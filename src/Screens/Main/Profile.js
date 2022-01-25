@@ -306,6 +306,38 @@ const Profile = (props) => {
                   </Card>
                 </TouchableOpacity>
                 {/* 2 */}
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('manageStaff')}
+                  >
+                  <Card
+                    containerStyle={{
+                      height: 50,
+                      paddingVertical: 2,
+                      justifyContent: 'center',
+                      borderRadius: 12,
+                    }}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Icon name="settings" type="octicon" />
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            fontFamily: FontFamily.semi_bold,
+                            marginHorizontal: 7,
+                          }}>
+                          Manage Your Staff
+                        </Text>
+                      </View>
+                      <Icon name="arrow-right" type="evilicon" />
+                    </View>
+                  </Card>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => gotoWithdraw()}>
                   <Card
                     containerStyle={{

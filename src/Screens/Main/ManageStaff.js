@@ -69,7 +69,7 @@ const ManageStaff = () => {
     console.log('id :>> ', id);
     let url =
       config.apiUrl +
-      'delete_staff_member.php';
+      '/delete_staff_member.php';
     let data = new FormData();
     data.append('staff_id', id);
     axios
@@ -99,7 +99,7 @@ const ManageStaff = () => {
     console.log('id :>> ', id);
     let url =
       config.apiUrl +
-      'view_staff_member.php';
+      '/view_staff_member.php';
     let data = new FormData();
     data.append('staff_id', id);
     data.append('boat_owner_id', parsedInfo.id);

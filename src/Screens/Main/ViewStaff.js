@@ -10,7 +10,7 @@ import {
 import Header from '../../Components/Header';
 import { Colors } from '../../Constants/Constants';
 class ViewStaff extends React.Component {
-  
+
   constructor(props) {
     console.log(props, 'props n view');
     super(props);
@@ -19,7 +19,7 @@ class ViewStaff extends React.Component {
       item: props.route.params.item,
       iscontact: '',
       listKeys: [
-        { key: 'Basketball', switch: true, text: 'View Home' },
+        { key: 'Basketball', switch: finalData && finalData.view_home_permission == 1 ? true : false, text: 'View Home' },
         { key: 'Football',switch: finalData && finalData.manage_home_permission == 1 ? true : false, text: 'Manage Home' },
         { key: 'Baseball', switch: finalData && finalData.view_add_permission == 1 ? true : false, text: 'View my add' },
         { key: 'Soccer',switch: finalData && finalData.manage_add_permission == 1 ? true : false, text: 'Manage my add' },

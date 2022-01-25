@@ -362,7 +362,7 @@ const SignUp = () => {
     if (!email.length) {
       return alert("enter something");
     }
-    let url = config.apiUrl + "check_valid_staff_member.php";
+    let url = config.apiUrl + "/check_valid_staff_member.php";
     var formData = new FormData();
     formData.append("staff_email_id", email);
 

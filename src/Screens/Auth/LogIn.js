@@ -48,8 +48,8 @@ const handleEmail = () => {
 const Login = (props) => {
   let passRef = null;
   const nav = useNavigation();
-  const [email, setemail] = useState("boat1@yopmail.com"); // boat1@yopmail.com
-  const [password, setpassword] = useState("123456"); // 123456
+  const [email, setemail] = useState(""); // boat1@yopmail.com
+  const [password, setpassword] = useState(""); // 123456
   const [isLogin, setIsLogin] = useState(false);
   const [language_id, setLanguageId] = useState(0);
   const [loader, setLoader] = useState(false);

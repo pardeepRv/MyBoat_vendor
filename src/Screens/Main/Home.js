@@ -23,6 +23,7 @@ import Upcoming from "../../Data/Upcoming";
 import { toggleLanguage } from "../../Data_Service/actions";
 import I18n from "../../Translations/i18";
 const Home = (props) => {
+  console.log(props,'pro[s in home');
   const [btn1Style, setBtn1Style] = useState({
     backColor: Colors.orange,
     textCOlor: Colors.white,
@@ -294,6 +295,8 @@ const Home = (props) => {
 };
 const mapStateToProps = (state) => ({
   language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+
 });
 const mapDispatchToProps = {
   toggleLanguage: toggleLanguage,

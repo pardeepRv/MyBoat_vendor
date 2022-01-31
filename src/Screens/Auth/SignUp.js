@@ -18,6 +18,7 @@ import {
   View,
 } from "react-native";
 import DatePicker from "react-native-datepicker";
+import { connect, useDispatch } from "react-redux";
 import { colors, Input, Overlay } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import OtpInputs from "react-native-otp-inputs";
@@ -25,6 +26,7 @@ import AntDesign from "react-native-vector-icons/dist/AntDesign";
 import Feather from "react-native-vector-icons/dist/Feather";
 import config from "../../Constants/config";
 import { back_img, Colors, FontFamily, Sizes } from "../../Constants/Constants";
+import { addPermissions } from "../../Data_Service/actions";
 import { firebaseprovider } from "../Provider/FirebaseProvider";
 
 /*
@@ -46,8 +48,11 @@ gender (0 for none, 1 for male, 2 for female),
 player_id
 */
 
-const SignUp = () => {
+const SignUp = (props) => {
+  console.log(props,'props in signup');
   const Navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [cityArr, serCityArr] = useState([]);
   const [cityArrCopy, setCityArrCopy] = useState([]);
   const [isChecked, setChecked] = useState(false);
@@ -193,7 +198,7 @@ const SignUp = () => {
           setAllData(res.data),
             res.data.success === "true"
               ? toggleOverlay()
-              : alert(res.data.msg[0]);
+              : alert(res.data.msg);
         })
         .catch((err) => console.log("sign_up_error", err));
       // return  console.log('res :>> ', res);
@@ -257,6 +262,9 @@ const SignUp = () => {
    * New Parameters = user_id_post, user_otp, user_type (0=admin, 1=user, 2=Client), device_type (browser, Android, IOS), player_id
    */
   const verifyOtp = ({ user_id, user_otp }) => {
+    let dataObj = {};
+    let data_arr = {};
+    let user_arr;
     console.log(parseInt(user_otp));
     var verify_otp_data = new FormData();
     verify_otp_data.append("user_id_post", user_id);
@@ -269,7 +277,17 @@ const SignUp = () => {
       .then((res) => {
         console.log(res);
         if (res.data.success === "true") {
-          let user_arr = JSON.stringify(res.data.user_details);
+
+          dataObj.associated_with_company = res.data.extra_details[0].associated_with_company;
+          dataObj.boat_id = res.data.extra_details[0].boat_id;
+          dataObj.registered = res.data.extra_details[0].registered;
+          dataObj.role_id = res.data.extra_details[0].role_id;
+
+          data_arr = JSON.stringify(dataObj);
+          user_arr = JSON.stringify(res.data.user_details);
+          console.log(data_arr, 'saving to local 1');
+          console.log(user_arr, 'saving to local 2');
+
           let userInfo = JSON.stringify({
             id: res.data.user_details.user_id,
             email: res.data.user_details.email,
@@ -291,6 +309,7 @@ const SignUp = () => {
             login_type: res.data.user_details.login_type,
           };
           AsyncStorage.setItem("user_arr", user_arr);
+          AsyncStorage.setItem("data_arr", data_arr);
           AsyncStorage.setItem("userInfo", userInfo);
           firebaseprovider.CreateUser(
             "u_" + res.data.user_details.user_id,
@@ -299,19 +318,36 @@ const SignUp = () => {
         } else {
           null;
         }
-        res.data.success === "true"
-          ? (ToastAndroid.show(
+        console.log(user_arr, 'saving to local storage>>>>>>>>>>');
+        if (res.data.extra_details[0].role_id === 2) {
+          res.data.success === "true"
+            ? (ToastAndroid.show(
               res.data.msg[0],
               ToastAndroid.SHORT,
               ToastAndroid.BOTTOM
             ),
-            setVisible(false),
-            gotoAddBoatPage())
-          : ToastAndroid.show(
+              setVisible(false),
+              gotoAddstaff())
+            : ToastAndroid.show(
               res.data.msg[0],
               ToastAndroid.SHORT,
               ToastAndroid.BOTTOM
             );
+        } else {
+          res.data.success === "true"
+            ? (ToastAndroid.show(
+              res.data.msg[0],
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM
+            ),
+              setVisible(false),
+              gotoAddBoatPage())
+            : ToastAndroid.show(
+              res.data.msg[0],
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM
+            );
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -327,6 +363,48 @@ const SignUp = () => {
       Navigation.navigate("AddBoat");
     }, 3000);
   };
+  // const gotoAddstaff = (data) => {
+  //   setloader(true);
+  //   setTimeout(() => {
+  //     setloader(false);
+  //     Navigation.navigate("Home");
+  //   }, 3000);
+  // };
+  const gotoAddstaff = async () => {
+    setloader(true);
+    let userInfo = await AsyncStorage.getItem('user_arr');
+    console.log('userInfo :>> ', userInfo);
+    let parsedInfo = JSON.parse(userInfo);
+    console.log('parsedInfo', parsedInfo.user_id);
+
+    let dataArr = await AsyncStorage.getItem('data_arr');
+    console.log('dataArr :>> ', dataArr);
+    let parsedInfoData = JSON.parse(dataArr);
+
+    let url =
+      config.apiUrl +
+      '/view_staff_member.php';
+    let data = new FormData();
+    data.append('staff_id', parsedInfo.user_id);
+    data.append('boat_owner_id', parsedInfoData.boat_id);
+    axios
+      .post(url, data)
+      .then(res => {
+        console.log('view_staff_member >>>>>>>>>>>1', res);
+        setloader(false);
+        if (res && res.data && res.data.data) {
+          dispatch(props.addPermissions(res.data.data[0]));
+          Navigation.navigate('Home');
+        } else {
+          setloader(false);
+          alert('Something went wrong!');
+          console.log(res.data.msg);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+
   const searchCity = (e) => {
     let text = e.toLowerCase();
     let cityArrCopy = cityArr;
@@ -785,7 +863,6 @@ const SignUp = () => {
                   color: colors.white,
                   marginTop: -20,
                   borderBottomColor: Colors.white,
-                  borderBottomWidth: 1,
                 },
               ]}
               itemStyle={{
@@ -801,16 +878,6 @@ const SignUp = () => {
               <Picker.Item label="Male" value="male" />
               <Picker.Item label="Female" value="female" />
             </Picker>
-            <View
-              style={{
-                borderColor: "#fff",
-                borderBottomWidth: 1,
-                width: "95%",
-                alignSelf: "center",
-                marginBottom: 23,
-                marginTop: -7,
-              }}
-            />
             <Input
               placeholder="Password"
               secureTextEntry
@@ -1073,4 +1140,11 @@ const s = StyleSheet.create({
     color: Colors.white,
   },
 });
-export default SignUp;
+
+
+const mapDispatchToProps = {
+  addPermissions: addPermissions,
+};
+
+export default connect(null, mapDispatchToProps)(SignUp);
+

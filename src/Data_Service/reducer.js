@@ -1,33 +1,28 @@
-import {TOGGLE_LANGUAGE } from '../Data_Service/constants'
+import { TOGGLE_LANGUAGE, PERMISSIONS_ADDED } from '../Data_Service/constants'
 
-const initialState={
-    language_id: 0
-   
-
-    
-
-
+const initialState = {
+    language_id: 0,
+    permissions:[],
 }
 
-const data_Reducer=(state=initialState,action={})=>{
+const data_Reducer = (state = initialState, action = {}) => {
 
-    switch(action.type)
-    {
+    switch (action.type) {
 
         case TOGGLE_LANGUAGE:
-             return { 
-                 ...state,
-                    language_id: action.data
-                  
-                }
-       
-       
-        default:  return state
+            return {
+                ...state,
+                language_id: action.data
+            }
+
+        case PERMISSIONS_ADDED:
+            return {
+                ...state,
+                permissions: action.payload
+            }
+
+        default: return state
     }
-
-
-
-
 
 }
 

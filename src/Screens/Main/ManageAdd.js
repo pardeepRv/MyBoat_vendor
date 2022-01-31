@@ -35,6 +35,7 @@ import axios from 'axios';
 import {Loading} from '../../Components/Loader';
 import {connect, useDispatch} from 'react-redux';
 const ManageAdd = props => {
+  console.log(props,'props in ManageAdd');
   const [visible, setVisible] = useState(false);
   const [Data, setData] = useState([]);
   const [allData, setAllData] = useState(null);
@@ -510,7 +511,9 @@ const ManageAdd = props => {
   );
 };
 const mapStateToProps = (state)=>({
-  language_id: state.data_Reducer.language_id
+  language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+
 
 })
 

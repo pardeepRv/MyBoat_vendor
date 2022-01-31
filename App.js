@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Root } from "native-base";
 import Stacks from "./src/Navi/Stack";
 import { firebaseprovider } from "./src/Screens/Provider/FirebaseProvider";
-import { StatusBar } from "react-native";
+import { SafeAreaView, StatusBar } from "react-native";
 import { Colors } from "./src/Constants/Constants";
 class App extends React.Component {
   async componentDidMount() {
@@ -31,9 +31,11 @@ class App extends React.Component {
       <Provider store={store}>
         <NavigationContainer>
           <Root>
+            <SafeAreaView style={{
+              backgroundColor: Colors.orange
+            }} />
             {/* <StatusBar hidden /> */}
             <StatusBar backgroundColor={Colors.orange} />
-
             <Stacks />
             {/* <TabNav /> */}
           </Root>

@@ -81,6 +81,7 @@ const Login = (props) => {
       .post(url, data)
       .then((res) => {
         setLoader(false);
+        console.log(res,'login res');
         if (res.data.success == "true") {
           let user_arr = JSON.stringify(res.data);
           let userInfo = JSON.stringify({

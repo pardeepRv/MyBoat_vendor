@@ -300,12 +300,12 @@ PODS:
     - React-Core
   - RNI18n (2.0.15):
     - React
-  - RNImageCropPicker (0.36.4):
+  - RNImageCropPicker (0.37.2):
     - React-Core
     - React-RCTImage
-    - RNImageCropPicker/QBImagePickerController (= 0.36.4)
+    - RNImageCropPicker/QBImagePickerController (= 0.37.2)
     - TOCropViewController
-  - RNImageCropPicker/QBImagePickerController (0.36.4):
+  - RNImageCropPicker/QBImagePickerController (0.37.2):
     - React-Core
     - React-RCTImage
     - TOCropViewController
@@ -510,7 +510,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: d9a54fc78a6301375f10a7203d88402bc9f465da
+  FBReactNativeSpec: 9c124965c8c02dfc6ff0a7e49765555dd2e178c7
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   OneSignalXCFramework: 10648e60ff3d335fbffa62d9b44b700b56d49b51
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
@@ -551,7 +551,7 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
-  RNImageCropPicker: 73891a709e6fd8a47d32104d942757971f220aee
+  RNImageCropPicker: 448d3c6e923fde3466b49caf3c2457c2a0ba02dd
   RNReanimated: 64c38d47ffcc29c97fc1d8cfde9e8a73d7be7cc8
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f

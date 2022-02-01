@@ -71,8 +71,8 @@ const Home = (props) => {
     let parsedInfo = JSON.parse(userInfo);
     setUser_id_post(parsedInfo.id);
     setLoader(true);
-    // let url = config.apiUrl + '/booking_list_owner.php?user_id_post=' + parsedInfo.id;
-    let url = config.apiUrl + "/booking_list_owner.php?user_id_post=14";
+    let url = config.apiUrl + '/booking_list_owner.php?user_id_post=' + parsedInfo.id;
+    // let url = config.apiUrl + "/booking_list_owner.php?user_id_post=14";
     // + parsedInfo.id;
     axios
       .get(url)

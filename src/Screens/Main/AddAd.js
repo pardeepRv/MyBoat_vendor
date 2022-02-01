@@ -218,6 +218,7 @@ class AddAd extends React.Component {
         axios
           .post(url, data)
           .then(res => {
+            console.log(res,'res in upload image');
             if (res.data.success == 'true') {
               this.setState({
                 uploadedImageCount: ++this.state.uploadedImageCount,
@@ -405,14 +406,14 @@ class AddAd extends React.Component {
       image3,
       cityOfBoat,
     } = this.state;
-    if (!banner || banner === '') {
-      alert(I18n.translate('banner_image'));
-      return;
-    }
-    if (this.state.uploadedImageCount < 3) {
-      alert(I18n.translate('upload_pic_alert'));
-      return;
-    }
+    // if (!banner || banner === '') {
+    //   alert(I18n.translate('banner_image'));
+    //   return;
+    // }
+    // if (this.state.uploadedImageCount < 3) {
+    //   alert(I18n.translate('upload_pic_alert'));
+    //   return;
+    // }
     if (this.state.discountError) {
       alert(I18n.translate('invalid_coupon'));
       return;
@@ -430,9 +431,11 @@ class AddAd extends React.Component {
       alert(I18n.translate('select_boat_alert'));
     } else if (max_number_of_people === '') {
       alert(I18n.translate('max_people_alert'));
-    } else if (BoatLang === '') {
-      alert(I18n.translate('location_alert'));
-    } else if (cityOfBoat === '') {
+    } 
+    // else if (BoatLang === '') {
+    //   alert(I18n.translate('location_alert'));
+    // }
+     else if (cityOfBoat === '') {
       alert(I18n.translate('select_city_alert'));
     } else if (Description_arbic === '') {
       alert(I18n.translate('des_ar_alert'));
@@ -452,9 +455,10 @@ class AddAd extends React.Component {
         Trip_type: this.state.tripType,
         Boat: this.state.boat,
         Max_number_of_people: this.state.max_number_of_people,
-        BoatLang: this.state.BoatLang,
-        BoatLat: this.state.BoatLat,
-        cityOfBoat: this.state.cityOfBoat,
+        // BoatLang: this.state.BoatLang,
+        // BoatLat: this.state.BoatLat,
+        BoatLat: '29.1282',
+        cityOfBoat: '48.1259',
         Description_arbic: this.state.Description_arbic,
         Description_engilsh: this.state.Description_engilsh,
         Extra_per_hour_price: this.state.Extra_per_hour_price,

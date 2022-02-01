@@ -35,14 +35,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Upload image</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>to upload boat stories</string>
-	<key>NSPhotoLibraryUsageDescription </key>
-	<string>Allow user to upload image</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.ttf</string>
@@ -103,5 +95,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string> $(PRODUCT_NAME) Upload image</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string> $(PRODUCT_NAME) wants to access your location.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) to upload boat stories</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME)  needs to access your gallery for uploading photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) Allow users to access gallery for upload image for showing details to other</string>
 </dict>
 </plist>

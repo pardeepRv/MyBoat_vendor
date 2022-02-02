@@ -64,6 +64,10 @@ const SignUp = (props) => {
     { value: 1, isSelected: true },
     { value: 2, isSelected: false },
   ]);
+  const [Gender, setGender] = useState([
+    { value: 1, isSelected: true },
+    { value: 2, isSelected: false },
+  ]);
   console.log("boatfacality :>> ", Boatfacality);
   // -------------------------------------------- //
   const [f_name, setF_name] = useState("");
@@ -160,7 +164,7 @@ const SignUp = (props) => {
   signup_data.append("city", city);
   signup_data.append("phone_number", m_number);
   signup_data.append("password", password);
-  signup_data.append("gender", gender === "" ? 0 : gender === "male" ? 1 : 2);
+  signup_data.append("gender", Gender  == 1 ? 1 : 2);
   signup_data.append("player_id", config.player_id);
   signup_data.append("user_type_post", config.user_type_post);
   // ------------------------------------//
@@ -432,6 +436,17 @@ const SignUp = (props) => {
     setBoatfacality(array);
     console.log(array);
   };
+  const toggleGender = (index) => {
+    const array = Gender.map((v) => {
+      const newItem = Object.assign({}, v);
+      console.log(newItem, "..........Gender");
+      newItem.isSelected = false;
+      return newItem;
+    });
+    array[index].isSelected = !array[index].isSelected;
+    setGender(array);
+    console.log(array);
+  };
   // ////////////////////////////////////////////  api of email for staff
 
   const onBlurInput = async () => {
@@ -471,6 +486,39 @@ const SignUp = (props) => {
         width: 200,
       }}
       onPress={() => toggleCml(index)}
+      activeOpacity={0.8}
+    >
+      {item.isSelected ? (
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <AntDesign
+            name={"checksquare"}
+            size={25}
+            color={"#fff"}
+            style={{ marginHorizontal: 5 }}
+          />
+        </View>
+      ) : (
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <Feather
+            name={"square"}
+            size={25}
+            color={"#fff"}
+            style={{ marginHorizontal: 5 }}
+          />
+        </View>
+      )}
+
+      {/* <Text style={styles.textStyle}>{item.value}</Text> */}
+    </TouchableOpacity>
+  );
+  const _renderGender = ({ item, index }) => (
+    <TouchableOpacity
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: 200,
+      }}
+      onPress={() => toggleGender(index)}
       activeOpacity={0.8}
     >
       {item.isSelected ? (
@@ -856,7 +904,7 @@ const SignUp = (props) => {
               }}
               onDateChange={(date) => setdob(date)}
             />
-            <Picker
+            {/* <Picker
               selectedValue={gender}
               style={[
                 {
@@ -877,7 +925,65 @@ const SignUp = (props) => {
               <Picker.Item label="Gender" value="" />
               <Picker.Item label="Male" value="male" />
               <Picker.Item label="Female" value="female" />
-            </Picker>
+            </Picker> */}
+
+            <View style={{marginTop:10 , height:100,}}>
+            {/* <Input
+                placeholder="Gender"
+                containerStyle={s.Input}
+                inputContainerStyle={s.Input}
+                placeholderTextColor={Colors.white}
+                inputStyle={{ color: Colors.white }}
+                keyboardType="default"
+                onChangeText={(t) => setb_name(t)}
+                value={b_name}
+                editable={false}
+              /> */}
+              <Text style={{ width: Sizes.width * 0.60,fontFamily: FontFamily.default,
+    marginLeft: 5,
+    color: "white",
+    fontSize: 18,
+    paddingHorizontal: 10,marginBottom:10}}> Please Select Gender</Text>
+<FlatList
+              extraData={Gender}
+              data={Gender}
+              style={{
+                marginTop: 5,
+                paddingHorizontal: 10,
+                marginBottom: 10,
+              }}
+              renderItem={_renderGender}
+              keyExtractor={(item, index) => "key" + index}
+              horizontal
+            />
+<View
+              style={{ flexDirection: "row", justifyContent: "space-around" }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: "white",
+                  fontSize: 16,
+                  paddingHorizontal: 10,
+                  marginTop: -60,
+                }}
+              >
+                Male
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: "white",
+                  fontSize: 16,
+                  paddingHorizontal: 10,
+                  marginTop: -60,
+                }}
+              >
+Female
+              </Text>
+            </View>
+              
+              </View>
             <Input
               placeholder="Password"
               secureTextEntry

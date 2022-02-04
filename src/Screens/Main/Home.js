@@ -16,6 +16,7 @@ import { Card } from "react-native-elements";
 import { connect, useDispatch } from "react-redux";
 import Header from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
+import { getPermission } from "../../config/callApi";
 import config from "../../Constants/config";
 import { Colors, FontFamily } from "../../Constants/Constants";
 import Outgoing from "../../Data/Outgoing";
@@ -23,7 +24,7 @@ import Upcoming from "../../Data/Upcoming";
 import { toggleLanguage } from "../../Data_Service/actions";
 import I18n from "../../Translations/i18";
 const Home = (props) => {
-  console.log(props,'pro[s in home');
+  console.log(props, "pro[s in home");
   const [btn1Style, setBtn1Style] = useState({
     backColor: Colors.orange,
     textCOlor: Colors.white,
@@ -41,6 +42,61 @@ const Home = (props) => {
   const [user_id_post, setUser_id_post] = useState(null);
   const [loader, setLoader] = useState(false);
   // --------------------------------------- //
+
+  // useEffect(async () => {
+  //   getLoginuserInfo();
+  // }, []);
+
+  useEffect(() => {
+    console.log("in useEfect loginsuer>>>>>>>>>>>.");
+    const unsubscribe = props.navigation.addListener("focus", () => {
+      getLoginuserInfo();
+    });
+    return unsubscribe;
+  }, [props.navigation]);
+
+  //getting user information
+  const getLoginuserInfo = async () => {
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo, "parsedInfo >>>>>>>>>>>>>");
+
+    if (parsedInfo?.role_id == 2) {
+      // console.log("staff user is login");
+      // getPermission(parsedInfo.id)
+      //   .then((res) => {
+      //     console.log(res, "res in new permiy");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err, "err coming");
+      //   });
+      // return;
+      let url =
+        config.apiUrl + "/get-permissions.php?user_id_post=" + parsedInfo.id;
+      axios
+        .get(url)
+        .then((res) => {
+          console.log(res, "res getting permission");
+          setLoader(false);
+          if (
+            res?.data?.success === "true" &&
+            res &&
+            res.data &&
+            res.data.permissions &&
+            res.data.permissions.length > 0 &&
+            res.data.permissions[0].view_home_permission
+          ) {
+            getBookingDetails();
+          } else {
+            alert("You do not have permission to see hme page.");
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      getBookingDetails();
+    }
+  };
+
   const OutgoingBtn = () => {
     setData(true);
     setBtn2Style({
@@ -71,12 +127,12 @@ const Home = (props) => {
     let parsedInfo = JSON.parse(userInfo);
     setUser_id_post(parsedInfo.id);
     setLoader(true);
-    let url = config.apiUrl + '/booking_list_owner.php?user_id_post=' + parsedInfo.id;
-    // let url = config.apiUrl + "/booking_list_owner.php?user_id_post=14";
-    // + parsedInfo.id;
+    let url =
+      config.apiUrl + "/booking_list_owner.php?user_id_post=" + parsedInfo.id;
     axios
       .get(url)
       .then((res) => {
+        console.log(res, "res in home");
         setLoader(false);
         if (res.data.success === "true") {
           setData(res.data.upcoming_booking_arr);
@@ -101,7 +157,7 @@ const Home = (props) => {
     } else {
       dispatch(props.toggleLanguage(language_id));
     }
-    getBookingDetails();
+    // getBookingDetails();
   }, []);
 
   const CardView = ({ item, ind }) => {
@@ -296,7 +352,6 @@ const Home = (props) => {
 const mapStateToProps = (state) => ({
   language_id: state.data_Reducer.language_id,
   permissions: state.data_Reducer.permissions,
-
 });
 const mapDispatchToProps = {
   toggleLanguage: toggleLanguage,

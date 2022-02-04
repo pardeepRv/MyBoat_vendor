@@ -63,6 +63,7 @@ const ManageAdd = props => {
   const getData = async () => {
     let userInfo = await AsyncStorage.getItem('userInfo');
     let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo,'get');
     setLoader(true);
     let url =
       config.apiUrl +
@@ -71,6 +72,7 @@ const ManageAdd = props => {
     axios
       .get(url)
       .then(res => {
+        console.log(res,'get ads here>>');
         setLoader(false);
         setIsFetching(false);
         if (res.data.success === 'true') {
@@ -122,6 +124,7 @@ const ManageAdd = props => {
     axios
       .get(url)
       .then(res => {
+        console.log(res,'get all ads');
         setLoader(false);
         if (res) {
           setData(res.data.adver_arr);
@@ -281,7 +284,7 @@ const ManageAdd = props => {
                                 ? config.imageUrl + item.image
                                 : 'https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=',
                           }}>
-                          {/* Discount */}
+                       
                           {Math.trunc(item.discount)>0 && 
                           <View
                             style={[
@@ -310,7 +313,6 @@ const ManageAdd = props => {
                               {I18n.translate('off')}
                             </Text>
                           </View>}
-                          {/* Three dots */}
                           <TouchableOpacity
                             style={{position: 'absolute', right: 10, top: 10}}
                             onPress={() => toggleOverlay({item})}>
@@ -320,7 +322,6 @@ const ManageAdd = props => {
                               color={Colors.orange}
                             />
                           </TouchableOpacity>
-                          {/* Price */}
                           <View
                             style={[
                               {
@@ -343,7 +344,6 @@ const ManageAdd = props => {
                             </Text>
                           </View>
                         </ImageBackground>
-                        {/*  */}
                         <View style={s.SEC3}>
                           <View style={{}}>
                             <Text style={s.title}>{item.boat_name}</Text>
@@ -399,7 +399,7 @@ const ManageAdd = props => {
                             </View>
                           </View>
                           <View>
-                            <Text
+                            {/* <Text
                               style={{
                                 color: 'rgba(51, 51, 51, 1)',
                                 fontSize: 12,
@@ -407,7 +407,7 @@ const ManageAdd = props => {
                               }}>
                               {I18n.translate('destination')}
                               {`: ${getDestinations(item, index)}`}
-                            </Text>
+                            </Text> */}
                             <View
                               style={{
                                 flexDirection: 'row',
@@ -424,7 +424,7 @@ const ManageAdd = props => {
                                 {item.no_of_people} {I18n.translate('person')}
                               </Text>
                             </View>
-                            <Text
+                            {/* <Text
                               style={{
                                 alignSelf: 'flex-end',
                                 color: 'rgba(51, 51, 51, 1)',
@@ -437,7 +437,7 @@ const ManageAdd = props => {
                                   ? item.city[0].name
                                   : item.city[0].name_ar
                               }`}
-                            </Text>
+                            </Text> */}
                           </View>
                         </View>
                       </Card>

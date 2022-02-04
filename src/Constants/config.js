@@ -23,7 +23,7 @@ import {Platform} from 'react-native';
 let config = {
   // apiUrl: 'https://freshandfine.xyz/app/webservice',
   apiUrl: 'https://server3.rvtechnologies.in/My-Boat/app/app/webservice',
-  imageUrl: 'https://freshandfine.xyz/app/webservice/images/',
+  imageUrl: 'https://server3.rvtechnologies.in/My-Boat/app/app/webservice/images/',
   device_type: Platform.OS,
   login_type: 0, //login_type (0 for App, 1 for Facebook, 2 for Google, 3 for twitter, 4 for Instagram, 5 for apple)
   player_id: 123456,

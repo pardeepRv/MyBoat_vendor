@@ -504,6 +504,7 @@ class AddAd extends React.Component {
         data.trip_type_id = this.props?.route?.params.trip_type_id;
         data.adver_boat_type = this.props?.route?.params?.adver_boat_type;
       }
+      console.log(data,'data sending to Add 1');
       this.props.navigation.navigate('AddAd1', {
         data: data,
       });

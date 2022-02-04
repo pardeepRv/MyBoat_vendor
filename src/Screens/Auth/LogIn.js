@@ -48,8 +48,8 @@ const handleEmail = () => {
 const Login = (props) => {
   let passRef = null;
   const nav = useNavigation();
-  const [email, setemail] = useState("boat1@yopmail.com"); // boat1@yopmail.com
-  const [password, setpassword] = useState("123456"); // 123456
+  const [email, setemail] = useState("owner@yopmail.com"); // boat1@yopmail.com
+  const [password, setpassword] = useState("qwerty123"); // 123456
   const [isLogin, setIsLogin] = useState(false);
   const [language_id, setLanguageId] = useState(0);
   const [loader, setLoader] = useState(false);
@@ -91,6 +91,7 @@ const Login = (props) => {
             fname: res.data.user_details.f_name,
             lname: res.data.user_details.l_name,
             image: res.data.user_details.image,
+            role_id: res.data.user_details.role_id,
           });
           AsyncStorage.setItem("user_arr", user_arr);
           AsyncStorage.setItem("userInfo", userInfo);

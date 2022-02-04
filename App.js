@@ -12,6 +12,7 @@ import { Colors } from "./src/Constants/Constants";
 class App extends React.Component {
   async componentDidMount() {
     let appLang = await AsyncStorage.getItem("locale");
+    
     if (appLang === null) {
       AsyncStorage.setItem("locale", "en");
       AsyncStorage.setItem("language", "0");

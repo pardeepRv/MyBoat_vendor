@@ -1,13 +1,21 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/core';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View,SafeAreaView } from 'react-native';
-import { Card, Icon, Overlay } from 'react-native-elements';
-import Header from '../../Components/Header';
-import { Loading } from '../../Components/Loader';
-import config from '../../Constants/config';
-import { Colors, FontFamily, Sizes } from '../../Constants/Constants';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/core";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+  Modal,
+} from "react-native";
+import { Card, Icon, Overlay } from "react-native-elements";
+import Header from "../../Components/Header";
+import { Loading } from "../../Components/Loader";
+import config from "../../Constants/config";
+import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
 
 const ManageStaff = () => {
   const navigation = useNavigation();
@@ -18,170 +26,167 @@ const ManageStaff = () => {
   const [itemData, setItemData] = useState([]);
   const [viewData, setViewdata] = useState([]);
 
-  console.log('data :>> ', data);
-  console.log('itemdata :>> ', itemData);
+  console.log("data :>> ", data);
+  console.log("itemdata :>> ", itemData);
   // --------------------------------------- //
   const toggleOverlay = ({ item }) => {
-    console.log(item, 'item to be console');
+    console.log(item, "item to be console");
     setItemData(item);
     setVisible(!visible);
     // setItemData(item);
   };
 
   useEffect(async () => {
-    navigation.addListener(
-      'focus',
-      () => {
-        return allData()
-      },
-    );
+    navigation.addListener("focus", () => {
+      return allData();
+    });
   }, []);
 
   const allData = async () => {
     setLoader(true);
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-    console.log('parsedInfo', parsedInfo.id);
-    let url = config.apiUrl + '/get_staff_member_list.php';
+    console.log("parsedInfo", parsedInfo.id);
+    let url = config.apiUrl + "/get_staff_member_list.php";
 
     var data = new FormData();
-    data.append('boat_owner_id', parsedInfo.id);
+    data.append("boat_owner_id", parsedInfo.id);
 
     axios
       .post(url, data)
-      .then(res => {
-        console.log('boat list >>>>>>>>>>>1', res);
+      .then((res) => {
+        console.log("boat list >>>>>>>>>>>1", res);
         setLoader(false);
-        setIsFetching(false)
+        setIsFetching(false);
         if (res && res.data && res.data.success == "true") {
-          console.log('boat_list2', res.data.data);
+          console.log("boat_list2", res.data.data);
           setData(res.data.data);
         } else {
-          alert('Something went wrong!');
+          alert("Something went wrong!");
           console.log(res.data.success);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  const deleteBoat = async id => {
+  const deleteBoat = async (id) => {
     setLoader(true);
-    console.log('id :>> ', id);
-    let url =
-      config.apiUrl +
-      '/delete_staff_member.php';
+    console.log("id :>> ", id);
+    let url = config.apiUrl + "/delete_staff_member.php";
     let data = new FormData();
-    data.append('staff_id', id);
+    data.append("staff_id", id);
     axios
       .post(url, data)
-      .then(res => {
-        console.log('delete list >>>>>>>>>>>1', res);
+      .then((res) => {
+        console.log("delete list >>>>>>>>>>>1", res);
         setLoader(false);
         if (res && res.data) {
           setItemData(null);
           allData();
         } else {
-          alert('Error');
+          alert("Error");
           setLoader(false);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
   const onRefresh = () => {
     setIsFetching(true);
     allData();
   };
-  const onViewstaff = async id => {
+  const onViewstaff = async (id) => {
     setLoader(true);
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-    console.log('parsedInfo', parsedInfo.id);
-    console.log('id :>> ', id);
-    let url =
-      config.apiUrl +
-      '/view_staff_member.php';
+    console.log("parsedInfo", parsedInfo.id);
+    console.log("id :>> ", id);
+    let url = config.apiUrl + "/view_staff_member.php";
     let data = new FormData();
-    data.append('staff_id', id);
-    data.append('boat_owner_id', parsedInfo.id);
+    data.append("staff_id", id);
+    data.append("boat_owner_id", parsedInfo.id);
     axios
       .post(url, data)
-      .then(res => {
-        console.log('delete list >>>>>>>>>>>1', res);
+      .then((res) => {
+        console.log("delete list >>>>>>>>>>>1", res);
         setLoader(false);
         if (res && res.data && res.data.data) {
           setViewdata(res.data.data);
           // allData();
-          navigation.navigate('ViewStaff', { item: res.data.data[0] });
+          navigation.navigate("ViewStaff", { item: res.data.data[0] });
         } else {
-
           setLoader(false);
-          alert('Something went wrong!');
+          alert("Something went wrong!");
           console.log(res.data.msg);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (
-    <SafeAreaView style={{flex:1}}>
-    <View style={{ backgroundColor: Colors.white, flex: 1 }}>
-      <Header
-        name="Add Staff"
-        backBtn={true}
-        headerHeight={Sizes.height * 0.2}
-      // searchBtn={true}
-      />
-      {/* Buttons */}
-      <View style={s.btn_1}></View>
-      {/* View */}
-      <View style={s.SEC2}>
-        <TouchableOpacity
-          style={[s.btn1]}
-          onPress={() => navigation.navigate('AddStaff', { type: 'Add' })}>
-          <Text style={{ letterSpacing: 0.75 }}>Add</Text>
-        </TouchableOpacity>
-        {loader ? (
-          <Loading />
-        ) : (
-          <View>
-            {data === 'NA' ? (
-              <View style={{ alignItems: 'center', marginTop: '10%' }}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#ccc' }}>
-                  No Staff Added
-                </Text>
-              </View>
-            ) : (
-              <FlatList
-                data={data === 'NA' ? [] : data}
-                showsVerticalScrollIndicator={false}
-                refreshing={isFetching}
-                contentInset={{ bottom: 50 }}
-                onRefresh={onRefresh}
-                renderItem={({ item }) => {
-                  return (
-                    <View style={{ padding: 5 }}>
-                      <Card
-                        containerStyle={{
-                          padding: 0,
-                          borderRadius: 15,
-                          paddingHorizontal: 0,
-                          margin: 7.5,
-                          marginHorizontal: 10,
-                          elevation: 5,
-                        }}>
-                        {/*  */}
-                        <View style={s.SEC3}>
-                          <View style={{ width: '90%', paddingStart: 10 }}>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                              }}>
-                              <Text style={{ fontWeight: 'bold' }}>
-                                email : {item && item.email}
-                              </Text>
-                            </View>
-                            {/* <View
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ backgroundColor: Colors.white, flex: 1 }}>
+        <Header
+          name="Add Staff"
+          backBtn={true}
+          headerHeight={Sizes.height * 0.2}
+          // searchBtn={true}
+        />
+        {/* Buttons */}
+        <View style={s.btn_1}></View>
+        {/* View */}
+        <View style={s.SEC2}>
+          <TouchableOpacity
+            style={[s.btn1]}
+            onPress={() => navigation.navigate("AddStaff", { type: "Add" })}
+          >
+            <Text style={{ letterSpacing: 0.75 }}>Add</Text>
+          </TouchableOpacity>
+          {loader ? (
+            <Loading />
+          ) : (
+            <View>
+              {data === "NA" ? (
+                <View style={{ alignItems: "center", marginTop: "10%" }}>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: "bold", color: "#ccc" }}
+                  >
+                    No Staff Added
+                  </Text>
+                </View>
+              ) : (
+                <FlatList
+                  data={data === "NA" ? [] : data}
+                  showsVerticalScrollIndicator={false}
+                  refreshing={isFetching}
+                  contentInset={{ bottom: 50 }}
+                  onRefresh={onRefresh}
+                  renderItem={({ item }) => {
+                    return (
+                      <View style={{ padding: 5 }}>
+                        <Card
+                          containerStyle={{
+                            padding: 0,
+                            borderRadius: 15,
+                            paddingHorizontal: 0,
+                            margin: 7.5,
+                            marginHorizontal: 10,
+                            elevation: 5,
+                          }}
+                        >
+                          {/*  */}
+                          <View style={s.SEC3}>
+                            <View style={{ width: "90%", paddingStart: 10 }}>
+                              <View
+                                style={{
+                                  flexDirection: "row",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                <Text style={{ fontWeight: "bold" }}>
+                                  email : {item && item.email}
+                                </Text>
+                              </View>
+                              {/* <View
                                   style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
@@ -191,36 +196,37 @@ const ManageStaff = () => {
                                     kunal
                               </Text>
                                 </View> */}
+                            </View>
+                            <TouchableOpacity
+                              style={{}}
+                              onPress={() => toggleOverlay({ item })}
+                            >
+                              <Icon
+                                name="dots-three-vertical"
+                                type="entypo"
+                                color={"#888"}
+                              />
+                            </TouchableOpacity>
                           </View>
-                          <TouchableOpacity
-                            style={{}}
-                            onPress={() => toggleOverlay({ item })}>
-                            <Icon
-                              name="dots-three-vertical"
-                              type="entypo"
-                              color={'#888'}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      </Card>
-                    </View>
-                  );
-                }}
-                keyExtractor={(i, ind) => ind}
-                style={{
-                  marginTop: 30,
-                }}
-                contentInsetAdjustmentBehavior="automatic"
-                contentContainerStyle={{
-                  paddingBottom: 10,
-                }}
-              />
-            )}
-          </View>
-        )}
-      </View>
-      {/* Overlay */}
-      <Overlay
+                        </Card>
+                      </View>
+                    );
+                  }}
+                  keyExtractor={(i, ind) => ind}
+                  style={{
+                    marginTop: 30,
+                  }}
+                  contentInsetAdjustmentBehavior="automatic"
+                  contentContainerStyle={{
+                    paddingBottom: 10,
+                  }}
+                />
+              )}
+            </View>
+          )}
+        </View>
+        {/* Overlay */}
+        {/* <Overlay
         isVisible={visible}
         onBackdropPress={toggleOverlay}
         overlayStyle={{ borderRadius: 20 }}
@@ -326,18 +332,145 @@ const ManageStaff = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </Overlay>
-    </View>
+      </Overlay> */}
+
+        <Modal
+          animationType={"none"}
+          transparent={true}
+          visible={visible}
+          onBackdropPress={toggleOverlay}
+          overlayStyle={{ borderRadius: 20 }}
+          onRequestClose={() => {}}
+        >
+          <View
+            style={{
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#ffffff25",
+            }}
+          >
+            <View
+              style={{
+                width: 300,
+                justifyContent: "center",
+                elevation: 1,
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 1,
+                borderRadius: 20,
+                backgroundColor: "white",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  onViewstaff(itemData.user_id);
+                  setVisible(false);
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: FontFamily.semi_bold,
+                    fontSize: 16,
+                    lineHeight: 40,
+                    color: "rgba(0, 0, 0, 0.55)",
+                  }}
+                >
+                  View
+                </Text>
+              </TouchableOpacity>
+              <View
+                style={{
+                  width: "100%",
+                  borderWidth: 0.5,
+                  marginTop: 5,
+                  borderColor: "rgba(0, 0, 0, 0.55)",
+                  backgroundColor: "rgba(0, 0, 0, 0.55)",
+                }}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("AddStaff", {
+                    type: "Edit",
+                    item: itemData,
+                  });
+                  setVisible(false);
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: FontFamily.semi_bold,
+                    fontSize: 16,
+                    lineHeight: 39,
+                    color: "rgba(0, 0, 0, 0.55)",
+                  }}
+                >
+                  Edit
+                </Text>
+              </TouchableOpacity>
+              <View
+                style={{
+                  width: "100%",
+                  borderWidth: 0.5,
+                  marginTop: 5,
+                  borderColor: "rgba(0, 0, 0, 0.55)",
+                  backgroundColor: "rgba(0, 0, 0, 0.55)",
+                }}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  deleteBoat(itemData.user_id);
+                  setVisible(false);
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: FontFamily.semi_bold,
+                    fontSize: 16,
+                    lineHeight: 39,
+                    color: "rgba(0, 0, 0, 0.55)",
+                  }}
+                >
+                  Delete
+                </Text>
+              </TouchableOpacity>
+              <View
+                style={{
+                  width: "100%",
+                  borderWidth: 0.5,
+                  marginTop: 5,
+                  borderColor: "rgba(0, 0, 0, 0.55)",
+                  backgroundColor: "rgba(0, 0, 0, 0.55)",
+                }}
+              />
+              <TouchableOpacity
+                onPress={() => toggleOverlay({ item: undefined })}
+              >
+                <Text
+                  style={{
+                    fontFamily: FontFamily.semi_bold,
+                    fontSize: 16,
+                    lineHeight: 39,
+                    color: "rgba(0, 0, 0, 0.55)",
+                  }}
+                >
+                  Back
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </SafeAreaView>
   );
 };
 const s = StyleSheet.create({
   btn1: {
     borderRadius: 5,
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
     marginTop: 20,
     borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.25)',
+    borderColor: "rgba(0, 0, 0, 0.25)",
     marginRight: 20,
     paddingHorizontal: 15,
     paddingVertical: 5,
@@ -348,10 +481,10 @@ const s = StyleSheet.create({
     color: Colors.black,
   },
   btn_1: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     // position: "absolute",
-    alignSelf: 'center',
+    alignSelf: "center",
     top: 100,
   },
   SEC2: {
@@ -363,24 +496,24 @@ const s = StyleSheet.create({
   },
   ImageBackground: {
     height: 215,
-    width: '100%',
+    width: "100%",
     borderRadius: 15,
-    alignSelf: 'center',
+    alignSelf: "center",
     // marginHorizontal:10,
     elevation: 0,
   },
   imgStyle: {
     borderRadius: 15,
     height: 215,
-    width: '100%',
-    alignSelf: 'center',
+    width: "100%",
+    alignSelf: "center",
   },
   SEC3: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
     paddingHorizontal: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     fontFamily: FontFamily.semi_bold,
@@ -416,13 +549,13 @@ const s = StyleSheet.create({
     borderBottomWidth: 25,
     borderBottomColor: Colors.orange,
     borderLeftWidth: 25,
-    borderLeftColor: 'transparent',
+    borderLeftColor: "transparent",
     borderRightWidth: 25,
-    borderRightColor: 'transparent',
-    borderStyle: 'solid',
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    transform: [{ rotate: '-45deg' }],
+    borderRightColor: "transparent",
+    borderStyle: "solid",
+    backgroundColor: "transparent",
+    alignItems: "center",
+    transform: [{ rotate: "-45deg" }],
     marginTop: 19.2,
     marginLeft: -26,
   },

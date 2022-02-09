@@ -821,7 +821,7 @@ class ViewAdd extends React.Component {
                   </Text>
                 </View>
               </View>
-              <View
+              {/* <View
                 style={{
                   backgroundColor: Colors.orange,
                   height: 75,
@@ -896,7 +896,7 @@ class ViewAdd extends React.Component {
                     </Text>
                   </View>
                 </View>
-              </View>
+              </View> */}
             </View>
           )}
         </ScrollView>

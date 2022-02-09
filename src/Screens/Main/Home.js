@@ -88,7 +88,7 @@ const Home = (props) => {
           ) {
             getBookingDetails();
           } else {
-            alert("You do not have permission to see hme page.");
+            alert("You do not have permission to see home page.");
           }
         })
         .catch((err) => console.log(err));

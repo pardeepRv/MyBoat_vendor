@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useState, useEffect} from 'react';
+import { useNavigation } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -10,137 +10,187 @@ import {
   FlatList,
   Image,
   I18nManager,
-} from 'react-native';
-import I18n from '../../Translations/i18'
-import {Calendar} from 'react-native-calendars';
-import {Icon, Input, Card} from 'react-native-elements';
-import Header from '../../Components/Header';
-import {Colors, FontFamily, Sizes} from '../../Constants/Constants';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import config from '../../Constants/config';
-import axios from 'axios';
-import {Loading} from '../../Components/Loader';
-import {connect, useDispatch} from 'react-redux';
-const CalenderView = () => {
+} from "react-native";
+import I18n from "../../Translations/i18";
+import { Calendar } from "react-native-calendars";
+import { Icon, Input, Card } from "react-native-elements";
+import Header from "../../Components/Header";
+import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../Constants/config";
+import axios from "axios";
+import { Loading } from "../../Components/Loader";
+import { connect, useDispatch } from "react-redux";
+const CalenderView = (props) => {
   const navigation = useNavigation();
   const [Data, setData] = useState([]);
   const [allData, setAllData] = useState(null);
   const [upcomingTripData, setUpcomingTripData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+
+  const [permissionArr, serPermissionArr] = useState([]);
+
+  // useEffect(() => {
+  //   navigation.addListener('focus', () => {
+  //     getData();
+  //   });
+  //   getData();
+  // }, []);
+
   useEffect(() => {
-    navigation.addListener('focus', () => {
-      getData();
+    const unsubscribe = props.navigation.addListener("focus", () => {
+      console.log("in useEfect calender>>>>>>>>>>>.");
+      getLoginuserInfo();
     });
-    getData();
-  }, []);
+    return unsubscribe;
+  }, [props.navigation]);
+
+  //getting user information
+  const getLoginuserInfo = async () => {
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo, "parsedInfo >>>>>>>>>>>>>");
+
+    if (parsedInfo?.role_id == 2) {
+      let url =
+        config.apiUrl + "/get-permissions.php?user_id_post=" + parsedInfo.id;
+      axios
+        .get(url)
+        .then((res) => {
+          console.log(res, "res getting permission");
+          setLoader(false);
+          if (
+            res?.data?.success === "true" &&
+            res &&
+            res.data &&
+            res.data.permissions &&
+            res.data.permissions.length > 0 &&
+            res.data.permissions[0].view_unavailability_permission === 1
+          ) {
+            serPermissionArr(res.data.permissions);
+            getData();
+          } else {
+            alert("You do not have permission to see unavailable page.");
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      getData();
+    }
+  };
+
   const getData = async () => {
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     setLoader(true);
 
-    let url = config.apiUrl + '/unavailable_list.php?user_id_post='+ parsedInfo.id;
+    let url =
+      config.apiUrl + "/unavailable_list.php?user_id_post=" + parsedInfo.id;
     axios
       .get(url)
-      .then(res => {
-        if (res.data.success === 'true') {
+      .then((res) => {
+        console.log(res, "checking unavailble");
+        if (res.data.success === "true") {
           getBookingListForOwner();
           setAllData(res.data.unavailabe_arr);
         } else {
           setLoader(false);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
+
   const getBookingListForOwner = async () => {
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-   
-    let url = config.apiUrl + '/booking_list_owner.php?user_id_post='+ parsedInfo.id;
+
+    let url =
+      config.apiUrl + "/booking_list_owner.php?user_id_post=" + parsedInfo.id;
     axios
       .get(url)
-      .then(res => {
-
+      .then((res) => {
         setLoader(false);
         setIsFetching(false);
-        if (res.data.success === 'true') {
+        if (res.data.success === "true") {
           res.data.upcoming_booking_arr?.length &&
             setUpcomingTripData(res.data.upcoming_booking_arr);
         } else {
-          if(props.language_id == 0)
-          alert(res.data.msg[0]);
-          else   alert(res.data.msg[1]);
+          if (props.language_id == 0) alert(res.data.msg[0]);
+          else alert(res.data.msg[1]);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
   // var dates = ['2021-08-23', '2021-08-26', '2021-08-10']
 
-  const gotoSelectedDate = ({data}) => {
-    navigation.navigate('SelectedDate', {data});
+  const gotoSelectedDate = ({ data }) => {
+    navigation.navigate("SelectedDate", { data });
   };
-  const deleteData = async id => {
-    let userInfo = await AsyncStorage.getItem('userInfo');
+  const deleteData = async (id) => {
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     setLoader(true);
     setIsFetching(true);
     let url =
       config.apiUrl +
-      '/unavailable_delete.php?user_id_post=' + parsedInfo.id +
-      '&unavailable_id=' +
+      "/unavailable_delete.php?user_id_post=" +
+      parsedInfo.id +
+      "&unavailable_id=" +
       id;
     // + parsedInfo.id;
     axios
       .get(url)
-      .then(res => {
+      .then((res) => {
         setLoader(false);
         setIsFetching(false);
-        if (res.data.success === 'true') {
+        if (res.data.success === "true") {
           getData();
         } else {
-          if(props.language_id == 0)
-          alert(res.data.msg[0]);
-          else    alert(res.data.msg[1]);
+          if (props.language_id == 0) alert(res.data.msg[0]);
+          else alert(res.data.msg[1]);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
   const getDayColor = (date, preference) => {
-    let color = 'white';
-    let textColor = '#000';
+    let color = "white";
+    let textColor = "#000";
     let found = false;
     let upcomingTripCount = 0;
-    allData != 'NA' &&
+    allData != "NA" &&
       allData?.length &&
-      allData.map(item => {
+      allData.map((item) => {
         if (date?.dateString === item.date) {
-          textColor = '#fff';
-          color = 'red';
+          textColor = "#fff";
+          color = "red";
         }
-        upcomingTripData !== 'NA' && upcomingTripData?.length && 
-        upcomingTripData.filter(innerItem => {
-          if (item.date === innerItem.date) {
-            if (date.dateString === innerItem.date) {
-              color = 'yellow';
-              textColor = '#000';
-              found = true;
+        upcomingTripData !== "NA" &&
+          upcomingTripData?.length &&
+          upcomingTripData.filter((innerItem) => {
+            if (item.date === innerItem.date) {
+              if (date.dateString === innerItem.date) {
+                color = "yellow";
+                textColor = "#000";
+                found = true;
+              }
             }
-          }
-        });
+          });
       });
-      upcomingTripData !== 'NA' && upcomingTripData?.length && 
-    upcomingTripData.filter(innerItem => {
-      if (date.dateString === innerItem.date && !found) {
-        color = 'green';
-        textColor = '#fff';
-      }
+    upcomingTripData !== "NA" &&
+      upcomingTripData?.length &&
+      upcomingTripData.filter((innerItem) => {
+        if (date.dateString === innerItem.date && !found) {
+          color = "green";
+          textColor = "#fff";
+        }
 
-      //   else color = 'green';
-    });
+        //   else color = 'green';
+      });
 
     return preference ? color : textColor;
   };
-  const Cal = ({selectDate}) => {
+  const Cal = ({ selectDate }) => {
     const IconLeft = () => (
       <Icon name="left" type="antdesign" size={20} color={Colors.black} />
     );
@@ -151,7 +201,7 @@ const CalenderView = () => {
       <View>
         <Calendar
           // onDayPress={(day) => { selecteddate.push(day.dateString), gotoSelectedDate({ data: day }) }}
-          dayComponent={({date, state}) => {
+          dayComponent={({ date, state }) => {
             return (
               <TouchableOpacity
                 style={{
@@ -160,91 +210,91 @@ const CalenderView = () => {
                   height: 40,
                   width: 40,
                   borderRadius: 20,
-                  textAlign: 'center',
-                  justifyContent: 'center',
+                  textAlign: "center",
+                  justifyContent: "center",
                 }}
                 onPress={() => {
-                 
-                  gotoSelectedDate({data: date});
-                }}>
+                  gotoSelectedDate({ data: date });
+                }}
+              >
                 <Text
                   style={{
-                    textAlign: 'center',
+                    textAlign: "center",
                     color: getDayColor(date, 0),
                     fontFamily: FontFamily.bold,
-                  }}>
+                  }}
+                >
                   {date.day}
                 </Text>
               </TouchableOpacity>
             );
           }}
           // onDayLongPress={(day) => { console.log(selecteddate) }}
-          monthFormat={'MMMM , yyyy'}
+          monthFormat={"MMMM , yyyy"}
           //firstDay={1}
           hideExtraDays
           //minDate={'2021-12-09'}
-          onMonthChange={month => {
-          }}
-          renderArrow={direction =>
-            direction === 'left' ? <IconLeft /> : <IconRight />
+          onMonthChange={(month) => {}}
+          renderArrow={(direction) =>
+            direction === "left" ? <IconLeft /> : <IconRight />
           }
-          onPressArrowLeft={subtractMonth => subtractMonth()}
-          onPressArrowRight={addMonth => addMonth()}
+          onPressArrowLeft={(subtractMonth) => subtractMonth()}
+          onPressArrowRight={(addMonth) => addMonth()}
           enableSwipeMonths={true}
           style={{
             // position:"absolute",
-            width: '100%',
-            alignSelf: 'center',
+            width: "100%",
+            alignSelf: "center",
             borderTopLeftRadius: 30,
             borderTopEndRadius: 30,
           }}
           theme={{
-            'stylesheet.calendar.header': {
+            "stylesheet.calendar.header": {
               week: {
                 marginTop: 15,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                flexDirection: "row",
+                justifyContent: "space-between",
                 paddingHorizontal: 5,
               },
               dayTextAtIndex0: {
                 fontFamily: FontFamily.default,
-                color: '#000',
+                color: "#000",
               },
               dayTextAtIndex1: {
                 fontFamily: FontFamily.default,
-                color: '#000',
+                color: "#000",
               },
               dayTextAtIndex2: {
                 fontFamily: FontFamily.default,
-                color: '#000',
+                color: "#000",
               },
               dayTextAtIndex3: {
                 fontFamily: FontFamily.default,
-                color: '#000',
+                color: "#000",
               },
               dayTextAtIndex4: {
                 fontFamily: FontFamily.default,
-                color: '#000',
+                color: "#000",
               },
               dayTextAtIndex5: {
                 fontFamily: FontFamily.default,
-                color: '#000',
+                color: "#000",
               },
               dayTextAtIndex6: {
                 fontFamily: FontFamily.default,
-                color: '#000',
+                color: "#000",
               },
               header: {
                 backgroundColor: Colors.cal_head,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                flexDirection: "row",
+                justifyContent: "space-between",
                 borderTopEndRadius: 30,
                 borderTopLeftRadius: 30,
-                width: '102%',
+                width: "102%",
                 height: 60,
-                alignSelf: 'center',
+                alignSelf: "center",
                 marginVertical: 1,
-                alignItems: 'center',
+                alignItems: "center",
                 fontFamily: FontFamily.bold,
               },
             },
@@ -253,17 +303,17 @@ const CalenderView = () => {
         />
         <View>
           <TouchableOpacity style={sb.btn1}>
-            <Text style={sb.btn1Text}>{I18n.translate('submit')}</Text>
+            <Text style={sb.btn1Text}>{I18n.translate("submit")}</Text>
           </TouchableOpacity>
         </View>
       </View>
     );
   };
   return (
-    <View style={{flex: 1, backgroundColor: Colors.white}}>
-      <Header name={I18n.translate('manage_unavailability')} imgBack={true} />
+    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+      <Header name={I18n.translate("manage_unavailability")} imgBack={true} />
       <View style={sb.SEC2}>
-        <View style={{marginTop: 30}}>
+        <View style={{ marginTop: 30 }}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Cal />
             <View>
@@ -272,17 +322,18 @@ const CalenderView = () => {
                   fontFamily: FontFamily.semi_bold,
                   fontSize: 16,
                   paddingHorizontal: 10,
-                }}>
-                {I18n.translate('unavailablity')}
+                }}
+              >
+                {I18n.translate("unavailablity")}
               </Text>
               {loader ? (
                 <Loading />
               ) : (
                 <View>
-                  {allData !== 'NA' ? (
+                  {allData !== "NA" ? (
                     <View>
                       {allData?.length &&
-                        allData != 'NA' &&
+                        allData != "NA" &&
                         allData.map((item, index) => {
                           return (
                             <View key={index}>
@@ -290,22 +341,26 @@ const CalenderView = () => {
                                 containerStyle={{
                                   height: 50,
                                   paddingVertical: 2,
-                                  justifyContent: 'center',
+                                  justifyContent: "center",
                                   borderRadius: 12,
-                                }}>
+                                }}
+                              >
                                 <View
                                   style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                  }}>
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                  }}
+                                >
                                   <View
                                     style={{
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
-                                    }}>
+                                      flexDirection: "row",
+                                      alignItems: "center",
+                                    }}
+                                  >
                                     <View
-                                      style={{flex: 1, flexDirection: 'row'}}>
+                                      style={{ flex: 1, flexDirection: "row" }}
+                                    >
                                       <Icon
                                         name="calendar"
                                         type="antdesign"
@@ -313,20 +368,22 @@ const CalenderView = () => {
                                       />
                                       <Text
                                         style={{
-                                          alignSelf: 'center',
+                                          alignSelf: "center",
                                           fontSize: 14,
                                           fontFamily: FontFamily.semi_bold,
                                           marginHorizontal: 7,
-                                        }}>
+                                        }}
+                                      >
                                         {item.date}
                                       </Text>
                                     </View>
                                     <View
                                       style={{
-                                        flexDirection: 'row',
+                                        flexDirection: "row",
                                         flex: 2,
-                                        justifyContent: 'center',
-                                      }}>
+                                        justifyContent: "center",
+                                      }}
+                                    >
                                       {/* <View style={{alignSelf:'center'}}> */}
 
                                       <Text
@@ -334,8 +391,9 @@ const CalenderView = () => {
                                           fontSize: 14,
                                           fontFamily: FontFamily.semi_bold,
                                           marginHorizontal: 7,
-                                          alignSelf: 'center',
-                                        }}>
+                                          alignSelf: "center",
+                                        }}
+                                      >
                                         {item.boat_name}
                                       </Text>
 
@@ -357,14 +415,15 @@ const CalenderView = () => {
                         })}
                     </View>
                   ) : (
-                    <View style={{alignItems: 'center', marginVertical: 20}}>
+                    <View style={{ alignItems: "center", marginVertical: 20 }}>
                       <Text
                         style={{
                           fontSize: 20,
-                          fontWeight: 'bold',
-                          color: '#ccc',
-                        }}>
-                       {I18n.translate('all_boats_available')}
+                          fontWeight: "bold",
+                          color: "#ccc",
+                        }}
+                      >
+                        {I18n.translate("all_boats_available")}
                       </Text>
                     </View>
                   )}
@@ -377,11 +436,10 @@ const CalenderView = () => {
     </View>
   );
 };
-const mapStateToProps = (state)=>({
-  language_id: state.data_Reducer.language_id
-
-})
-export default connect(mapStateToProps)(CalenderView)
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+});
+export default connect(mapStateToProps)(CalenderView);
 const sb = StyleSheet.create({
   SEC2: {
     backgroundColor: Colors.white,
@@ -392,11 +450,11 @@ const sb = StyleSheet.create({
   },
   btn1: {
     height: 48,
-    width: '95%',
+    width: "95%",
     backgroundColor: Colors.orange,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 12,
     marginVertical: 10,
     elevation: 5,
@@ -407,5 +465,3 @@ const sb = StyleSheet.create({
     color: Colors.white,
   },
 });
-
-

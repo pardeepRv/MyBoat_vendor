@@ -40,6 +40,7 @@ const MyWithdraw = () => {
     axios
       .get(url)
       .then(res => {
+        console.log(res,'in withdraw');
         let data = JSON.stringify(res.data, null, 1);
 
         setLoader(false);

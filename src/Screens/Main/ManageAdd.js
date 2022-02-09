@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -8,8 +8,8 @@ import {
   ScrollView,
   FlatList,
   ActivityIndicator,
-} from 'react-native';
-import I18n from '../../Translations/i18';
+} from "react-native";
+import I18n from "../../Translations/i18";
 import {
   Icon,
   Input,
@@ -17,25 +17,25 @@ import {
   AirbnbRating,
   Overlay,
   Image,
-} from 'react-native-elements';
-import {color} from 'react-native-elements/dist/helpers';
-import {baseProps} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
-import Header from '../../Components/Header';
+} from "react-native-elements";
+import { color } from "react-native-elements/dist/helpers";
+import { baseProps } from "react-native-gesture-handler/lib/typescript/handlers/gestureHandlers";
+import Header from "../../Components/Header";
 import {
   back_img3,
   boat_img1,
   Colors,
   FontFamily,
   Sizes,
-} from '../../Constants/Constants';
-import Ad from '../../Data/Ad';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import config from '../../Constants/config';
-import axios from 'axios';
-import {Loading} from '../../Components/Loader';
-import {connect, useDispatch} from 'react-redux';
-const ManageAdd = props => {
-  console.log(props,'props in ManageAdd');
+} from "../../Constants/Constants";
+import Ad from "../../Data/Ad";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../Constants/config";
+import axios from "axios";
+import { Loading } from "../../Components/Loader";
+import { connect, useDispatch } from "react-redux";
+const ManageAdd = (props) => {
+  console.log(props, "props in ManageAdd");
   const [visible, setVisible] = useState(false);
   const [Data, setData] = useState([]);
   const [allData, setAllData] = useState(null);
@@ -43,41 +43,80 @@ const ManageAdd = props => {
   const [isFetching, setIsFetching] = useState(false);
   let [prices, setDestinationPrice] = useState([]);
   const [destination, setDestination] = useState([]);
+  const [permissionArr, setPermissionArr] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
+
   // --------------------------------------- //
-  const toggleOverlay = ({item}) => {
+  const toggleOverlay = ({ item }) => {
     setVisible(!visible);
     setData(item);
   };
   useEffect(async () => {
-    props.navigation.addListener('focus', () => {
-      getData();
+    const unsubscribe = props.navigation.addListener("focus", () => {
+      getLoginuserInfo();
     });
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    return unsubscribe;
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     getData();
   }, []);
-  const onRefresh = () => {
-    setIsFetching(true);
-    getData();
-  };
-  const getData = async () => {
-    let userInfo = await AsyncStorage.getItem('userInfo');
+  // const onRefresh = () => {
+  //   setIsFetching(true);
+  //   getData();
+  // };
+
+  const getLoginuserInfo = async () => {
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-    console.log(parsedInfo,'get');
+    console.log(parsedInfo, "parsedInfo >>>>>>>>>>>>>");
+    setUserInfo(parsedInfo);
+    if (parsedInfo?.role_id == 2) {
+      let url =
+        config.apiUrl + "/get-permissions.php?user_id_post=" + parsedInfo.id;
+      axios
+        .get(url)
+        .then((res) => {
+          console.log(res, "res getting permission");
+          setLoader(false);
+          if (
+            res?.data?.success === "true" &&
+            res &&
+            res.data &&
+            res.data.permissions &&
+            res.data.permissions.length > 0 &&
+            res.data.permissions[0].view_add_permission
+          ) {
+            setPermissionArr(res.data.permissions);
+            getData();
+          } else {
+            alert("You do not have permission to see myadd page.");
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      getData();
+    }
+  };
+
+  const getData = async () => {
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo, "get");
     setLoader(true);
     let url =
       config.apiUrl +
-      '/advertisement_list_vender.php?user_id_post=' +
+      "/advertisement_list_vender.php?user_id_post=" +
       parsedInfo.id;
     axios
       .get(url)
-      .then(res => {
-        console.log(res,'get ads here>>');
+      .then((res) => {
+        console.log(res, "get ads here>>");
         setLoader(false);
         setIsFetching(false);
-        if (res.data.success === 'true') {
+        if (res.data.success === "true") {
           setAllData(res.data.adver_arr);
-          if (allData !== 'NA' && allData?.length) {
+
+          if (allData !== "NA" && allData?.length) {
             allData.map((item, index) => {
               getDestinations(item, index, true);
             });
@@ -87,20 +126,20 @@ const ManageAdd = props => {
           else alert(res.data.msg[1]);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
-  const deleteAd = async advertisementId => {
-    let userInfo = await AsyncStorage.getItem('userInfo');
+  const deleteAd = async (advertisementId) => {
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     const url =
-      'https://freshandfine.xyz/app/webservice/advertisement_delete.php?user_id_post=' +
+      "https://freshandfine.xyz/app/webservice/advertisement_delete.php?user_id_post=" +
       parsedInfo.id +
-      '&&advertisement_id_post=' +
+      "&&advertisement_id_post=" +
       advertisementId;
     axios
       .get(url)
-      .then(res => {
-        if (res.data.success === 'true') {
+      .then((res) => {
+        if (res.data.success === "true") {
           getData();
           setVisible(false);
         } else {
@@ -109,22 +148,22 @@ const ManageAdd = props => {
           else alert(res.data.msg[1]);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
-  const loadAdDetails = async ad_id => {
+  const loadAdDetails = async (ad_id) => {
     setLoader(true);
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     let url =
       config.apiUrl +
-      '/advertisement_details.php?user_id_post=' +
+      "/advertisement_details.php?user_id_post=" +
       parsedInfo.id +
-      '&advertisement_id=' +
+      "&advertisement_id=" +
       ad_id;
     axios
       .get(url)
-      .then(res => {
-        console.log(res,'get all ads');
+      .then((res) => {
+        console.log(res, "get all ads");
         setLoader(false);
         if (res) {
           setData(res.data.adver_arr);
@@ -156,7 +195,7 @@ const ManageAdd = props => {
             city_name: res.data.adver_arr.city_name[0],
             addon_arr: JSON.parse(JSON.stringify(res.data.adver_arr.addon_arr)),
             destination_arr: JSON.parse(
-              JSON.stringify(res.data.adver_arr.destination_arr),
+              JSON.stringify(res.data.adver_arr.destination_arr)
             ),
             free_cancel_days: res.data.adver_arr.free_cancel_days,
             advertisement_id: Data.advertisement_id,
@@ -167,23 +206,23 @@ const ManageAdd = props => {
           } else {
             data.trip_time_start = Data.trip_time_start;
           }
-          props.navigation.navigate('AddAd', data);
+          props.navigation.navigate("AddAd", data);
         } else {
           if (props.language_id == 0) alert(res.data.msg[0]);
           else alert(res.data.msg[1]);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         setLoader(false);
       });
   };
   const getDestinations = (item, index, update) => {
-    let destinations = '';
-    let destinationPrices = '';
+    let destinations = "";
+    let destinationPrices = "";
     if (
       item.destination_arr &&
       item.destination_arr.length &&
-      item.destination_arr !== 'NA'
+      item.destination_arr !== "NA"
     ) {
       item.destination_arr.map((innerItem, index) => {
         if (index === item.destination_arr.length - 1) {
@@ -191,16 +230,16 @@ const ManageAdd = props => {
           destinationPrices += Math.trunc(innerItem?.price);
         } else {
           // destinations +=props.language_id == 0?  innerItem?.destination[0]:innerItem?.destination[1] + ',';
-          destinationPrices += Math.trunc(innerItem?.price) + ',';
+          destinationPrices += Math.trunc(innerItem?.price) + ",";
         }
       });
     }
-    let destinationPricesArr = destinationPrices.split(',');
-    let destinationArr = destinations.split(',');
-    destinationPricesArr = destinationPricesArr.map(item => parseInt(item));
+    let destinationPricesArr = destinationPrices.split(",");
+    let destinationArr = destinations.split(",");
+    destinationPricesArr = destinationPricesArr.map((item) => parseInt(item));
 
     let price = destinationPricesArr[0];
-    destinationPricesArr.filter(item => {
+    destinationPricesArr.filter((item) => {
       if (item < price) price = item;
     });
 
@@ -221,9 +260,9 @@ const ManageAdd = props => {
     return destination;
   };
   return (
-    <View style={{backgroundColor: Colors.white, flex: 1}}>
+    <View style={{ backgroundColor: Colors.white, flex: 1 }}>
       <Header
-        name={I18n.translate('manage_ad')}
+        name={I18n.translate("manage_ad")}
         searchBtn={true}
         imgBack={true}
       />
@@ -232,10 +271,14 @@ const ManageAdd = props => {
         <TouchableOpacity
           style={[s.btn1]}
           onPress={() => {
-            props.navigation.navigate('AddAd');
+            (permissionArr && permissionArr.manage_add_permission === 1) ||
+            (userInfo && userInfo.role_id == 1)
+              ? props.navigation.navigate("AddAd")
+              : alert("No permission granted to check this.");
           }}
-          activeOpacity={0.8}>
-          <Text style={[s.btn1Text]}>{I18n.translate('add_ad')}</Text>
+          activeOpacity={0.8}
+        >
+          <Text style={[s.btn1Text]}>{I18n.translate("add_ad")}</Text>
         </TouchableOpacity>
       </View>
       {/* View */}
@@ -244,28 +287,31 @@ const ManageAdd = props => {
           <Loading />
         ) : (
           <View>
-            {allData === 'NA' ? (
-              <View style={{alignItems: 'center', marginTop: '10%'}}>
-                <Text style={{fontSize: 20, fontWeight: 'bold', color: '#ccc'}}>
-                  {I18n.translate('no_data')}
+            {allData === "NA" ? (
+              <View style={{ alignItems: "center", marginTop: "10%" }}>
+                <Text
+                  style={{ fontSize: 20, fontWeight: "bold", color: "#ccc" }}
+                >
+                  {I18n.translate("no_data")}
                 </Text>
               </View>
             ) : (
               <FlatList
-                data={allData === 'NA' ? [] : allData}
+                data={allData === "NA" ? [] : allData}
                 showsVerticalScrollIndicator={false}
                 refreshing={isFetching}
-                onRefresh={onRefresh}
-                renderItem={({item, index}) => {
+                // onRefresh={onRefresh}
+                renderItem={({ item, index }) => {
                   return (
                     <TouchableOpacity
                       activeOpacity={0.7}
                       onPress={() => {
-                        props.navigation.navigate('viewAdd', {
+                        props.navigation.navigate("viewAdd", {
                           item: allData[index],
                         });
                       }}
-                      style={{padding: 5}}>
+                      style={{ padding: 5 }}
+                    >
                       <Card
                         containerStyle={{
                           padding: 0,
@@ -274,48 +320,53 @@ const ManageAdd = props => {
                           margin: 7.5,
                           marginHorizontal: 10,
                           elevation: 5,
-                        }}>
+                        }}
+                      >
                         <ImageBackground
                           style={s.ImageBackground}
                           imageStyle={s.imgStyle}
                           source={{
                             uri:
-                              item.image !== 'NA'
+                              item.image !== "NA"
                                 ? config.imageUrl + item.image
-                                : 'https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=',
-                          }}>
-                       
-                          {Math.trunc(item.discount)>0 && 
-                          <View
-                            style={[
-                              {
-                                justifyContent: 'center',
-                                transform: [
-                                  {
-                                    rotate:
-                                      props.language_id == 0
-                                        ? '-45deg'
-                                        : '45deg',
-                                  },
-                                ],
-                              },
-                              s.trapezoid_discount,
-                            ]}>
-                            <Text
-                              style={{
-                                position: 'absolute',
-                                fontFamily: FontFamily.semi_bold,
-                                fontSize: 11,
-                                alignSelf: 'center',
-                                color: Colors.white,
-                              }}>
-                              {Math.trunc(item.discount)} %{' '}
-                              {I18n.translate('off')}
-                            </Text>
-                          </View>}
+                                : "https://media.istockphoto.com/vectors/no-image-available-sign-vector-id922962354?k=20&m=922962354&s=612x612&w=0&h=f-9tPXlFXtz9vg_-WonCXKCdBuPUevOBkp3DQ-i0xqo=",
+                          }}
+                        >
+                          {Math.trunc(item.discount) > 0 && (
+                            <View
+                              style={[
+                                {
+                                  justifyContent: "center",
+                                  transform: [
+                                    {
+                                      rotate:
+                                        props.language_id == 0
+                                          ? "-45deg"
+                                          : "45deg",
+                                    },
+                                  ],
+                                },
+                                s.trapezoid_discount,
+                              ]}
+                            >
+                              <Text
+                                style={{
+                                  position: "absolute",
+                                  fontFamily: FontFamily.semi_bold,
+                                  fontSize: 11,
+                                  alignSelf: "center",
+                                  color: Colors.white,
+                                }}
+                              >
+                                {Math.trunc(item.discount)} %{" "}
+                                {I18n.translate("off")}
+                              </Text>
+                            </View>
+                          )}
                           <TouchableOpacity
-                            style={{position: 'absolute', right: 10, top: 10}}
-                            onPress={() => toggleOverlay({item})}>
+                            style={{ position: "absolute", right: 10, top: 10 }}
+                            onPress={() => toggleOverlay({ item })}
+                          >
                             <Icon
                               name="dots-three-vertical"
                               type="entypo"
@@ -328,19 +379,20 @@ const ManageAdd = props => {
                                 height: 40,
                                 //  width:97,
                                 backgroundColor: Colors.white,
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-around',
-                                position: 'absolute',
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-around",
+                                position: "absolute",
                                 right: 20,
                                 bottom: -1,
                                 paddingHorizontal: 10,
                                 borderTopLeftRadius: 12,
                                 borderTopRightRadius: 12,
                               },
-                            ]}>
+                            ]}
+                          >
                             <Text style={s.place}>
-                              {I18n.translate('kwd')} {prices[index]}
+                              {I18n.translate("kwd")} {prices[index]}
                             </Text>
                           </View>
                         </ImageBackground>
@@ -349,19 +401,20 @@ const ManageAdd = props => {
                             <Text style={s.title}>{item.boat_name}</Text>
                             <View
                               style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
+                                flexDirection: "row",
+                                alignItems: "center",
                                 marginTop: 5,
-                                justifyContent: 'center',
-                                alignContent: 'center',
-                              }}>
-                              <View style={{justifyContent: 'center'}}>
+                                justifyContent: "center",
+                                alignContent: "center",
+                              }}
+                            >
+                              <View style={{ justifyContent: "center" }}>
                                 <Image
                                   style={{
                                     height: 40,
                                     width: 40,
                                     borderRadius: 20,
-                                    resizeMode: 'cover',
+                                    resizeMode: "cover",
                                   }}
                                   source={{
                                     uri: config.imageUrl + item.user_image,
@@ -370,18 +423,19 @@ const ManageAdd = props => {
                                     <ActivityIndicator
                                       size={30}
                                       color={Colors.orange}
-                                      style={{alignSelf: 'center'}}
+                                      style={{ alignSelf: "center" }}
                                     />
                                   }
                                 />
                               </View>
-                              <View style={{marginHorizontal: 15}}>
+                              <View style={{ marginHorizontal: 15 }}>
                                 <Text
                                   style={{
-                                    color: '#000',
+                                    color: "#000",
                                     fontSize: 14,
                                     fontFamily: FontFamily.default,
-                                  }}>
+                                  }}
+                                >
                                   {item.boat_brand}
                                 </Text>
                                 <AirbnbRating
@@ -389,7 +443,7 @@ const ManageAdd = props => {
                                   size={12}
                                   //isDisabled
                                   defaultRating={
-                                    item.rating !== null && item.rating !== 'NA'
+                                    item.rating !== null && item.rating !== "NA"
                                       ? item.rating
                                       : 3
                                   }
@@ -410,18 +464,20 @@ const ManageAdd = props => {
                             </Text> */}
                             <View
                               style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                alignSelf: 'flex-end',
-                              }}>
+                                flexDirection: "row",
+                                alignItems: "center",
+                                alignSelf: "flex-end",
+                              }}
+                            >
                               <Icon name="person" size={14} />
                               <Text
                                 style={{
-                                  color: 'rgba(51, 51, 51, 1)',
+                                  color: "rgba(51, 51, 51, 1)",
                                   fontSize: 10,
                                   fontFamily: FontFamily.default,
-                                }}>
-                                {item.no_of_people} {I18n.translate('person')}
+                                }}
+                              >
+                                {item.no_of_people} {I18n.translate("person")}
                               </Text>
                             </View>
                             {/* <Text
@@ -462,69 +518,71 @@ const ManageAdd = props => {
       <Overlay
         isVisible={visible}
         onBackdropPress={toggleOverlay}
-        overlayStyle={{borderRadius: 20}}
+        overlayStyle={{ borderRadius: 20 }}
         supportedOrientations
-        statusBarTranslucent>
-        <View style={{padding: 10, width: Sizes.width * 0.8}}>
+        statusBarTranslucent
+      >
+        <View style={{ padding: 10, width: Sizes.width * 0.8 }}>
           <TouchableOpacity
             onPress={() => {
               setVisible(false);
               loadAdDetails(Data.advertisement_id);
-            }}>
+            }}
+          >
             <Text
               style={{
                 fontFamily: FontFamily.semi_bold,
                 fontSize: 16,
                 lineHeight: 39,
-                color: 'rgba(0, 0, 0, 0.55)',
-              }}>
-              {I18n.translate('edit')}
+                color: "rgba(0, 0, 0, 0.55)",
+              }}
+            >
+              {I18n.translate("edit")}
             </Text>
           </TouchableOpacity>
           <View
             style={{
-              width: '100%',
+              width: "100%",
               borderWidth: 0.5,
               marginTop: 5,
-              borderColor: 'rgba(0, 0, 0, 0.55)',
-              backgroundColor: 'rgba(0, 0, 0, 0.55)',
+              borderColor: "rgba(0, 0, 0, 0.55)",
+              backgroundColor: "rgba(0, 0, 0, 0.55)",
             }}
           />
           <TouchableOpacity
             onPress={() => {
               deleteAd(Data.advertisement_id);
-            }}>
+            }}
+          >
             <Text
               style={{
                 fontFamily: FontFamily.semi_bold,
                 fontSize: 16,
                 lineHeight: 39,
-                color: 'rgba(0, 0, 0, 0.55)',
-              }}>
-              {I18n.translate('delete')}
+                color: "rgba(0, 0, 0, 0.55)",
+              }}
+            >
+              {I18n.translate("delete")}
             </Text>
           </TouchableOpacity>
-          
         </View>
       </Overlay>
     </View>
   );
 };
-const mapStateToProps = (state)=>({
+const mapStateToProps = (state) => ({
   language_id: state.data_Reducer.language_id,
   permissions: state.data_Reducer.permissions,
+});
 
-
-})
-
-export default connect(mapStateToProps)(ManageAdd)
+export default connect(mapStateToProps)(ManageAdd);
 const s = StyleSheet.create({
   btn1: {
     height: 35,
     width: 240,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 7,
     marginBottom: 20,
     elevation: 5,
@@ -536,10 +594,10 @@ const s = StyleSheet.create({
     color: Colors.white,
   },
   btn_1: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    position: 'absolute',
-    alignSelf: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    position: "absolute",
+    alignSelf: "center",
     top: 100,
   },
   SEC2: {
@@ -551,24 +609,24 @@ const s = StyleSheet.create({
   },
   ImageBackground: {
     height: 215,
-    width: '100%',
+    width: "100%",
     borderRadius: 15,
-    alignSelf: 'center',
+    alignSelf: "center",
     // marginHorizontal:10,
     elevation: 0,
   },
   imgStyle: {
     borderRadius: 15,
     height: 215,
-    width: '100%',
-    alignSelf: 'center',
+    width: "100%",
+    alignSelf: "center",
   },
   SEC3: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
     paddingHorizontal: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     fontFamily: FontFamily.semi_bold,
@@ -604,14 +662,13 @@ const s = StyleSheet.create({
     borderBottomWidth: 25,
     borderBottomColor: Colors.orange,
     borderLeftWidth: 25,
-    borderLeftColor: 'transparent',
+    borderLeftColor: "transparent",
     borderRightWidth: 25,
-    borderRightColor: 'transparent',
-    borderStyle: 'solid',
-    backgroundColor: 'transparent',
-    alignItems: 'center',
+    borderRightColor: "transparent",
+    borderStyle: "solid",
+    backgroundColor: "transparent",
+    alignItems: "center",
     marginTop: 19.2,
     marginLeft: -26,
   },
 });
-

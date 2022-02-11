@@ -41,6 +41,7 @@ const snapPoints = ['0%', '50%'];
 class AddAd extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props,'props in Add Add');
     this.state = {
       loader: false,
       Arbic_captain: props?.route?.params?.captain_ar || '',
@@ -350,6 +351,7 @@ class AddAd extends React.Component {
           .get(url)
           .then(res => {
             if (res) {
+              console.log(res,'getting boats');
               var cityArr = res?.data?.city_arr || [];
               var arr = [];
               cityArr.map(item => {

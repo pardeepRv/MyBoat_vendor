@@ -1,31 +1,24 @@
-import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
-  StatusBar,
-  Image,
-  I18nManager,
-} from "react-native";
-import { connect, useDispatch } from "react-redux";
-import I18n from "../../Translations/i18";
-import { Icon, Input, Card, Rating, AirbnbRating } from "react-native-elements";
-import axios from "axios";
-import { s } from "../../Components/Header";
-import {
-  back_img4,
-  Colors,
-  FontFamily,
-  Sizes,
-} from "../../Constants/Constants";
-import { useNavigation } from "@react-navigation/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import config from "../../Constants/config";
+import { useNavigation } from "@react-navigation/core";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { AirbnbRating, Card, Icon } from "react-native-elements";
+import { connect } from "react-redux";
+import { s } from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
+import config from "../../Constants/config";
+import { back_img4, Colors, FontFamily } from "../../Constants/Constants";
+import I18n from "../../Translations/i18";
 const CustomHeader = ({ name }) => {
   const nav = useNavigation();
   const gotoSettings = () => {
@@ -355,79 +348,86 @@ const Profile = (props) => {
               {/* THREE OPT  */}
               <View>
                 {/* 1 option */}
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("manageBoats")}
-                >
-                  <Card
-                    containerStyle={{
-                      height: 50,
-                      paddingVertical: 2,
-                      justifyContent: "center",
-                      borderRadius: 12,
-                    }}
+
+                {!permissionArr.length && (
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("manageBoats")}
                   >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
+                    <Card
+                      containerStyle={{
+                        height: 50,
+                        paddingVertical: 2,
+                        justifyContent: "center",
+                        borderRadius: 12,
                       }}
                     >
                       <View
-                        style={{ flexDirection: "row", alignItems: "center" }}
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
                       >
-                        <Icon name="settings" type="octicon" />
-                        <Text
-                          style={{
-                            fontSize: 14,
-                            fontFamily: FontFamily.semi_bold,
-                            marginHorizontal: 7,
-                          }}
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
                         >
-                          {I18n.translate("manage_boat")}
-                        </Text>
+                          <Icon name="settings" type="octicon" />
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              fontFamily: FontFamily.semi_bold,
+                              marginHorizontal: 7,
+                            }}
+                          >
+                            {I18n.translate("manage_boat")}
+                          </Text>
+                        </View>
+                        <Icon name="arrow-right" type="evilicon" />
                       </View>
-                      <Icon name="arrow-right" type="evilicon" />
-                    </View>
-                  </Card>
-                </TouchableOpacity>
+                    </Card>
+                  </TouchableOpacity>
+                )}
+
                 {/* 2 */}
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("manageStaff")}
-                >
-                  <Card
-                    containerStyle={{
-                      height: 50,
-                      paddingVertical: 2,
-                      justifyContent: "center",
-                      borderRadius: 12,
-                    }}
+                {!permissionArr.length && (
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("manageStaff")}
                   >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
+                    <Card
+                      containerStyle={{
+                        height: 50,
+                        paddingVertical: 2,
+                        justifyContent: "center",
+                        borderRadius: 12,
                       }}
                     >
                       <View
-                        style={{ flexDirection: "row", alignItems: "center" }}
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
                       >
-                        <Icon name="settings" type="octicon" />
-                        <Text
-                          style={{
-                            fontSize: 14,
-                            fontFamily: FontFamily.semi_bold,
-                            marginHorizontal: 7,
-                          }}
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
                         >
-                          Manage Your Staff
-                        </Text>
+                          <Icon name="settings" type="octicon" />
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              fontFamily: FontFamily.semi_bold,
+                              marginHorizontal: 7,
+                            }}
+                          >
+                            Manage Your Staff
+                          </Text>
+                        </View>
+                        <Icon name="arrow-right" type="evilicon" />
                       </View>
-                      <Icon name="arrow-right" type="evilicon" />
-                    </View>
-                  </Card>
-                </TouchableOpacity>
+                    </Card>
+                  </TouchableOpacity>
+                )}
+
                 <TouchableOpacity onPress={() => gotoWithdraw()}>
                   <Card
                     containerStyle={{

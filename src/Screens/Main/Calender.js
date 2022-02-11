@@ -125,7 +125,15 @@ const CalenderView = (props) => {
   // var dates = ['2021-08-23', '2021-08-26', '2021-08-10']
 
   const gotoSelectedDate = ({ data }) => {
-    navigation.navigate("SelectedDate", { data });
+    navigation.navigate("SelectedDate", {
+      data,
+      manage_unavailability_permission:
+        permissionArr &&
+        permissionArr.length > 0 &&
+        permissionArr.manage_unavailability_permission
+          ? 1
+          : 0,
+    });
   };
   const deleteData = async (id) => {
     let userInfo = await AsyncStorage.getItem("userInfo");
@@ -139,16 +147,19 @@ const CalenderView = (props) => {
       "&unavailable_id=" +
       id;
     // + parsedInfo.id;
+
+    console.log(url, "test url");
     axios
       .get(url)
       .then((res) => {
+        console.log(res, "res in calender");
         setLoader(false);
         setIsFetching(false);
         if (res.data.success === "true") {
           getData();
         } else {
-          if (props.language_id == 0) alert(res.data.msg[0]);
-          else alert(res.data.msg[1]);
+          if (props.language_id == 0) alert(res.data.msg);
+          else alert(res.data.msg);
         }
       })
       .catch((err) => console.log(err));

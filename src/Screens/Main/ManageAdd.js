@@ -131,11 +131,19 @@ const ManageAdd = (props) => {
   const deleteAd = async (advertisementId) => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-    const url =
-      "https://freshandfine.xyz/app/webservice/advertisement_delete.php?user_id_post=" +
+    // const url =
+    //   "https://freshandfine.xyz/app/webservice/advertisement_delete.php?user_id_post=" +
+    //   parsedInfo.id +
+    //   "&&advertisement_id_post=" +
+    //   advertisementId;
+
+    let url =
+      config.apiUrl +
+      "/advertisement_delete.php?user_id_post=" +
       parsedInfo.id +
-      "&&advertisement_id_post=" +
+      "&advertisement_id_post=" +
       advertisementId;
+
     axios
       .get(url)
       .then((res) => {
@@ -206,6 +214,7 @@ const ManageAdd = (props) => {
           } else {
             data.trip_time_start = Data.trip_time_start;
           }
+          console.log(data, "sending it>>>>");
           props.navigation.navigate("AddAd", data);
         } else {
           if (props.language_id == 0) alert(res.data.msg[0]);
@@ -247,11 +256,15 @@ const ManageAdd = (props) => {
     destinationPricesArr.map((item, index) => {
       if (item == price) lowestIndex = index;
     });
-    let destination =
-      props.language_id == 0
-        ? item.destination_arr[lowestIndex].destination[0]
-        : item.destination_arr[lowestIndex].destination[1];
-    prices[index] = price;
+    let destination;
+    if (item && item.destination_arr !== "NA") {
+      destination =
+        props.language_id == 0
+          ? item.destination_arr[lowestIndex].destination[0]
+          : item.destination_arr[lowestIndex].destination[1];
+      prices[index] = price;
+    }
+
     if (update) {
       setDestinationPrice(prices);
       setDestination(destination);
@@ -271,7 +284,9 @@ const ManageAdd = (props) => {
         <TouchableOpacity
           style={[s.btn1]}
           onPress={() => {
-            (permissionArr && permissionArr.manage_add_permission === 1) ||
+            (permissionArr &&
+              permissionArr.length > 0 &&
+              permissionArr[0].manage_add_permission === 1) ||
             (userInfo && userInfo.role_id == 1)
               ? props.navigation.navigate("AddAd")
               : alert("No permission granted to check this.");

@@ -694,6 +694,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mahmoud Albandar (MTG47X9M92)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MTG47X9M92;
@@ -709,7 +711,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.boatclient;
 				PRODUCT_NAME = orangeApp;
-				PROVISIONING_PROFILE_SPECIFIER = "BoatOwner Provisioning Profile";
+				PROVISIONING_PROFILE_SPECIFIER = Adhoc_owner;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

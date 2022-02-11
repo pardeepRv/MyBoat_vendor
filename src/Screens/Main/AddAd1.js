@@ -372,13 +372,11 @@ class AddAd1 extends React.Component {
       return element !== null;
     });
 
-    
     let url = config.apiUrl + "/advertisement_create.php";
     if (this.props.route?.params?.data?.advertisement_id) {
       url = config.apiUrl + "/advertisement_edit.php";
     }
     var data = new FormData();
- 
 
     if (this.props?.route?.params?.data?.advertisement_id) {
       data.append(
@@ -416,7 +414,6 @@ class AddAd1 extends React.Component {
       data.append("trip_time_type", "2");
       // data.append("trip_time_start", JSON.stringify(fixedTime));
       data.append("trip_time_start", "10:00:00");
-
     }
     data.append("adver_boat_type", addType === "public" ? 2 : 1);
     data.append("freeCancel_days", this.state.Free_Cancel_Days);
@@ -441,7 +438,8 @@ class AddAd1 extends React.Component {
       //   name: 'imageName',
       // });
       data.append("image[" + index + "]", item);
-    }); 
+    });
+    data.append("manage_add_permission", 1);
 
     this.setState({ loader: true }, () => {
       if (this.state.tripTimeType === "open") {
@@ -450,7 +448,7 @@ class AddAd1 extends React.Component {
           return;
         }
       }
-        console.log(data, "data while creatin Ad");
+      console.log(data, "data while creatin Ad");
 
       axios
         .post(url, data)
@@ -517,7 +515,7 @@ class AddAd1 extends React.Component {
       tripTimeType,
       addType,
     } = this.state;
-    console.log(this.state,'consoling');
+    console.log(this.state, "consoling");
     return (
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
         <Header imgBack={true} name={I18n.translate("add_ad")} backBtn={true} />

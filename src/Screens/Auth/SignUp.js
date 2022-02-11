@@ -299,6 +299,7 @@ const SignUp = (props) => {
             fname: res.data.user_details.f_name,
             lname: res.data.user_details.l_name,
             image: res.data.user_details.image,
+            role_id:res.data.user_details.role_id
           });
           let jsonUserDataMe = {
             name: res.data.user_details.name,

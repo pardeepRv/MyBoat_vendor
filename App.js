@@ -11,6 +11,7 @@ import { SafeAreaView, StatusBar } from "react-native";
 import { Colors } from "./src/Constants/Constants";
 class App extends React.Component {
   async componentDidMount() {
+    
     let appLang = await AsyncStorage.getItem("locale");
     
     if (appLang === null) {

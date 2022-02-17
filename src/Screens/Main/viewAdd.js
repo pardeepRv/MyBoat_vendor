@@ -23,6 +23,7 @@ import MyCarousel from "./carousel";
 class ViewAdd extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props,'consoling here in viewAdd');
     this.state = {
       id: this.props.route.params.item.advertisement_id,
       boatDetails: null,

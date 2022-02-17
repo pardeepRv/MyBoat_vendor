@@ -164,7 +164,13 @@ const Home = (props) => {
     return (
       <View>
         <Card containerStyle={s.Card}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("viewAdd", {
+                item: item,
+              });
+            }}
+          >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 source={{

@@ -103,8 +103,13 @@ class HomeLocator extends React.Component {
   async requestLocationPermission() {
     try {
       if (Platform.OS === 'ios') {
-        Geolocation.requestAuthorization();
-        this.callLocation();
+        // Geolocation.requestAuthorization();
+        const auth = await Geolocation.requestAuthorization("whenInUse");
+        console.log("authTest",auth)
+        if(auth === "granted") {
+          this.callLocation();
+        }
+        
       } else {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,

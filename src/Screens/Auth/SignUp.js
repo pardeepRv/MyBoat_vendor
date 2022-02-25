@@ -876,7 +876,7 @@ const SignUp = (props) => {
                 height: 60,
                 color: "#fff",
               }}
-              date={dob}
+              // date={dob}
               mode="date"
               placeholder="Date of Birth"
               format="YYYY-MM-DD"
@@ -891,7 +891,6 @@ const SignUp = (props) => {
                 dateInput: {
                   borderColor: "#234456",
                   borderWidth: 0,
-                  // borderRadius: 4,
                   alignItems: "flex-start",
                   paddingRight: 10,
                   borderBottomColor: "#fff",
@@ -900,7 +899,6 @@ const SignUp = (props) => {
                 dateText: {
                   color: "#fff",
                   fontFamily: FontFamily.semi_bold,
-                  // fontSize:30
                 },
               }}
               onDateChange={(date) => setdob(date)}

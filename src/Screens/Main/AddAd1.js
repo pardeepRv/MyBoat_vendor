@@ -52,7 +52,7 @@ class AddAd1 extends React.Component {
       showCloseTime: false,
       fixedTime:
         props?.route?.params?.data?.trip_time_type === 2 &&
-        props?.route?.params?.data?.trip_time_start !== null
+          props?.route?.params?.data?.trip_time_start !== null
           ? new Date(JSON.parse(props?.route?.params?.data?.trip_time_start))
           : new Date(),
       showFixedTime: false,
@@ -391,11 +391,12 @@ class AddAd1 extends React.Component {
     data.append("trip_type_id", props.Trip_type);
     data.append("boat_id", props.Boat);
     data.append("no_of_people", props.Max_number_of_people);
-    data.append("location_address", "Arabs");
-    // data.append('location_lat', props.BoatLat);
-    // data.append('location_lng', props.BoatLang);
-    data.append("location_lat", 30.7046);
-    data.append("location_lng", 76.7179);
+    data.append("location_address", props.locationAddress);
+    data.append('location_lat', props.BoatLat);
+    data.append('location_lng', props.BoatLang);
+
+    // data.append("location_lat", 30.7046);
+    // data.append("location_lng", 76.7179);
     data.append("city", props.cityOfBoat);
     data.append("discription_ar", props.Description_arbic);
     data.append("discription_en", props.Description_engilsh);
@@ -478,12 +479,12 @@ class AddAd1 extends React.Component {
     );
     let isEndHoursPM =
       moment(new Date(this.state.closeTime)).format("hh:mm:a").split(":")[2] ===
-      "pm"
+        "pm"
         ? true
         : false;
     let isStartHoursPM =
       moment(new Date(this.state.openTime)).format("hh:mm:a").split(":")[2] ===
-      "pm"
+        "pm"
         ? true
         : false;
     if (isEndHoursPM !== isStartHoursPM) {
@@ -503,6 +504,15 @@ class AddAd1 extends React.Component {
     return true;
   };
 
+
+  getDate() {
+    let tempDate = this.state.fixedTime.toString().split(' ');
+    // console.log('object :>> ', date.toString().split(' '));
+    setdatetext(`${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`)
+    return this.state.fixedTime !== ''
+      ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
+      : '';
+  };
   render() {
     const {
       showCloseTime,
@@ -515,7 +525,7 @@ class AddAd1 extends React.Component {
       tripTimeType,
       addType,
     } = this.state;
-    console.log(this.state, "consoling");
+    // console.log(this.state.openTime, "consoling");
     return (
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
         <Header imgBack={true} name={I18n.translate("add_ad")} backBtn={true} />
@@ -591,16 +601,26 @@ class AddAd1 extends React.Component {
                     <TouchableOpacity
                       onPress={() =>
                         this.setState({ showOpenTime: !showOpenTime })
+
+                        // this.getDate()
                       }
                     >
                       <Text>{moment(openTime).format("hh:mm a")}</Text>
                     </TouchableOpacity>
                     {showOpenTime && tripTimeType === "open" && (
-                      <DateTimePicker
+                      <DateTimePicker style={{
+                        backgroundColor: 'red',
+                        borderRadius: 5,
+                        borderColor: '#C5C5C5',
+                        borderWidth: 1,
+                        marginVertical: 10,
+                        height: 70, width: 150
+                      }}
                         value={openTime}
                         mode={"time"}
                         is24Hour={true}
-                        display="spinner"
+                        display="default"
+
                         onChange={(event, selectedDate) => {
                           var currentDate = selectedDate || date;
                           this.setState({
@@ -618,11 +638,19 @@ class AddAd1 extends React.Component {
                     </TouchableOpacity>
                     {showCloseTime && tripTimeType === "open" && (
                       <DateTimePicker
+                        style={{
+                          backgroundColor: 'blue',
+                          borderRadius: 5,
+                          borderColor: '#C5C5C5',
+                          borderWidth: 1,
+                          marginVertical: 10,
+                          height: 70, width: 150
+                        }}
                         testID="dateTimePicker"
                         value={closeTime}
                         mode={"time"}
                         is24Hour={true}
-                        display="spinner"
+                        display="default"
                         onChange={(event, selectedDate) => {
                           var currentDate = selectedDate || date;
                           this.setState({

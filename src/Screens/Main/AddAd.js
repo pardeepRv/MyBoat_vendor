@@ -113,6 +113,8 @@ class AddAd extends React.Component {
     );
   };
   componentDidMount() {
+       
+      
    //alert(this.props.language_id)
     Geocode.setApiKey('AIzaSyBwum8vSJGI-HNtsPVSiK9THpmA2IbgDTg');
     if (this.props?.route?.params?.edit) {
@@ -457,10 +459,11 @@ class AddAd extends React.Component {
         Trip_type: this.state.tripType,
         Boat: this.state.boat,
         Max_number_of_people: this.state.max_number_of_people,
-        // BoatLang: this.state.BoatLang,
-        // BoatLat: this.state.BoatLat,
-        BoatLat: '29.1282',
-        cityOfBoat: '48.1259',
+        BoatLang: this.state.BoatLang,
+        BoatLat: this.state.BoatLat,
+        locationAddress:this.state.locationAddress,
+        // BoatLat: '29.1282',
+        cityOfBoat: cityOfBoat,
         Description_arbic: this.state.Description_arbic,
         Description_engilsh: this.state.Description_engilsh,
         Extra_per_hour_price: this.state.Extra_per_hour_price,

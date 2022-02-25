@@ -11,7 +11,7 @@ import { SafeAreaView, StatusBar } from "react-native";
 import { Colors } from "./src/Constants/Constants";
 class App extends React.Component {
   async componentDidMount() {
-    
+    console.disableYellowBox = true; // hide warings from simulator
     let appLang = await AsyncStorage.getItem("locale");
     
     if (appLang === null) {
@@ -28,7 +28,8 @@ class App extends React.Component {
     firebaseprovider.getMyInboxAllData();
     firebaseprovider.getAllUsers();
   }
-  render() {
+  render() { 
+    // console.disableYellowBox = true;
     return (
       <Provider store={store}>
         <NavigationContainer>

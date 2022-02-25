@@ -13,6 +13,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Platform
 } from "react-native";
 import { AirbnbRating } from "react-native-elements";
 import { connect } from "react-redux";
@@ -20,11 +21,13 @@ import config from "../../Constants/config";
 import { Colors, FontFamily } from "../../Constants/Constants";
 import I18n from "../../Translations/i18";
 import MyCarousel from "./carousel";
+import DatePicker from "react-native-datepicker";
 class ViewAdd extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props,'consoling here in viewAdd');
+    console.log(props, 'consoling here in viewAdd');
     this.state = {
+
       id: this.props.route.params.item.advertisement_id,
       boatDetails: null,
       item: null,
@@ -43,12 +46,18 @@ class ViewAdd extends React.Component {
       endTime: new Date(),
       startTime: new Date(),
       boat_brand: "",
+      status1: ''
     };
     this.addOnData();
     this.getAdvertismentDetails();
   }
   componentDidMount() {
-    StatusBar.setTranslucent(true);
+    // var userInfo =  AsyncStorage.getItem("user_id");
+    // alert(JSON.stringify(userInfo))
+
+    if (Platform.OS == 'android') {
+      StatusBar.setTranslucent(true);
+    }
     StatusBar.setBarStyle("light-content");
     StatusBar.setBackgroundColor("transparent");
     setTimeout(() => {
@@ -56,6 +65,51 @@ class ViewAdd extends React.Component {
     }, 1000);
     this.getBoatDetails(this.state.item?.boat_id);
   }
+
+  /// use for caNCEL AND CONFI9RM BOOKING
+  cancelConfirmBooking = async (id) => {
+    this.setState({
+      loader: true
+    })
+
+    console.log(id, " id from cancvel confirm ");
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo, ' parsedInfo in url');
+    let url =
+      config.apiUrl +
+      "/booking_list_owner_manage.php";
+
+    var data = new FormData();
+    data.append("user_id_post", parsedInfo.id);
+    data.append("booking_id", this.props.route.params.item.booking_id);
+    data.append("status", id);
+
+    console.log(data);
+    console.log(url, 'url');
+    axios
+      .post(url, data)
+      .then((res) => {
+        console.log(res, 'res in cancel api ');
+        this.setState({
+          loader: false
+        })
+
+        if (res.data.success === "true") {
+          this.goBack()
+        }
+        else {
+          if (this.props.language_id == 0) alert(res.data.msg[0]);
+          else alert(res.data.msg[1]);
+          this.setState({
+            loader: false
+          })
+
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   getAdvertismentDetails = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
@@ -64,13 +118,15 @@ class ViewAdd extends React.Component {
       "/advertisement_details.php?user_id_post=" +
       parsedInfo.id +
       "&advertisement_id=" +
-      this.state.id;
+      this.state.id +
+      "&booking_id=" + this.props.route.params.item.booking_id
     axios
       .get(url)
       .then((res) => {
         console.log(res, "view ad");
         if (res) {
           this.setState(
+
             {
               item: res.data.adver_arr,
               img_arr: res.data.adver_arr?.img_arr,
@@ -78,6 +134,7 @@ class ViewAdd extends React.Component {
               toiletCount: res.data.adver_arr?.boat_toilets,
               numberOfPeople: res.data.adver_arr?.no_of_people,
               boat_brand: this.props.route.params.item?.boat_brand,
+              status1: res.data.status
               // boatDropdown: res.data.boat_arr,
               // cityDropdown: res.data.city_arr,
             },
@@ -242,6 +299,8 @@ class ViewAdd extends React.Component {
     axios
       .get(url)
       .then((res) => {
+        console.log("test==>>", res)
+
         if (res.data.success === "true") {
           this.setState({ boatDetails: res.data?.boat_arr });
         } else {
@@ -458,11 +517,11 @@ class ViewAdd extends React.Component {
 
         <ScrollView showsVerticalScrollIndicator={false}>
           {this.state.loader ? (
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <View style={{ justifyContent: "center", alignItems: "center", bottom: 40 }}>
               <ActivityIndicator size={30} color={Colors.orange} />
             </View>
           ) : (
-            <View>
+            <View >
               <View style={styles.adressbox}>
                 <View
                   style={{
@@ -524,10 +583,10 @@ class ViewAdd extends React.Component {
                     >
                       {this.props.language_id == 0
                         ? this.state.item?.captain_name[0] &&
-                          this.state.item?.captain_name[0]
+                        this.state.item?.captain_name[0]
                         : (this.state.item?.captain_name[1] &&
-                            this.state.item?.captain_name[1]) ||
-                          ""}
+                          this.state.item?.captain_name[1]) ||
+                        ""}
                     </Text>
                   </View>
                 </View>
@@ -900,6 +959,80 @@ class ViewAdd extends React.Component {
               </View> */}
             </View>
           )}
+          {this.state.status1 == 0 ?
+            <View style={{ alignItems: "center", bottom: 15, height: 150, top: 20 }}>
+
+              {/* <View style={{flexDirection:'row',flex:1,}}> */}
+
+              {/* <Text style={styles.booking}>
+                Change Booking Date
+              </Text> */}
+
+              <DatePicker
+                style={styles.booking}
+                // date={dob}
+                mode="date"
+                showIcon={false}
+                placeholder="Change Booking Date"
+
+                format="YYYY-MM-DD"
+                // minDate="2016-05-01"
+                // maxDate="2016-06-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    alignItems: "flex-end",
+                  },
+                  dateInput: {
+                    borderColor: "white",
+                    borderWidth: 0,
+                    // borderRadius: 4,
+                    alignItems: "flex-start",
+                    paddingRight: 10,
+                    borderBottomColor: "#fff",
+                    borderBottomWidth: 1,
+                  },
+                  dateText: {
+                    color: "#fff",
+                    fontFamily: FontFamily.semi_bold,
+                    // fontSize:30
+                  },
+                  placeholderText: {
+                    fontSize: 17,
+                    color: "white",
+                    textAlign: 'center',
+                    alignSelf: 'center'
+                  },
+                }}
+                onDateChange={(date) => setdob(date)}
+              />
+              {/* </View> */}
+
+
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '85%', }}>
+
+                <TouchableOpacity style={styles.bookingStatus} onPress={() => {
+                  this.cancelConfirmBooking(1)
+
+                }}>
+                  <Text style={styles.bookingtext}>
+                    Confirm
+                  </Text>
+                </TouchableOpacity>
+                <View style={{ width: 10, }}></View>
+
+                <TouchableOpacity style={styles.bookingStatus} onPress={() => {
+                  this.cancelConfirmBooking(4)
+                }}>
+
+                  <Text style={styles.bookingtext}>
+                    Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            : null}
+
         </ScrollView>
       </View>
     );
@@ -929,8 +1062,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.default,
   },
   ImageBackground: {
-    //height: '100%',
-    //width: Sizes.width,
+    //height: '
     backgroundColor: Colors.black,
     zIndex: -1,
     position: "absolute",
@@ -985,5 +1117,53 @@ const styles = StyleSheet.create({
     borderColor: "orange",
     justifyContent: "center",
     alignItems: "center",
+  },
+  booking: {
+    height: 40,
+    width: "90%",
+    backgroundColor: "orange",
+    elevation: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "orange",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: 'center',
+    color: "white",
+    padding: 8,
+    top: 10,
+    overflow: 'hidden'
+  },
+  bookingStatus: {
+    height: 40,
+    width: "50%",
+    backgroundColor: "orange",
+    elevation: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "orange",
+    alignItems: "center",
+    color: "white",
+    padding: 8,
+    top: 20,
+    overflow: 'hidden',
+
+  },
+  bookingtext: {
+    height: 40,
+    // width: "50%",
+    backgroundColor: "orange",
+    elevation: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "orange",
+    alignItems: "center",
+    color: "white",
+    padding: 8,
+    overflow: 'hidden',
+    left: 8,
+    top: -8,
+    fontSize: 15
+
   },
 });

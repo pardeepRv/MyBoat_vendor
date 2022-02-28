@@ -690,15 +690,20 @@ class AddAd1 extends React.Component {
                         this.setState({ showFixedTime: !showFixedTime })
                       }
                     >
-                      <Text>{moment(fixedTime).format("hh:mm a")}</Text>
+                      <Text style={{top:5}}>{moment(fixedTime).format("hh:mm a")}</Text>
                     </TouchableOpacity>
                     {showFixedTime && tripTimeType === "fixed" && (
                       <DateTimePicker
+
+                      style={{
+                        backgroundColor: 'lightgray',
+                        height: 40, width: 100
+                      }}
                         testID="dateTimePicker"
                         value={fixedTime}
                         mode={"time"}
                         // is24Hour={true}
-                        display="spinner"
+                        display="default"
                         onChange={(event, selectedDate) => {
                           var currentDate = selectedDate || date;
                           this.setState({

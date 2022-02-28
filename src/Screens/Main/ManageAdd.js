@@ -52,6 +52,7 @@ const ManageAdd = (props) => {
     setData(item);
   };
   useEffect(async () => {
+    
     const unsubscribe = props.navigation.addListener("focus", () => {
       getLoginuserInfo();
     });
@@ -321,8 +322,9 @@ const ManageAdd = (props) => {
                     <TouchableOpacity
                       activeOpacity={0.7}
                       onPress={() => {
-                        props.navigation.navigate("viewAdd", {
+                        props.navigation.navigate("viewAddDetail", {
                           item: allData[index],
+                          // addvr_id:Data.advertisement_id
                         });
                       }}
                       style={{ padding: 5 }}

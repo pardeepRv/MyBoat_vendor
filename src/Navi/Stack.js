@@ -34,6 +34,7 @@ import viewBooking from "../Screens/Main/viewBooking";
 import ViewStaff from "../Screens/Main/ViewStaff";
 import MapView from "../Screens/MapView";
 import TabNav from "./BottomNav";
+import viewAddDetail from "../Screens/Main/viewAddDetail";
 // import MyTabs from './BottomNav';
 
 const Stack = createStackNavigator();
@@ -89,6 +90,7 @@ const Stacks = () => {
       <Stack.Screen name="about" component={about} />
       <Stack.Screen name="privacyPolicy" component={privacyPolicy} />
       <Stack.Screen name="forgot" component={ForgotPassword} />
+      <Stack.Screen name="viewAddDetail" component={viewAddDetail} />
     </Stack.Navigator>
   );
 };

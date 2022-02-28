@@ -85,9 +85,9 @@ class AddAd1 extends React.Component {
   }
 
   async componentDidMount() {
+    
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-
     this.setState({ userId: parsedInfo.id });
     this.addOnData();
   }
@@ -413,8 +413,8 @@ class AddAd1 extends React.Component {
       data.append("trip_time_end", JSON.stringify(closeTime));
     } else {
       data.append("trip_time_type", "2");
-      // data.append("trip_time_start", JSON.stringify(fixedTime));
-      data.append("trip_time_start", "10:00:00");
+      data.append("trip_time_start", this.getDate());
+      // data.append("trip_time_start", "10:00:00");
     }
     data.append("adver_boat_type", addType === "public" ? 2 : 1);
     data.append("freeCancel_days", this.state.Free_Cancel_Days);
@@ -506,13 +506,10 @@ class AddAd1 extends React.Component {
 
 
   getDate() {
-    let tempDate = this.state.fixedTime.toString().split(' ');
-    // console.log('object :>> ', date.toString().split(' '));
-    setdatetext(`${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`)
-    return this.state.fixedTime !== ''
-      ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
-      : '';
+    let tempDate = moment(this.state.fixedTime).format('H:mm:ss')
+    return tempDate
   };
+
   render() {
     const {
       showCloseTime,
@@ -596,25 +593,19 @@ class AddAd1 extends React.Component {
                           }}
                         />
                       )}
-                      <Text>{I18n.translate("open_time")}</Text>
+                      <Text style={{top:5}}>{I18n.translate("open_time")} </Text>
                     </View>
                     <TouchableOpacity
                       onPress={() =>
                         this.setState({ showOpenTime: !showOpenTime })
-
-                        // this.getDate()
                       }
                     >
-                      <Text>{moment(openTime).format("hh:mm a")}</Text>
+                      <Text style={{top:5}}>{moment(openTime).format("hh:mm a")}</Text>
                     </TouchableOpacity>
                     {showOpenTime && tripTimeType === "open" && (
                       <DateTimePicker style={{
-                        backgroundColor: 'red',
-                        borderRadius: 5,
-                        borderColor: '#C5C5C5',
-                        borderWidth: 1,
-                        marginVertical: 10,
-                        height: 70, width: 150
+                        backgroundColor: 'lightgray',
+                        height: 40, width: 100
                       }}
                         value={openTime}
                         mode={"time"}
@@ -630,21 +621,17 @@ class AddAd1 extends React.Component {
                         }}
                       />
                     )}
-                    <Text>{I18n.translate("to")}</Text>
+                    <Text style={{top:5,}}>{I18n.translate("to")}</Text>
                     <TouchableOpacity
                       onPress={() => this.setState({ showCloseTime: true })}
                     >
-                      <Text>{moment(closeTime).format("hh:mm a")}</Text>
+                      <Text style={{top:5}}>{moment(closeTime).format("hh:mm a")}</Text>
                     </TouchableOpacity>
                     {showCloseTime && tripTimeType === "open" && (
                       <DateTimePicker
                         style={{
-                          backgroundColor: 'blue',
-                          borderRadius: 5,
-                          borderColor: '#C5C5C5',
-                          borderWidth: 1,
-                          marginVertical: 10,
-                          height: 70, width: 150
+                          backgroundColor: 'lightgray',
+                          height: 40, width: 100
                         }}
                         testID="dateTimePicker"
                         value={closeTime}
@@ -696,7 +683,7 @@ class AddAd1 extends React.Component {
                           }}
                         />
                       )}
-                      <Text>{I18n.translate("fixed_time")}</Text>
+                      <Text style={{top:5}} >{I18n.translate("fixed_time")}</Text>
                     </View>
                     <TouchableOpacity
                       onPress={() =>

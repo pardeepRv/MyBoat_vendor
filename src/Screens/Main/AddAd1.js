@@ -28,6 +28,8 @@ import config from "../../Constants/config";
 import { TextInput } from "react-native-gesture-handler";
 import { CallApi } from "../../config/callApi";
 import moment from "moment";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 const width = Dimensions.get("window").width;
 class AddAd1 extends React.Component {
   constructor(props) {
@@ -85,7 +87,6 @@ class AddAd1 extends React.Component {
   }
 
   async componentDidMount() {
-    
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     this.setState({ userId: parsedInfo.id });
@@ -526,7 +527,9 @@ class AddAd1 extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
         <Header imgBack={true} name={I18n.translate("add_ad")} backBtn={true} />
-        <ScrollView
+       
+        <KeyboardAwareScrollView 
+          keyboardShouldPersistTaps='handled'
           style={{
             marginVertical: -30,
             borderTopLeftRadius: 20,
@@ -1212,7 +1215,8 @@ class AddAd1 extends React.Component {
               </View>
             </View>
           )}
-        </ScrollView>
+        </KeyboardAwareScrollView>
+       
       </View>
     );
   }

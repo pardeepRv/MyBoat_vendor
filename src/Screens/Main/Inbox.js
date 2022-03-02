@@ -124,6 +124,7 @@ class Inbox extends Component {
     });
   };
   componentDidMount() {
+   
     this.props.navigation.addListener("focus", () => {
       this.getBookingListForOwner();
       this.showUserInbox();
@@ -588,6 +589,7 @@ class Inbox extends Component {
       this.setState({ availablePeopleToChatCopy: filteredName });
     }
   };
+
   render() {
     return (
       <SafeAreaView
@@ -605,14 +607,14 @@ class Inbox extends Component {
             }}
           >
             <View style={{ flex: 1 }}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View style={{ flexDirection: "row", alignItems: "center", top:30}}>
                 <AntDesign
                   name={"arrowleft"}
-                  onPress={() => {
+                  onPress={() => {                    
                     this.setState({ modalVisible: false });
                   }}
                   size={25}
-                  style={{ padding: 5, marginHorizontal: 10 }}
+                  style={{ padding: 5, marginHorizontal: 10}}
                 />
 
                 <TextInput
@@ -628,8 +630,10 @@ class Inbox extends Component {
                     borderWidth: 1,
                     borderColor: Colors.orange,
                     width: "85%",
+                    height:40,
                     borderRadius: 10,
                     marginVertical: 10,
+                   
                   }}
                 />
               </View>

@@ -18,6 +18,7 @@ import Header from "../../Components/Header";
 import config from "../../Constants/config";
 import { Colors, FontFamily } from "../../Constants/Constants";
 import I18n from "../../Translations/i18";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const AddBoat = (props) => {
   const Navigation = useNavigation();
@@ -158,7 +159,9 @@ const AddBoat = (props) => {
         backBtn={true}
       />
       <View style={s.SEC2}>
-        <ScrollView>
+        <KeyboardAwareScrollView
+        keyboardShouldPersistTaps='handled'
+        >
           <View style={{ marginTop: 5 }}>
             <Input
               fontFamily={FontFamily.default}
@@ -327,7 +330,7 @@ const AddBoat = (props) => {
               )}
             </TouchableOpacity>
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     </View>
   );

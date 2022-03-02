@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -14,34 +14,36 @@ import {
   SafeAreaView,
   ActivityIndicator,
 } from 'react-native';
-import {connect, useDispatch} from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import I18n from '../../Translations/i18'
-import {Icon, Input} from 'react-native-elements';
+import { Icon, Input } from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import Entypo from 'react-native-vector-icons/dist/Entypo';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../Components/Header';
-import {back_img, Colors, FontFamily, Sizes} from '../../Constants/Constants';
-import {useNavigation} from '@react-navigation/core';
+import { back_img, Colors, FontFamily, Sizes } from '../../Constants/Constants';
+import { useNavigation } from '@react-navigation/core';
 import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';
 import config from '../../Constants/config';
 import ToastMessage from '../../Components/toastMessage/ToastMessage';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import {
   BottomSheetModalProvider,
   BottomSheetModal,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Geocode from 'react-geocode';
 const width = Dimensions.get('window').width;
 const snapPoints = ['0%', '50%'];
 class AddAd extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props,'props in Add Add');
+    console.log(props, 'props in Add Add');
     this.state = {
       loader: false,
       Arbic_captain: props?.route?.params?.captain_ar || '',
@@ -113,9 +115,8 @@ class AddAd extends React.Component {
     );
   };
   componentDidMount() {
-       
-      
-   //alert(this.props.language_id)
+    
+    //alert(this.props.language_id)
     Geocode.setApiKey('AIzaSyBwum8vSJGI-HNtsPVSiK9THpmA2IbgDTg');
     if (this.props?.route?.params?.edit) {
       this.setBoatLocationLatLong(
@@ -131,7 +132,7 @@ class AddAd extends React.Component {
     }
   }
   setBoatLocationLatLong = (lat, lng) => {
-    this.setState({BoatLat: lat, BoatLang: lng});
+    this.setState({ BoatLat: lat, BoatLang: lng });
   };
 
   setImages(arr) {
@@ -199,7 +200,7 @@ class AddAd extends React.Component {
       });
     }
   }
-  componentWillUnmount() {}
+  componentWillUnmount() { }
   uploadImage = type => {
     ImagePicker.openPicker({
       width: Dimensions.get('window').width,
@@ -221,7 +222,7 @@ class AddAd extends React.Component {
         axios
           .post(url, data)
           .then(res => {
-            console.log(res,'res in upload image');
+            console.log(res, 'res in upload image');
             if (res.data.success == 'true') {
               this.setState({
                 uploadedImageCount: ++this.state.uploadedImageCount,
@@ -298,25 +299,25 @@ class AddAd extends React.Component {
         });
         break;
       case '1':
-        this.setState({loader1: !this.state.loader1});
+        this.setState({ loader1: !this.state.loader1 });
         break;
       case '2':
-        this.setState({loader2: !this.state.loader2});
+        this.setState({ loader2: !this.state.loader2 });
         break;
       case '3':
-        this.setState({loader3: !this.state.loader3});
+        this.setState({ loader3: !this.state.loader3 });
         break;
       case '4':
-        this.setState({loader4: !this.state.loader4});
+        this.setState({ loader4: !this.state.loader4 });
         break;
       case '5':
-        this.setState({loader5: !this.state.loader5});
+        this.setState({ loader5: !this.state.loader5 });
         break;
       case '6':
-        this.setState({loader6: !this.state.loader6});
+        this.setState({ loader6: !this.state.loader6 });
         break;
       case '7':
-        this.setState({loader7: !this.state.loader7});
+        this.setState({ loader7: !this.state.loader7 });
         break;
       default:
         Alert.alert('TYPE NOT FOUND');
@@ -353,11 +354,11 @@ class AddAd extends React.Component {
           .get(url)
           .then(res => {
             if (res) {
-              console.log(res,'getting boats');
+              console.log(res, 'getting boats');
               var cityArr = res?.data?.city_arr || [];
               var arr = [];
               cityArr.map(item => {
-                var cityItem = {id: item.city_id, name: this.props.language_id == 0? item.city[0]:item.city[1]};
+                var cityItem = { id: item.city_id, name: this.props.language_id == 0 ? item.city[0] : item.city[1] };
                 arr.push(cityItem);
               });
               this.sortCity(arr);
@@ -374,9 +375,9 @@ class AddAd extends React.Component {
                 },
               );
             } else {
-              if(this.props.language_id == 0)
-              alert(res.data.msg[0]);
-              else   alert(res.data.msg[1]);
+              if (this.props.language_id == 0)
+                alert(res.data.msg[0]);
+              else alert(res.data.msg[1]);
             }
           })
           .catch(err => console.log(err));
@@ -435,11 +436,11 @@ class AddAd extends React.Component {
       alert(I18n.translate('select_boat_alert'));
     } else if (max_number_of_people === '') {
       alert(I18n.translate('max_people_alert'));
-    } 
+    }
     // else if (BoatLang === '') {
     //   alert(I18n.translate('location_alert'));
     // }
-     else if (cityOfBoat === '') {
+    else if (cityOfBoat === '') {
       alert(I18n.translate('select_city_alert'));
     } else if (Description_arbic === '') {
       alert(I18n.translate('des_ar_alert'));
@@ -461,7 +462,7 @@ class AddAd extends React.Component {
         Max_number_of_people: this.state.max_number_of_people,
         BoatLang: this.state.BoatLang,
         BoatLat: this.state.BoatLat,
-        locationAddress:this.state.locationAddress,
+        locationAddress: this.state.locationAddress,
         // BoatLat: '29.1282',
         cityOfBoat: cityOfBoat,
         Description_arbic: this.state.Description_arbic,
@@ -509,7 +510,7 @@ class AddAd extends React.Component {
         data.trip_type_id = this.props?.route?.params.trip_type_id;
         data.adver_boat_type = this.props?.route?.params?.adver_boat_type;
       }
-      console.log(data,'data sending to Add 1');
+      console.log(data, 'data sending to Add 1');
       this.props.navigation.navigate('AddAd1', {
         data: data,
       });
@@ -517,7 +518,7 @@ class AddAd extends React.Component {
   };
   renderTripTypeValues() {
     return this.state.tripTypeDropdown.map((item, key) => (
-      <Picker.Item label={this.props.language_id == 0? item?.name[0]: item?.name[1]} value={item?.trip_type_id} key={key} />
+      <Picker.Item label={this.props.language_id == 0 ? item?.name[0] : item?.name[1]} value={item?.trip_type_id} key={key} />
     ));
   }
   _searchCity = e => {
@@ -527,11 +528,11 @@ class AddAd extends React.Component {
       return item.name.toLowerCase().match(text);
     });
     if (!text || !text.length || text === '') {
-      this.setState({cityDropdownCopy: this.state.cityDropdown});
+      this.setState({ cityDropdownCopy: this.state.cityDropdown });
     } else if (!filteredName.length) {
-      this.setState({cityArrCopyCopy: this.state.cityDropdown});
+      this.setState({ cityArrCopyCopy: this.state.cityDropdown });
     } else if (Array.isArray(filteredName)) {
-      this.setState({cityDropdownCopy: filteredName});
+      this.setState({ cityDropdownCopy: filteredName });
     }
   };
   _selectCity = item => {
@@ -544,7 +545,7 @@ class AddAd extends React.Component {
 
   setBoatCapacity = boat_id => {
     this.state.boatDropdown !== 'NA' &&
-    this.state.boatDropdown?.length &&
+      this.state.boatDropdown?.length &&
       this.state.boatDropdown.forEach(item => {
         if (item.boat_id === boat_id) {
           this.setState({
@@ -557,42 +558,43 @@ class AddAd extends React.Component {
   render() {
     return (
       <BottomSheetModalProvider>
-        <View style={{flex: 1, backgroundColor: Colors.white}}>
+        <View style={{ flex: 1, backgroundColor: Colors.white }}>
           <Header
             imgBack={true}
             name={I18n.translate('add_ad')}
             backBtn={true}
             headerHeight={120}
           />
-          <ScrollView
-            style={{
-              marginVertical: -30,
-              borderTopLeftRadius: 30,
-              borderTopRightRadius: 30,
-              backgroundColor: '#fff',
-             // paddingHorizontal:10
-            }}>
+          <KeyboardAwareScrollView 
+          keyboardShouldPersistTaps='handled'
+          style={{
+            marginVertical: -30,
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+            backgroundColor: '#fff',
+            // paddingHorizontal:10
+          }}>
             <Modal
               onRequestClose={() => {
-                this.setState({modalVisible: false});
+                this.setState({ modalVisible: false });
               }}
               visible={this.state.modalVisible}
               animationType={'slide'}
               animationInTiming={500}
               animationOutTiming={500}>
-              <View style={{flex: 1}}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <AntDesign
                     name={'arrowleft'}
                     onPress={() => {
-                      this.setState({modalVisible: false});
+                      this.setState({ modalVisible: false });
                     }}
                     size={25}
-                    style={{padding: 5, marginHorizontal: 10}}
+                    style={{ padding: 5, marginHorizontal: 10 }}
                   />
 
                   <TextInput
-                      textAlign={this.props.language_id == 0? 'left':'right'}
+                    textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                     placeholder={I18n.translate('search_city')}
                     //value={placeholderText}
                     onChangeText={text => {
@@ -610,7 +612,7 @@ class AddAd extends React.Component {
                 </View>
                 <FlatList
                   data={this.state.cityDropdownCopy}
-                  renderItem={({item}) => {
+                  renderItem={({ item }) => {
                     return (
                       <TouchableOpacity
                         onPress={() => {
@@ -634,19 +636,19 @@ class AddAd extends React.Component {
             <View style={s.SEC2}>
               <View
                 style={{
-                
+
                   height: 300,
                   width: Dimensions.get('window').width,
                   backgroundColor: 'black',
                   opacity: 0.8,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  alignSelf:'center'
+                  alignSelf: 'center'
                   //zIndex:-1
                 }}>
                 {this.state.banner ? (
                   <ImageBackground
-                    source={{uri: config.imageUrl + this.state.banner}}
+                    source={{ uri: config.imageUrl + this.state.banner }}
                     style={{
                       height: 300,
                       width: 400,
@@ -661,14 +663,14 @@ class AddAd extends React.Component {
                       fontSize: 20,
                       fontFamily: FontFamily.default,
                     }}>
-                    {`${I18n.translate('upload_text')}\n`}{`${I18n.translate('sub_upload_text')}` }
+                    {`${I18n.translate('upload_text')}\n`}{`${I18n.translate('sub_upload_text')}`}
                   </Text>
                 )}
               </View>
               <TouchableOpacity
-                style={{zIndex: 1, right: 15, bottom: 15, position: 'absolute'}}
+                style={{ zIndex: 1, right: 15, bottom: 15, position: 'absolute' }}
                 onPress={() => {
-                  this.setState({bannerLoader: !this.state.bannerLoader});
+                  this.setState({ bannerLoader: !this.state.bannerLoader });
                   this.uploadImage('banner');
                 }}>
                 <Image
@@ -688,7 +690,7 @@ class AddAd extends React.Component {
                 fontSize: 16,
                 fontWeight: 'bold',
               }}>
-           {I18n.translate('add_more')}
+              {I18n.translate('add_more')}
             </Text>
             <ScrollView
               horizontal
@@ -698,10 +700,10 @@ class AddAd extends React.Component {
                 alignContent: 'center',
                 marginVertical: 15,
               }}>
-              <View style={{marginHorizontal: 2, marginVertical: 5}}>
+              <View style={{ marginHorizontal: 2, marginVertical: 5 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({loader1: !this.state.loader1}, () =>
+                    this.setState({ loader1: !this.state.loader1 }, () =>
                       this.uploadImage('1'),
                     );
                   }}>
@@ -723,7 +725,7 @@ class AddAd extends React.Component {
                     <Image
                       source={
                         this.state.image1
-                          ? {uri: config.imageUrl + this.state.image1}
+                          ? { uri: config.imageUrl + this.state.image1 }
                           : require('../../Images/chose_image.png')
                       }
                       style={s.imagePicker}
@@ -743,10 +745,10 @@ class AddAd extends React.Component {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={{marginHorizontal: 2, marginVertical: 5}}>
+              <View style={{ marginHorizontal: 2, marginVertical: 5 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({loader2: !this.state.loader2}, () =>
+                    this.setState({ loader2: !this.state.loader2 }, () =>
                       this.uploadImage('2'),
                     );
                   }}>
@@ -768,7 +770,7 @@ class AddAd extends React.Component {
                     <Image
                       source={
                         this.state.image2
-                          ? {uri: config.imageUrl + this.state.image2}
+                          ? { uri: config.imageUrl + this.state.image2 }
                           : require('../../Images/chose_image.png')
                       }
                       style={s.imagePicker}
@@ -788,10 +790,10 @@ class AddAd extends React.Component {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={{marginHorizontal: 2, marginVertical: 5}}>
+              <View style={{ marginHorizontal: 2, marginVertical: 5 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({loader3: !this.state.loader3}, () =>
+                    this.setState({ loader3: !this.state.loader3 }, () =>
                       this.uploadImage('3'),
                     );
                   }}>
@@ -813,7 +815,7 @@ class AddAd extends React.Component {
                     <Image
                       source={
                         this.state.image3
-                          ? {uri: config.imageUrl + this.state.image3}
+                          ? { uri: config.imageUrl + this.state.image3 }
                           : require('../../Images/chose_image.png')
                       }
                       style={s.imagePicker}
@@ -833,10 +835,10 @@ class AddAd extends React.Component {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={{marginHorizontal: 2, marginVertical: 5}}>
+              <View style={{ marginHorizontal: 2, marginVertical: 5 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({loader4: !this.state.loader4}, () =>
+                    this.setState({ loader4: !this.state.loader4 }, () =>
                       this.uploadImage('4'),
                     );
                   }}>
@@ -858,7 +860,7 @@ class AddAd extends React.Component {
                     <Image
                       source={
                         this.state.image4
-                          ? {uri: config.imageUrl + this.state.image4}
+                          ? { uri: config.imageUrl + this.state.image4 }
                           : require('../../Images/chose_image.png')
                       }
                       style={s.imagePicker}
@@ -878,10 +880,10 @@ class AddAd extends React.Component {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={{marginHorizontal: 2, marginVertical: 5}}>
+              <View style={{ marginHorizontal: 2, marginVertical: 5 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({loader5: !this.state.loader5}, () =>
+                    this.setState({ loader5: !this.state.loader5 }, () =>
                       this.uploadImage('5'),
                     );
                   }}>
@@ -903,7 +905,7 @@ class AddAd extends React.Component {
                     <Image
                       source={
                         this.state.image5
-                          ? {uri: config.imageUrl + this.state.image5}
+                          ? { uri: config.imageUrl + this.state.image5 }
                           : require('../../Images/chose_image.png')
                       }
                       style={s.imagePicker}
@@ -923,10 +925,10 @@ class AddAd extends React.Component {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={{marginHorizontal: 2, marginVertical: 5}}>
+              <View style={{ marginHorizontal: 2, marginVertical: 5 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({loader6: !this.state.loader6}, () =>
+                    this.setState({ loader6: !this.state.loader6 }, () =>
                       this.uploadImage('6'),
                     );
                   }}>
@@ -948,7 +950,7 @@ class AddAd extends React.Component {
                     <Image
                       source={
                         this.state.image6
-                          ? {uri: config.imageUrl + this.state.image6}
+                          ? { uri: config.imageUrl + this.state.image6 }
                           : require('../../Images/chose_image.png')
                       }
                       style={s.imagePicker}
@@ -968,10 +970,10 @@ class AddAd extends React.Component {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={{marginHorizontal: 2, marginVertical: 5}}>
+              <View style={{ marginHorizontal: 2, marginVertical: 5 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({loader7: !this.state.loader7}, () =>
+                    this.setState({ loader7: !this.state.loader7 }, () =>
                       this.uploadImage('7'),
                     );
                   }}>
@@ -993,7 +995,7 @@ class AddAd extends React.Component {
                     <Image
                       source={
                         this.state.image7
-                          ? {uri: config.imageUrl + this.state.image7}
+                          ? { uri: config.imageUrl + this.state.image7 }
                           : require('../../Images/chose_image.png')
                       }
                       style={s.imagePicker}
@@ -1015,27 +1017,27 @@ class AddAd extends React.Component {
               </View>
             </ScrollView>
 
-            <View style={{marginTop: 5}}>
+            <View style={{ marginTop: 5 }}>
               <Input
                 fontFamily={FontFamily.default}
                 value={this.state.Arbic_captain}
-                placeholder= {I18n.translate('captain_name_ar')}
-                containerStyle={{...s.Input}}
-                textAlign={this.props.language_id == 0? 'left':'right'}
-                inputContainerStyle={{...s.Input}}
+                placeholder={I18n.translate('captain_name_ar')}
+                containerStyle={{ ...s.Input }}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
+                inputContainerStyle={{ ...s.Input }}
                 placeholderTextColor={Colors.gray1}
-                onChangeText={Arbic_captain => this.setState({Arbic_captain})}
+                onChangeText={Arbic_captain => this.setState({ Arbic_captain })}
               />
               <Input
                 fontFamily={FontFamily.default}
                 value={this.state.English_captain}
                 placeholder={I18n.translate('captain_name_en')}
                 containerStyle={s.Input}
-                textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 inputContainerStyle={s.Input}
                 placeholderTextColor={Colors.gray1}
                 onChangeText={English_captain =>
-                  this.setState({English_captain})
+                  this.setState({ English_captain })
                 }
               />
               <Input
@@ -1043,27 +1045,27 @@ class AddAd extends React.Component {
                 value={this.state.Contact_number}
                 placeholder={I18n.translate('contact_num')}
                 containerStyle={s.Input}
-                textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 keyboardType={'phone-pad'}
                 inputContainerStyle={s.Input}
                 placeholderTextColor={Colors.gray1}
-                onChangeText={Contact_number => this.setState({Contact_number})}
+                onChangeText={Contact_number => this.setState({ Contact_number })}
               />
-              <View style={{...s.Picker, marginTop: -20}}>
+              <View style={{ ...s.Picker, marginTop: -20 }}>
                 {/* <Text style={s.PickerText}>Select Trip Type</Text> */}
                 {this.state.tripTypeDropdown?.length > 0 && (
                   <Picker
-                    style={{fontFamily: FontFamily.default}}
+                    style={{ fontFamily: FontFamily.default }}
                     mode="dialog"
                     iosHeader="Time Zone"
                     iosIcon={<AntDesign name="down" size={15} />}
-                    style={{width: '100%'}}
+                    style={{ width: '100%' }}
                     selectedValue={this.state.tripType}
                     onValueChange={(modeValue, modeIndex) =>
-                      this.setState({tripType: modeValue})
+                      this.setState({ tripType: modeValue })
                     }>
                     <Picker.Item
-                      style={{fontFamily: FontFamily.default}}
+                      style={{ fontFamily: FontFamily.default }}
                       label={I18n.translate('select_trip_type')}
                       color={Colors.gray}
                       value={''}
@@ -1074,7 +1076,7 @@ class AddAd extends React.Component {
                 )}
               </View>
 
-              <View style={{...s.Picker, marginTop: -10}}>
+              <View style={{ ...s.Picker, marginTop: -10 }}>
                 {/* <Text style={s.PickerText}>Select Boat</Text> */}
                 {this.state.boatDropdown?.length > 0 && (
                   <Picker
@@ -1082,11 +1084,11 @@ class AddAd extends React.Component {
                     fontFamily={FontFamily.default}
                     iosHeader="Time Zone"
                     iosIcon={<AntDesign name="down" size={15} />}
-                    style={{width: '100%'}}
+                    style={{ width: '100%' }}
                     selectedValue={this.state.boat}
                     onValueChange={(modeValue, modeIndex) => {
                       this.setBoatCapacity(modeValue);
-                      this.setState({boat: modeValue});
+                      this.setState({ boat: modeValue });
                     }}>
                     <Picker.Item
                       label={I18n.translate('choose_boat')}
@@ -1095,7 +1097,7 @@ class AddAd extends React.Component {
                     />
                     {this.state.boatDropdown !== "NA" && this.state.boatDropdown.map((item, key) => (
                       <Picker.Item
-                        style={{fontFamily: FontFamily.default}}
+                        style={{ fontFamily: FontFamily.default }}
                         label={item.name}
                         value={item.boat_id}
                         key={key}
@@ -1128,10 +1130,10 @@ class AddAd extends React.Component {
                   {(this.state.locationAddress && this.state.locationAddress) ||
                     I18n.translate('choose_boat_location')}
                 </Text>
-                <Entypo name="location" size={15} style={{marginRight: 15}} />
+                <Entypo name="location" size={15} style={{ marginRight: 15 }} />
               </TouchableOpacity>
               {this.state.capacityError && (
-                <View style={{marginHorizontal: 15}}>
+                <View style={{ marginHorizontal: 15 }}>
                   <Text
                     style={{
                       color: 'red',
@@ -1146,43 +1148,43 @@ class AddAd extends React.Component {
                 value={this.state.max_number_of_people}
                 placeholder={I18n.translate('max_num_of_people')}
                 keyboardType={'phone-pad'}
-                textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 //defaultValue={this.state.max_number_of_people}
                 style={
                   this.state.capacityError
                     ? [
-                        s.Input2,
-                        {marginHorizontal: 15, marginBottom: 15, marginTop: -5},
-                      ]
+                      s.Input2,
+                      { marginHorizontal: 15, marginBottom: 15, marginTop: -5 },
+                    ]
                     : [
-                        s.Input,
-                        {
-                          marginHorizontal: 17,
-                          borderColor: 'red',
-                          borderBottomWidth: 1,
-                          marginBottom: 17,
-                          marginTop: -5,
-                        },
-                      ]
+                      s.Input,
+                      {
+                        marginHorizontal: 17,
+                        borderColor: 'red',
+                        borderBottomWidth: 1,
+                        marginBottom: 17,
+                        marginTop: -5,
+                      },
+                    ]
                 }
                 color={this.state.capacityError ? 'red' : '#000'}
                 fontSize={16}
                 fontFamily={FontFamily.default}
                 onChangeText={max_number_of_people => {
-                  this.setState({max_number_of_people}, () => {
+                  this.setState({ max_number_of_people }, () => {
                     if (
                       parseInt(this.state.max_number_of_people) >
                       parseInt(this.state.boatCapacity)
                     ) {
-                      this.setState({capacityError: true});
+                      this.setState({ capacityError: true });
                     } else {
-                      this.setState({capacityError: false});
+                      this.setState({ capacityError: false });
                     }
                   });
                 }}
               />
               <TouchableOpacity
-                onPress={() => this.setState({modalVisible: true})}
+                onPress={() => this.setState({ modalVisible: true })}
                 style={{
                   ...s.Picker,
                   flexDirection: 'row',
@@ -1194,22 +1196,22 @@ class AddAd extends React.Component {
                   style={
                     this.state.CityName === I18n.translate('select_city')
                       ? {
-                          ...s.PickerText,
-                          color: Colors.gray,
-                          fontFamily: FontFamily.default,
-                        }
+                        ...s.PickerText,
+                        color: Colors.gray,
+                        fontFamily: FontFamily.default,
+                      }
                       : {
-                          ...s.PickerText,
-                          color: Colors.black,
-                          fontFamily: FontFamily.default,
-                        }
+                        ...s.PickerText,
+                        color: Colors.black,
+                        fontFamily: FontFamily.default,
+                      }
                   }>
                   {this.state.CityName}
                 </Text>
                 <AntDesign
                   name="right"
                   size={15}
-                  style={{alignSelf: 'center'}}
+                  style={{ alignSelf: 'center' }}
                 />
               </TouchableOpacity>
               <Text
@@ -1223,7 +1225,7 @@ class AddAd extends React.Component {
                 {I18n.translate('description_en')}
               </Text>
               <TextInput
-               textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 value={this.state.Description_engilsh}
                 placeholder={I18n.translate('description_en')}
                 style={{
@@ -1241,7 +1243,7 @@ class AddAd extends React.Component {
                 multiline={true}
                 placeholderTextColor={Colors.gray}
                 onChangeText={Description_engilsh =>
-                  this.setState({Description_engilsh})
+                  this.setState({ Description_engilsh })
                 }
               />
               <Text
@@ -1255,7 +1257,7 @@ class AddAd extends React.Component {
                 {I18n.translate('description_ar')}
               </Text>
               <TextInput
-                textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 value={this.state.Description_arbic}
                 placeholder={I18n.translate('description_ar')}
                 style={{
@@ -1272,7 +1274,7 @@ class AddAd extends React.Component {
                 multiline={true}
                 placeholderTextColor={Colors.gray1}
                 onChangeText={Description_arbic =>
-                  this.setState({Description_arbic})
+                  this.setState({ Description_arbic })
                 }
               />
               <Input
@@ -1282,22 +1284,22 @@ class AddAd extends React.Component {
                 fontFamily={FontFamily.default}
                 containerStyle={s.Input}
                 inputContainerStyle={s.Input}
-                textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 placeholderTextColor={Colors.gray1}
                 onChangeText={Extra_per_hour_price =>
-                  this.setState({Extra_per_hour_price})
+                  this.setState({ Extra_per_hour_price })
                 }
               />
               <Input
                 value={this.state.Minimum_hour}
                 placeholder={I18n.translate('min_hour')}
                 keyboardType={'phone-pad'}
-                textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 fontFamily={FontFamily.default}
                 containerStyle={s.Input}
                 inputContainerStyle={s.Input}
                 placeholderTextColor={Colors.gray1}
-                onChangeText={Minimum_hour => this.setState({Minimum_hour})}
+                onChangeText={Minimum_hour => this.setState({ Minimum_hour })}
               />
               <Input
                 value={this.state.idle_hours}
@@ -1305,20 +1307,20 @@ class AddAd extends React.Component {
                 fontFamily={FontFamily.default}
                 keyboardType={'phone-pad'}
                 containerStyle={s.Input}
-                textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 inputContainerStyle={s.Input}
                 placeholderTextColor={Colors.gray1}
-                onChangeText={idle_hours => this.setState({idle_hours})}
+                onChangeText={idle_hours => this.setState({ idle_hours })}
               />
               {this.state.discountError && (
-                <View style={{marginHorizontal: 15}}>
+                <View style={{ marginHorizontal: 15 }}>
                   <Text
                     style={{
                       color: 'red',
                       fontSize: 16,
                       marginBottom: 8,
                     }}>
-                   {I18n.translate('coupon_code_length_alert')}
+                    {I18n.translate('coupon_code_length_alert')}
                   </Text>
                 </View>
               )}
@@ -1333,29 +1335,29 @@ class AddAd extends React.Component {
                   borderBottomColor: Colors.gray,
                 }}>
                 <TextInput
-                 textAlign={this.props.language_id == 0? 'left':'right'}
+                  textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                   placeholder={I18n.translate('coupon_discount')}
                   keyboardType={'default'}
                   fontFamily={FontFamily.default}
                   defaultValue={this.state.Coupon_discount}
                   color={this.state.discountError ? 'red' : '#000'}
-                  style={{width: width * 0.72, fontSize: 18}}
+                  style={{ width: width * 0.72, fontSize: 18 }}
                   placeholderTextColor={Colors.gray1}
                   onChangeText={Coupon_discount =>
-                    this.setState({Coupon_discount}, () => {
+                    this.setState({ Coupon_discount }, () => {
                       if (!this.state.Coupon_discount.length) {
-                        this.setState({discountError: false});
+                        this.setState({ discountError: false });
                         return;
                       }
                       if (
                         this.state.Coupon_discount.length < 6 ||
                         this.state.Coupon_discount.toUpperCase() !==
-                          this.state.Coupon_discount ||
+                        this.state.Coupon_discount ||
                         this.state.Coupon_discount.length > 6
                       ) {
-                        this.setState({discountError: true});
+                        this.setState({ discountError: true });
                       } else {
-                        this.setState({discountError: false});
+                        this.setState({ discountError: false });
                       }
                     })
                   }
@@ -1364,7 +1366,7 @@ class AddAd extends React.Component {
                   value={this.state.Coupon_discount_perct}
                   fontFamily={FontFamily.default}
                   placeholder="%"
-                  textAlign={this.props.language_id == 0? 'left':'right'}
+                  textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                   keyboardType={'phone-pad'}
                   style={{
                     width: width * 0.2,
@@ -1375,7 +1377,7 @@ class AddAd extends React.Component {
                   }}
                   placeholderTextColor={Colors.gray1}
                   onChangeText={Coupon_discount_perct =>
-                    this.setState({Coupon_discount_perct})
+                    this.setState({ Coupon_discount_perct })
                   }
                 />
               </View>
@@ -1385,18 +1387,22 @@ class AddAd extends React.Component {
                 placeholder={`${I18n.translate('discount')} %`}
                 keyboardType={'phone-pad'}
                 containerStyle={s.Input}
-                textAlign={this.props.language_id == 0? 'left':'right'}
+                textAlign={this.props.language_id == 0 ? 'left' : 'right'}
                 inputContainerStyle={s.Input}
                 placeholderTextColor={Colors.gray1}
-                onChangeText={Discount => this.setState({Discount})}
+                onChangeText={Discount => this.setState({ Discount })}
               />
             </View>
-            <View style={{marginBottom: 30}}>
+            <View style={{ marginBottom: 30 }}>
               <TouchableOpacity onPress={() => this.Addad()} style={s.btn1}>
                 <Text style={s.btn1Text}>{I18n.translate('next')}</Text>
               </TouchableOpacity>
             </View>
-          </ScrollView>
+
+
+          </KeyboardAwareScrollView>
+
+          {/* ---------------------------- */}
         </View>
         <BottomSheetModal
           ref={this.bottomSheetRef}
@@ -1457,7 +1463,7 @@ class AddAd extends React.Component {
   };
 }
 
-const mapStateToProps = (state)=>({
+const mapStateToProps = (state) => ({
   language_id: state.data_Reducer.language_id
 
 })
@@ -1468,7 +1474,7 @@ export default connect(mapStateToProps)(AddAd)
 const s = StyleSheet.create({
   SEC2: {
     backgroundColor: Colors.white,
-   
+
     borderRadius: 10,
     height: 300,
     width: 400,

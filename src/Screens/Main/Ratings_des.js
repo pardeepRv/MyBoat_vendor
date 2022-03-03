@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -18,6 +18,8 @@ import {
 import Header from '../../Components/Header';
 import { back_img3, boat_img1, Colors, FontFamily, Sizes } from '../../Constants/Constants';
 import { useNavigation } from '@react-navigation/core';
+import config from '../../Constants/config';
+
 
 
 const DetailsRatings = ({ route }) => {
@@ -25,21 +27,52 @@ const DetailsRatings = ({ route }) => {
     const gotoBack = () => {
         Navigator.goBack();
     }
+
     // console.log(route.params.item.avg_rating)
     return (
+
         <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <Header
                 imgBack={true}
                 backBtn={true} />
-            <View style={sb.SEC2}>
-                <ScrollView style={{ marginTop: 20, paddingHorizontal: 20 }}>
+            <View style={[sb.SEC2,{height:400,flex:1}]}>
+                <ScrollView style={{ marginTop: 20, paddingHorizontal: 20,}}>
                     {/*  */}
+                    <Text style={{
+                        fontSize: 12, fontFamily:
+                            FontFamily.default, color: "#999", right: 3, alignSelf: 'flex-end'
+                    }}>
+                        {route.params.item.createtime}</Text>
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                         <View style={{ flexDirection: 'row', alignItems: "center" }}>
-                            <Image style={{ height: 40, width: 40 }} source={{ uri: 'https://source.unsplash.com/1600x900/?face' }} />
-                            <Text style={{ marginLeft: 5, fontFamily: FontFamily.semi_bold, fontSize: 16 }}>{route.params.item.review}</Text>
+                            {/* <Image style={{ height: 40, width: 40 }} 
+                            source={{ uri: 'https://source.unsplash.com/1600x900/?face' 
+                        }}
+                            /> */}
+
+                            {
+                            route.params.item && route.params.item.user_image ?
+                              <Image
+                                style={{ height: 40, width: 40 }}
+                                source={{
+                                  uri: config.imageUrl + route.params.item.user_image
+                                }}
+                              />
+                              :
+                              <Image
+                                style={{ height: 40, width: 40 }}
+                                source={{
+                                  uri: 'https://source.unsplash.com/weekly?face'
+                                }}
+                              />
+                          }
+
+                            <Text style={{
+                                width: Sizes.width - 100, marginLeft: 5,
+                                fontFamily: FontFamily.semi_bold,
+                            }}>{route.params.item.review}</Text>
                         </View>
-                        <Text style={{ fontSize: 10, fontFamily: FontFamily.default, color: "#999" }}>10:30 PM</Text>
+
                     </View>
                     {/*  */}
                     <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 10 }}>
@@ -210,14 +243,19 @@ const DetailsRatings = ({ route }) => {
                         {/* btn */}
 
                     </View>
+
                 </ScrollView>
-                <Card containerStyle={[{ position: "absolute", bottom: 10 }, sb.Btn1]}>
+                <Card containerStyle={[{ bottom: 20 ,}, sb.Btn1]}>
                     <TouchableOpacity onPress={() => gotoBack()}>
                         <View>
-                            <Text style={{ fontSize: 20, fontFamily: FontFamily.semi_bold, color: Colors.orange }}>Go Back</Text>
+                            <Text style={{
+                                fontSize: 20, fontFamily: FontFamily.semi_bold,
+                                color: Colors.orange
+                            }}>Go Back</Text>
                         </View>
                     </TouchableOpacity>
                 </Card>
+                
             </View>
         </View>
     )

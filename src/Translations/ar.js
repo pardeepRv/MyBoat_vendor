@@ -223,5 +223,7 @@ export default {
   permission_deny: 'طلب صلاحية مرفوض',
   error: 'خطأ',
   coupon_code_length_alert:'يجب أن يتكون رمز القسيمة من 6 أحرف',
-  loading_addons:'تحميل الإضافات'
+  loading_addons:'تحميل الإضافات',
+  //////////////new strings
+    manage_staff: 'إدارة موظفيك',
 };

@@ -419,7 +419,7 @@ const Profile = (props) => {
                               marginHorizontal: 7,
                             }}
                           >
-                            Manage Your Staff
+                            {I18n.translate("manage_staff")}
                           </Text>
                         </View>
                         <Icon name="arrow-right" type="evilicon" />

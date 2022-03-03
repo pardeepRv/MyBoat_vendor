@@ -8,6 +8,7 @@ import {
   ScrollView,
   FlatList,
   Image,
+  Dimensions,
 } from 'react-native';
 import { Icon, Input, Card, AirbnbRating } from 'react-native-elements';
 import Header from '../../Components/Header';
@@ -55,11 +56,13 @@ const Ratings = () => {
         if (res.data.success === 'true') {
           console.log('getUserDetails', res.data);
           setData(res.data.rating_arr);
-          setCount1(res.data.num_1);
-          setCount2(res.data.num_2);
-          setCount3(res.data.num_3);
-          setCount4(res.data.num_4);
-          setCount5(res.data.num_5);
+
+          setCount1(res.data.food_rating.rating);
+          setCount2(res.data.hospitality_rating.rating);
+          setCount3(res.data.captain_rating.rating);
+          setCount4(res.data.clean_rating.rating);
+          setCount5(res.data.time_rating.rating);
+
           setTotalcount(res.data.total_rating.count);
           setTotalrating(res.data.total_rating.rating);
         } else {
@@ -109,7 +112,7 @@ const Ratings = () => {
           </View>
         </View>
         {/*  */}
-        <View style={{ left: 40 }} >
+        <View style={{ left: 30 }} >
           {/* Time* */}
           <View
             style={sb.ratingView}>
@@ -258,14 +261,26 @@ const Ratings = () => {
                         }}>
                         <View
                           style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <Image
-                            style={{ height: 40, width: 40 }}
-                            source={{
-                              uri: 'https://source.unsplash.com/weekly?face',
-                            }}
-                          />
+                          {
+                            item && item.item.user_image ?
+                              <Image
+                                style={{ height: 40, width: 40 }}
+                                source={{
+                                  uri: config.imageUrl + item.item.user_image
+                                }}
+                              />
+                              :
+                              <Image
+                                style={{ height: 40, width: 40 }}
+                                source={{
+                                  uri: 'https://source.unsplash.com/weekly?face'
+                                }}
+                              />
+                          }
+
                           <View style={{ marginLeft: 5 }}>
-                            <Text style={{ fontFamily: FontFamily.semi_bold }}>
+
+                            <Text style={{ fontFamily: FontFamily.semi_bold, flex: 1, }}>
                               {item.item.user_name}
                             </Text>
                             <AirbnbRating
@@ -283,8 +298,12 @@ const Ratings = () => {
                             <Text
                               style={{
                                 fontFamily: FontFamily.default,
-                                fontSize: 10,
-                              }}>
+                                width: Sizes.width - 100
+                              }}
+                              numberOfLines={2}
+                              ellipsizeMode={'tail'}
+                            >
+
                               {item.item.review}
                             </Text>
                           </View>
@@ -292,7 +311,7 @@ const Ratings = () => {
                         <Text
                           style={{
                             fontSize: 10,
-                            fontFamily: FontFamily.default,
+                            fontFamily: FontFamily.default, right: 50
                           }}>
                           {item.item.createtime}
                         </Text>
@@ -331,11 +350,13 @@ const sb = StyleSheet.create({
     // alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 2,
-    width: '60%'
+    width: '60%',
+    
   },
   ratingText: {
     color: '#fff',
-    width: 90
+    width: 90,
+    
   }
 });
 export default Ratings;

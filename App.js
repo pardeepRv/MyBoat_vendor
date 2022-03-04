@@ -13,7 +13,7 @@ class App extends React.Component {
   async componentDidMount() {
     console.disableYellowBox = true; // hide warings from simulator
     let appLang = await AsyncStorage.getItem("locale");
-    
+
     if (appLang === null) {
       AsyncStorage.setItem("locale", "en");
       AsyncStorage.setItem("language", "0");
@@ -28,17 +28,21 @@ class App extends React.Component {
     firebaseprovider.getMyInboxAllData();
     firebaseprovider.getAllUsers();
   }
-  render() { 
+  render() {
     // console.disableYellowBox = true;
     return (
       <Provider store={store}>
         <NavigationContainer>
           <Root>
-            <SafeAreaView style={{
-              backgroundColor: Colors.orange
-            }} />
+            <SafeAreaView
+              style={{
+                backgroundColor: Colors.black,
+              }}
+            />
             {/* <StatusBar hidden /> */}
-            <StatusBar backgroundColor={Colors.orange} />
+          
+            <StatusBar backgroundColor={'transparent'} translucent/>
+
             <Stacks />
             {/* <TabNav /> */}
           </Root>

@@ -135,17 +135,19 @@ const Home = (props) => {
         console.log(res, "res in home");
         setLoader(false);
         if (res.data.success === "true") {
-          setData(res.data.upcoming_booking_arr);
           if (res.data.upcoming_booking_arr != "NA2") {
             setUpcoming(res.data.upcoming_booking_arr);
           } else if (res.data.ongoning_booking_arr != "NA3") {
             setOutgoing(res.data.ongoning_booking_arr);
+          } else {
+            setUpcoming([]);
+            setOutgoing([]);
           }
         } else {
           if (props.language_id == 0) alert(res.data.msg[0]);
           else alert(res.data.msg[1]);
         }
-        console.log(upcoming, 'upcomingupcoming');
+        console.log(upcoming, "upcomingupcoming");
       })
       .catch((err) => console.log(err));
   };

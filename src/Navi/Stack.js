@@ -35,6 +35,7 @@ import ViewStaff from "../Screens/Main/ViewStaff";
 import MapView from "../Screens/MapView";
 import TabNav from "./BottomNav";
 import viewAddDetail from "../Screens/Main/viewAddDetail";
+import OneToOneChat from "../Screens/Main/OneToOneChat";
 // import MyTabs from './BottomNav';
 
 const Stack = createStackNavigator();
@@ -64,6 +65,7 @@ const Stacks = () => {
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="Ratings" component={Ratings} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="OneToOneChat" component={OneToOneChat} />
       <Stack.Screen name="DetailsRating" component={DetailsRatings} />
       <Stack.Screen name="Noti_Setting" component={Noti_Setting} />
       <Stack.Screen name="Change_Language" component={Change_Language} />

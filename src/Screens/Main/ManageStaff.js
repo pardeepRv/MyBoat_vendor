@@ -16,6 +16,8 @@ import Header from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
 import config from "../../Constants/config";
 import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
+import I18n from "../../Translations/i18";
+
 
 const ManageStaff = () => {
   const navigation = useNavigation();
@@ -37,6 +39,7 @@ const ManageStaff = () => {
   };
 
   useEffect(async () => {
+    
     navigation.addListener("focus", () => {
       return allData();
     });
@@ -126,7 +129,7 @@ const ManageStaff = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: Colors.white, flex: 1 }}>
         <Header
-          name="Add Staff"
+          name={I18n.translate('Add_Staff')}
           backBtn={true}
           headerHeight={Sizes.height * 0.2}
           // searchBtn={true}
@@ -139,7 +142,7 @@ const ManageStaff = () => {
             style={[s.btn1]}
             onPress={() => navigation.navigate("AddStaff", { type: "Add" })}
           >
-            <Text style={{ letterSpacing: 0.75 }}>Add</Text>
+            <Text style={{ letterSpacing: 0.75 }}>{I18n.translate('add')}</Text>
           </TouchableOpacity>
           {loader ? (
             <Loading />
@@ -376,7 +379,7 @@ const ManageStaff = () => {
                     color: "rgba(0, 0, 0, 0.55)",
                   }}
                 >
-                  View
+                  {I18n.translate('view')}
                 </Text>
               </TouchableOpacity>
               <View
@@ -405,7 +408,7 @@ const ManageStaff = () => {
                     color: "rgba(0, 0, 0, 0.55)",
                   }}
                 >
-                  Edit
+                  {I18n.translate('edit')}
                 </Text>
               </TouchableOpacity>
               <View
@@ -431,7 +434,7 @@ const ManageStaff = () => {
                     color: "rgba(0, 0, 0, 0.55)",
                   }}
                 >
-                  Delete
+                  {I18n.translate('delete')}
                 </Text>
               </TouchableOpacity>
               <View
@@ -453,8 +456,8 @@ const ManageStaff = () => {
                     lineHeight: 39,
                     color: "rgba(0, 0, 0, 0.55)",
                   }}
-                >
-                  Back
+                >               
+                  {I18n.translate('back')}
                 </Text>
               </TouchableOpacity>
             </View>

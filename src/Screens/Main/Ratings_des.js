@@ -19,7 +19,7 @@ import Header from '../../Components/Header';
 import { back_img3, boat_img1, Colors, FontFamily, Sizes } from '../../Constants/Constants';
 import { useNavigation } from '@react-navigation/core';
 import config from '../../Constants/config';
-
+import I18n from "../../Translations/i18";
 
 
 const DetailsRatings = ({ route }) => {
@@ -77,7 +77,7 @@ const DetailsRatings = ({ route }) => {
                     {/*  */}
                     <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 10 }}>
                         <Text style={{ fontFamily: FontFamily.semi_bold, fontSize: 12 }}>
-                            Total Ratings
+                            {I18n.translate('total_rating')}
                         </Text>
                         <AirbnbRating
                             showRating={false}
@@ -96,12 +96,12 @@ const DetailsRatings = ({ route }) => {
                     <View style={sb.DIVIDER} />
                     {/*  */}
                     <View style={{ marginTop: 10 }}>
-                        <Text style={{ fontFamily: FontFamily.semi_bold, fontSize: 14 }}>Rating :</Text>
+                        <Text style={{ fontFamily: FontFamily.semi_bold, fontSize: 14 }}>{I18n.translate('rating')} :</Text>
                         <View style={{ marginVertical: 10 }}>
                             {/* Time */}
                             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginBottom: 5, paddingHorizontal: 40 }}>
                                 <Text style={{ fontSize: 13, fontFamily: FontFamily.semi_bold }}>
-                                    Time
+                                {I18n.translate('time')}
                                 </Text>
                                 <AirbnbRating
                                     showRating={false}
@@ -119,7 +119,7 @@ const DetailsRatings = ({ route }) => {
                             {/* Captain */}
                             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginBottom: 5, paddingHorizontal: 40 }}>
                                 <Text style={{ fontSize: 13, fontFamily: FontFamily.semi_bold }}>
-                                    Captain
+                                {I18n.translate('captain')}
                                 </Text>
                                 <AirbnbRating
                                     showRating={false}
@@ -137,7 +137,7 @@ const DetailsRatings = ({ route }) => {
                             {/*Food */}
                             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginBottom: 5, paddingHorizontal: 40 }}>
                                 <Text style={{ fontSize: 13, fontFamily: FontFamily.semi_bold }}>
-                                    Food
+                                {I18n.translate('food')}
                                 </Text>
                                 <AirbnbRating
                                     showRating={false}
@@ -155,7 +155,7 @@ const DetailsRatings = ({ route }) => {
                             {/* Clean */}
                             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginBottom: 5, paddingHorizontal: 40 }}>
                                 <Text style={{ fontSize: 13, fontFamily: FontFamily.semi_bold }}>
-                                    Clean
+                                {I18n.translate('clean')}
                                 </Text>
                                 <AirbnbRating
                                     showRating={false}
@@ -173,7 +173,8 @@ const DetailsRatings = ({ route }) => {
                             {/* Hospitality */}
                             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginBottom: 5, paddingHorizontal: 40 }}>
                                 <Text style={{ fontSize: 13, fontFamily: FontFamily.semi_bold }}>
-                                    Hospitality
+                                   
+                                    {I18n.translate('hospitality')}
                                 </Text>
                                 <AirbnbRating
                                     showRating={false}
@@ -191,7 +192,8 @@ const DetailsRatings = ({ route }) => {
                             {/* Equipment */}
                             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginBottom: 5, paddingHorizontal: 40 }}>
                                 <Text style={{ fontSize: 13, fontFamily: FontFamily.semi_bold }}>
-                                    Equipment
+                                    {/* Equipment */}
+                                    {I18n.translate('equipment')}
                                 </Text>
                                 <AirbnbRating
                                     showRating={false}
@@ -209,7 +211,8 @@ const DetailsRatings = ({ route }) => {
                             {/* Entertainment */}
                             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginBottom: 5, paddingHorizontal: 40 }}>
                                 <Text style={{ fontSize: 13, fontFamily: FontFamily.semi_bold }}>
-                                    Entertainment
+                                    {/* Entertainment */}
+                                    {I18n.translate('entertainment')}
                                 </Text>
                                 <AirbnbRating
                                     showRating={false}
@@ -231,7 +234,7 @@ const DetailsRatings = ({ route }) => {
                     <View style={sb.DIVIDER} />
                     {/*  */}
                     <View style={{ marginTop: 10 }}>
-                        <Text style={{ fontFamily: FontFamily.semi_bold, fontSize: 14 }}>Comment :</Text>
+                        <Text style={{ fontFamily: FontFamily.semi_bold, fontSize: 14 }}>{I18n.translate('comment')} :</Text>
                         <View style={{ paddingHorizontal: 20, marginTop: 6 }}>
                             <Text style={{ fontFamily: FontFamily.default, fontSize: 10, lineHeight: 16, color: "#999" }}>
                                 Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is
@@ -251,7 +254,7 @@ const DetailsRatings = ({ route }) => {
                             <Text style={{
                                 fontSize: 20, fontFamily: FontFamily.semi_bold,
                                 color: Colors.orange
-                            }}>Go Back</Text>
+                            }}> {I18n.translate('go_back')} </Text>
                         </View>
                     </TouchableOpacity>
                 </Card>

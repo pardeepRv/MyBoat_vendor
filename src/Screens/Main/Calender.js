@@ -28,7 +28,7 @@ const CalenderView = (props) => {
   const [upcomingTripData, setUpcomingTripData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-
+  
   const [permissionArr, serPermissionArr] = useState([]);
 
   // useEffect(() => {
@@ -113,7 +113,7 @@ const CalenderView = (props) => {
         setLoader(false);
         setIsFetching(false);
         if (res.data.success === "true") {
-          res.data.upcoming_booking_arr?.length &&
+          res.data.upcoming_booking_arr?.length && res.data.booking_arr?.length&&
             setUpcomingTripData(res.data.upcoming_booking_arr);
         } else {
           if (props.language_id == 0) alert(res.data.msg[0]);

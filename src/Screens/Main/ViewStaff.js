@@ -5,11 +5,16 @@ import {
   StyleSheet,
   Switch,
   Text,
-  View,
+  View,Alert
 } from 'react-native';
 import Header from '../../Components/Header';
 import { Colors } from '../../Constants/Constants';
+import I18n from "../../Translations/i18";
 class ViewStaff extends React.Component {
+
+  componentDidMount(){
+   
+  }
 
   constructor(props) {
     console.log(props, 'props n view');
@@ -19,15 +24,15 @@ class ViewStaff extends React.Component {
       item: props.route.params.item,
       iscontact: '',
       listKeys: [
-        { key: 'Basketball', switch: finalData && finalData.view_home_permission == 1 ? true : false, text: 'View Home' },
-        { key: 'Football',switch: finalData && finalData.manage_home_permission == 1 ? true : false, text: 'Manage Home' },
-        { key: 'Baseball', switch: finalData && finalData.view_add_permission == 1 ? true : false, text: 'View my add' },
-        { key: 'Soccer',switch: finalData && finalData.manage_add_permission == 1 ? true : false, text: 'Manage my add' },
-        { key: 'Running', switch: finalData && finalData.chat_permission == 1 ? true : false, text: 'Chat' },
-        { key: 'Cross Training',switch: finalData && finalData.view_unavailability_permission == 1 ? true : false, text: 'View Unavalibilty' },
-        { key: 'Gym Workout',switch: finalData && finalData.manage_unavailability_permission == 1 ? true : false, text: 'Manage Unavalibilty' },
-        { key: 'Workout',switch: finalData && finalData.view_my_wallet_permission == 1 ? true : false, text: 'View My Wallet' },
-        { key: 'Gym ',switch: finalData && finalData.view_withdrawl_permission == 1 ? true : false, text: 'View Withdrawl' },
+        { key: 'Basketball', switch: finalData && finalData.view_home_permission == 1 ? true : false, text: I18n.translate('view_home') },
+        { key: 'Football',switch: finalData && finalData.manage_home_permission == 1 ? true : false, text: I18n.translate('manage_home') },
+        { key: 'Baseball', switch: finalData && finalData.view_add_permission == 1 ? true : false, text: I18n.translate('view_my_add') },
+        { key: 'Soccer',switch: finalData && finalData.manage_add_permission == 1 ? true : false, text: I18n.translate('manage_my_add') },
+        { key: 'Running', switch: finalData && finalData.chat_permission == 1 ? true : false, text: I18n.translate('chat')},
+        { key: 'Cross Training',switch: finalData && finalData.view_unavailability_permission == 1 ? true : false, text: I18n.translate('view_unavailability') },
+        { key: 'Gym Workout',switch: finalData && finalData.manage_unavailability_permission == 1 ? true : false, text: I18n.translate('manage_unavailability') },
+        { key: 'Workout',switch: finalData && finalData.view_my_wallet_permission == 1 ? true : false, text: I18n.translate('view_my_wallet') },
+        { key: 'Gym ',switch: finalData && finalData.view_withdrawl_permission == 1 ? true : false, text: I18n.translate('view_withdraw') },
       ],
     };
   }
@@ -74,7 +79,7 @@ class ViewStaff extends React.Component {
     const { item } = this.state;
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
-        <Header imgBack={true} backBtn={true} name="Details" />
+        <Header imgBack={true} backBtn={true} name={I18n.translate("details")} />
         <View style={{ flex: 1 }}>
           <FlatList
             data={this.state.listKeys}

@@ -226,5 +226,30 @@ export default {
   loading_addons: 'Loading Addons',
   ///////////////new strings
   manage_staff: 'Manage Your Staff',
+  Add_Staff:'Add Staff',
+  rating:'Ratings',
+  time:'Time',
+  clean:'Clean',
+  captain:'Captain',
+  hospitality:'Hospitality',
+  equipment:'Equipment',
+  total_rating:'Total Ratings',
+  rating:'Rating',
+  comment:'Comment',
+  go_back:'Go Back',
+  view:'View',
+  back:'Back',
+  view_home:'View Home',
+
+  manage_home:'Manage Home',
+  view_my_add:'View My Add',
+  manage_my_add:'Manage My Add',
+  chat:'Chat',
+  view_unavailability:'View Unavailability',
+  manage_unavailability:'Manage Unavailability',
+  view_my_wallet:'View My Wallet',
+  view_withdraw:'View Withdraw',
+  permission:'permissions',
+  save:'save'
 
 };

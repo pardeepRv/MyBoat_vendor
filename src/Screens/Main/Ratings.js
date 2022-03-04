@@ -25,6 +25,7 @@ import config from '../../Constants/config';
 import axios from 'axios';
 import { s } from '../../Components/Header';
 import { Loading } from '../../Components/Loader';
+import I18n from "../../Translations/i18";
 const Ratings = () => {
   const navigate = useNavigation();
   const [data, setData] = useState([]);
@@ -74,7 +75,7 @@ const Ratings = () => {
   }, []);
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header backBtn={true} name="Ratings" imgBack={true} headerHeight={300} />
+      <Header backBtn={true} name={I18n.translate("rating")} imgBack={true} headerHeight={300} />
       {/* Ratings */}
       <View
         style={{
@@ -116,7 +117,7 @@ const Ratings = () => {
           {/* Time* */}
           <View
             style={sb.ratingView}>
-            <Text style={sb.ratingText} >Time</Text>
+            <Text style={sb.ratingText} >{I18n.translate('time')}</Text>
             <AirbnbRating
               showRating={false}
               size={14}
@@ -133,7 +134,7 @@ const Ratings = () => {
           {/* Clean* */}
           <View
             style={sb.ratingView}>
-            <Text style={sb.ratingText} >Clean</Text>
+            <Text style={sb.ratingText} >{I18n.translate('clean')}</Text>
             <AirbnbRating
               showRating={false}
               size={14}
@@ -150,7 +151,7 @@ const Ratings = () => {
           {/* Captain* */}
           <View
             style={sb.ratingView}>
-            <Text style={sb.ratingText} >Captain</Text>
+            <Text style={sb.ratingText} >{I18n.translate('captain')}</Text>
             <AirbnbRating
               showRating={false}
               size={14}
@@ -167,7 +168,7 @@ const Ratings = () => {
           {/* Hospitality* */}
           <View
             style={sb.ratingView}>
-            <Text style={sb.ratingText} >Hospitality</Text>
+            <Text style={sb.ratingText} >{I18n.translate('hospitality')}</Text>
             <AirbnbRating
               showRating={false}
               size={14}
@@ -184,7 +185,7 @@ const Ratings = () => {
           {/* Food* */}
           <View
             style={sb.ratingView}>
-            <Text style={sb.ratingText} >Food</Text>
+            <Text style={sb.ratingText} >{I18n.translate('food')}</Text>
             <AirbnbRating
               showRating={false}
               size={14}
@@ -201,7 +202,7 @@ const Ratings = () => {
           {/* Equipment* */}
           <View
             style={sb.ratingView}>
-            <Text style={sb.ratingText} >Equipment</Text>
+            <Text style={sb.ratingText} >{I18n.translate('equipment')} </Text>
             <AirbnbRating
               showRating={false}
               size={14}
@@ -218,7 +219,7 @@ const Ratings = () => {
           {/* Entertainment* */}
           <View
             style={sb.ratingView}>
-            <Text style={sb.ratingText} >Entertainment</Text>
+            <Text style={sb.ratingText} >{I18n.translate('entertainment')}</Text>
             <AirbnbRating
               showRating={false}
               size={14}

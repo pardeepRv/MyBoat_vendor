@@ -52,6 +52,7 @@ class ViewAdd extends React.Component {
     this.getAdvertismentDetails();
   }
   componentDidMount() {
+    
     //   alert( JSON.stringify(this.props.route.params.item.addvr_id))
     
     // var userInfo =  AsyncStorage.getItem("user_id");

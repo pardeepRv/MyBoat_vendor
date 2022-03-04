@@ -67,14 +67,15 @@ class Inbox extends Component {
     axios
       .get(url)
       .then((res) => {
-        console.log(res,'res in inbox');
+        console.log(res, 'res in inbox');
         if (res.data.success === "true") {
           res.data.upcoming_booking_arr?.length &&
             this.setState(
               {
+
                 bookingListDetails:
                   res.data.upcoming_booking_arr.length &&
-                  res.data.upcoming_booking_arr !== "NA"
+                    res.data.upcoming_booking_arr !== "NA" && res.data.ongoning_booking_arr.length && res.data.ongoning_booking_arr !== "NA3"
                     ? res.data.upcoming_booking_arr
                     : [],
               },
@@ -111,12 +112,12 @@ class Inbox extends Component {
   setAvailableChatDetails = () => {
     let availablePeopleToChat = [];
     let bookingDetails = this.state.bookingListDetails;
-    bookingDetails?.length &&
-      bookingDetails.map((item) => {
-        if (this.checkBookingStatus(item)) {
-          availablePeopleToChat.push(item);
-        }
-      });
+    bookingDetails?.length
+    bookingDetails.map((item) => {
+      if (this.checkBookingStatus(item)) {
+        availablePeopleToChat.push(item);
+      }
+    });
 
     this.setState({
       availablePeopleToChat,
@@ -124,7 +125,7 @@ class Inbox extends Component {
     });
   };
   componentDidMount() {
-   
+
     this.props.navigation.addListener("focus", () => {
       this.getBookingListForOwner();
       this.showUserInbox();
@@ -493,8 +494,8 @@ class Inbox extends Component {
                 }}
               >
                 {item.images == undefined ||
-                item.images == "NA" ||
-                item.images === null ? (
+                  item.images == "NA" ||
+                  item.images === null ? (
                   <ImageBackground
                     imageStyle={{ borderRadius: 20 }}
                     style={{
@@ -607,14 +608,14 @@ class Inbox extends Component {
             }}
           >
             <View style={{ flex: 1 }}>
-              <View style={{ flexDirection: "row", alignItems: "center", top:30}}>
+              <View style={{ flexDirection: "row", alignItems: "center", top: 30 }}>
                 <AntDesign
                   name={"arrowleft"}
-                  onPress={() => {                    
+                  onPress={() => {
                     this.setState({ modalVisible: false });
                   }}
                   size={25}
-                  style={{ padding: 5, marginHorizontal: 10}}
+                  style={{ padding: 5, marginHorizontal: 10 }}
                 />
 
                 <TextInput
@@ -630,10 +631,10 @@ class Inbox extends Component {
                     borderWidth: 1,
                     borderColor: Colors.orange,
                     width: "85%",
-                    height:40,
+                    height: 40,
                     borderRadius: 10,
                     marginVertical: 10,
-                   
+
                   }}
                 />
               </View>

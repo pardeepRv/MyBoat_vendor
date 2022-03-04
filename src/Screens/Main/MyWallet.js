@@ -24,6 +24,7 @@ import config from '../../Constants/config';
 import axios from 'axios';
 import moment from 'moment';
 import {Loading} from '../../Components/Loader';
+import I18n from "../../Translations/i18";
 const MyWallet = () => {
   const [totalEarn, setTotalEarn] = useState(0);
   const [pending, setPending] = useState(0);
@@ -32,6 +33,7 @@ const MyWallet = () => {
   // --------------------------------------- //
   useEffect(async () => {
     wallet_data();
+   
   }, []);
   const wallet_data = async () => {
     let userInfo = await AsyncStorage.getItem('userInfo');
@@ -59,7 +61,7 @@ const MyWallet = () => {
     <View style={{flex: 1, backgroundColor: Colors.white}}>
       <Header
         backBtn={true}
-        name="My Wallet"
+        name={I18n.translate('my_wallet')}
         imgBack={true}
         headerHeight={300}
       />
@@ -86,7 +88,8 @@ const MyWallet = () => {
               fontSize: 17,
               color: Colors.white,
             }}>
-            Total Amount
+            {/* Total Amount */}
+            {I18n.translate("total_amt")}
           </Text>
         </View>
         <View style={{alignItems: 'center'}}>
@@ -104,7 +107,8 @@ const MyWallet = () => {
               fontSize: 17,
               color: Colors.white,
             }}>
-            Pending Amount
+            {/* Pending Amount */}
+            {I18n.translate("pending_amt")}
           </Text>
         </View>
       </View>
@@ -117,7 +121,8 @@ const MyWallet = () => {
             {data === 'NA' ? (
               <View style={{alignItems: 'center', marginTop: '10%'}}>
                 <Text style={{fontSize: 20, fontWeight: 'bold', color: '#ccc'}}>
-                  No Data Available
+                  {/* No Data Available */}
+                  {I18n.translate("no_data")}
                 </Text>
               </View>
             ) : (

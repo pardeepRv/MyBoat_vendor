@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/core";
+import messaging from '@react-native-firebase/messaging';
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
@@ -74,7 +75,13 @@ const Login = (props) => {
   data.append("language_id", props.language_id);
   data.append("country_code", config.country_code);
   data.append("user_type", config.user_type_post);
+
   const logIn = async () => {
+
+    const fcmToken = await messaging().getToken();
+    data.append('device_token', fcmToken);
+    console.log(data,'data in log in');
+
     setLoader(true);
     // nav.navigate("Home");
     axios

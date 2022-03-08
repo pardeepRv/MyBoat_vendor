@@ -9,8 +9,17 @@ import Stacks from "./src/Navi/Stack";
 import { firebaseprovider } from "./src/Screens/Provider/FirebaseProvider";
 import { SafeAreaView, StatusBar } from "react-native";
 import { Colors } from "./src/Constants/Constants";
+import { requestUserPermission } from "./src/Screens/service/FcmService";
+import { createNotificationListener } from "./src/Screens/service/notificationListener";
+import checkPermission from "./src/Screens/service/notificationServices";
+
 class App extends React.Component {
   async componentDidMount() {
+    
+    checkPermission();
+    requestUserPermission();
+    createNotificationListener();
+
     console.disableYellowBox = true; // hide warings from simulator
     let appLang = await AsyncStorage.getItem("locale");
 
@@ -40,8 +49,8 @@ class App extends React.Component {
               }}
             />
             {/* <StatusBar hidden /> */}
-          
-            <StatusBar backgroundColor={'transparent'} translucent/>
+
+            <StatusBar backgroundColor={"transparent"} translucent />
 
             <Stacks />
             {/* <TabNav /> */}

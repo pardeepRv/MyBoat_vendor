@@ -86,7 +86,7 @@ class ViewAdd extends React.Component {
     data.append("status", id);
 
     console.log(data);
-    console.log(url, 'url');
+     console.log(url, 'url');
     axios
       .post(url, data)
       .then((res) => {
@@ -294,7 +294,7 @@ class ViewAdd extends React.Component {
       config.apiUrl +
       "/boat_details.php?user_id_post=" +
       parsedInfo.id +
-      "&&boat_id_post=" +
+      "&boat_id_post=" +
       id;
     axios
       .get(url)

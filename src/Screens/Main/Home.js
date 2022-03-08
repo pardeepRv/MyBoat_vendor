@@ -17,6 +17,7 @@ import { connect, useDispatch } from "react-redux";
 import Header from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
 import { getPermission } from "../../config/callApi";
+import socketServices from "../../config/socketServices";
 import config from "../../Constants/config";
 import { Colors, FontFamily } from "../../Constants/Constants";
 import Outgoing from "../../Data/Outgoing";
@@ -43,14 +44,33 @@ const Home = (props) => {
   const [loader, setLoader] = useState(false);
   // --------------------------------------- //
 
-  // useEffect(async () => {
-  //   getLoginuserInfo();
-  // }, []);
+  useEffect(() => {
+    if (!socketServices.socket) {
+      //connect socket
+      socketServices.initializeSocket(206);
+    }
+    if (!socketServices.socket.connected) {
+      //connect socket
+      socketServices.socket.connect();
+    }
+  }, []);
+
+  const socketintial = () => {
+    if (!socketServices.socket) {
+      //connect socket
+      socketServices.initializeSocket(206);
+    }
+    if (!socketServices.socket.connected) {
+      //connect socket
+      socketServices.socket.connect();
+    }
+  };
 
   useEffect(() => {
     console.log("in useEfect loginsuer>>>>>>>>>>>.");
     const unsubscribe = props.navigation.addListener("focus", () => {
       getLoginuserInfo();
+      // socketintial();
     });
     return unsubscribe;
   }, [props.navigation]);

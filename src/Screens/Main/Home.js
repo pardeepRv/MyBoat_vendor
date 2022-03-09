@@ -24,7 +24,11 @@ import Outgoing from "../../Data/Outgoing";
 import Upcoming from "../../Data/Upcoming";
 import { toggleLanguage } from "../../Data_Service/actions";
 import I18n from "../../Translations/i18";
+import { UserContext } from "./UserContext";
+
 const Home = (props) => {
+  const value = React.useContext(UserContext);
+  console.log(value,'in home');
   console.log(props, "pro[s in home");
   const [btn1Style, setBtn1Style] = useState({
     backColor: Colors.orange,
@@ -44,10 +48,13 @@ const Home = (props) => {
   const [loader, setLoader] = useState(false);
   // --------------------------------------- //
 
-  useEffect(() => {
+  useEffect(async () => {
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+
     if (!socketServices.socket) {
       //connect socket
-      socketServices.initializeSocket(206);
+      socketServices.initializeSocket(parsedInfo.id);
     }
     if (!socketServices.socket.connected) {
       //connect socket
@@ -267,6 +274,7 @@ const Home = (props) => {
           searchBtn={true}
           name={I18n.translate("home")}
         />
+
         {/* Buttons */}
         <View
           style={{
@@ -280,11 +288,13 @@ const Home = (props) => {
             <TouchableOpacity
               style={[s.btn1, { backgroundColor: btn1Style.backColor }]}
               onPress={() => OutgoingBtn()}
+              // onPress={() =>value.updateValue(2)}
               activeOpacity={0.8}
             >
               <Text style={[s.btn1Text, { color: btn1Style.textCOlor }]}>
                 {I18n.translate("outgoing")}
               </Text>
+              {/* <Text>{value.value}</Text> */}
             </TouchableOpacity>
             <TouchableOpacity
               style={[s.btn1, { backgroundColor: btn2Style.backColor }]}

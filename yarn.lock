@@ -4590,7 +4590,7 @@
   "resolved" "https://registry.npmjs.org/interpret/-/interpret-1.4.0.tgz"
   "version" "1.4.0"
 
-"invariant@^2.2.2", "invariant@^2.2.4":
+"invariant@^2.2.4":
   "integrity" "sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA=="
   "resolved" "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
   "version" "2.2.4"
@@ -7320,13 +7320,6 @@
   dependencies:
     "prop-types" "^15.6.2"
     "react-native-animatable" "1.3.3"
-
-"react-native-onesignal@^4.3.3":
-  "integrity" "sha512-FpSUA9JczrIndqEGk86pnHr0XHRGmZLB6EhSK2PeF++tAA2GNTKd7ga59RCb8S2097qHzBBpHYVefmIIbR8dtQ=="
-  "resolved" "https://registry.npmjs.org/react-native-onesignal/-/react-native-onesignal-4.3.4.tgz"
-  "version" "4.3.4"
-  dependencies:
-    "invariant" "^2.2.2"
 
 "react-native-otp-inputs@^7.0.3":
   "integrity" "sha512-o5AGNF7HOzFcQzQ/8D7yngyolIxmgpCpIUi7Wzs1zYpxYtJrPSOXaQn/zYpJ7fhJZi0PxhPsxQdGEbZDGF5jNg=="

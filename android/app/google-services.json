@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "1076734868236",
+    "firebase_url": "https://myboat-54b2a-default-rtdb.firebaseio.com",
+    "project_id": "myboat-54b2a",
+    "storage_bucket": "myboat-54b2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076734868236:android:d7eb558e09eaf9ab406729",
+        "android_client_info": {
+          "package_name": "com.boatuser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076734868236-9idrhal5qg6dss2ag1kfciiu4e3kv6f2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boatuser",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1076734868236-emtvn569n5uecsoqgchs32lcskvp7ub1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boatuser",
+            "certificate_hash": "f5e538c7dfb5c4d2d166d57a6514626d6a9e4087"
+          }
+        },
+        {
+          "client_id": "1076734868236-uon9jm6dmf6l8ss6sbjhfjmakba027ao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlcRhsVx__5eGypgp5GfD78-YAE2bgTWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076734868236-uon9jm6dmf6l8ss6sbjhfjmakba027ao.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1076734868236-b42pusj1jlesml9mru4su3blhlbk76fi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.boatuser"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076734868236:android:78551ef0d76a9e72406729",
+        "android_client_info": {
+          "package_name": "com.orangeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076734868236-uon9jm6dmf6l8ss6sbjhfjmakba027ao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlcRhsVx__5eGypgp5GfD78-YAE2bgTWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076734868236-uon9jm6dmf6l8ss6sbjhfjmakba027ao.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1076734868236-b42pusj1jlesml9mru4su3blhlbk76fi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.boatuser"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,6 +19,8 @@ import { Loading } from "../../Components/Loader";
 import config from "../../Constants/config";
 import { back_img4, Colors, FontFamily } from "../../Constants/Constants";
 import I18n from "../../Translations/i18";
+import { UserContext } from "./UserContext";
+
 const CustomHeader = ({ name }) => {
   const nav = useNavigation();
   const gotoSettings = () => {
@@ -64,6 +66,8 @@ const CustomHeader = ({ name }) => {
 };
 
 const Profile = (props) => {
+  const value = React.useContext(UserContext);
+
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [totalcount, setTotalcount] = useState("");
@@ -348,7 +352,6 @@ const Profile = (props) => {
               {/* THREE OPT  */}
               <View>
                 {/* 1 option */}
-
                 {!permissionArr.length && (
                   <TouchableOpacity
                     onPress={() => navigation.navigate("manageBoats")}

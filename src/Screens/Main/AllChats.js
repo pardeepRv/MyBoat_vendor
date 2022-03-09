@@ -1,3 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import React, { PureComponent } from "react";
 import {
   Dimensions,
@@ -12,6 +15,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import Header from "../../Components/Header";
+import config from "../../Constants/config";
 
 const { width, height } = Dimensions.get("window");
 
@@ -44,6 +48,36 @@ class AllChats extends PureComponent {
       allChatMember: dummyChat,
     };
   }
+
+  componentDidMount() {
+    this.onFocusSubscribe = this.props.navigation.addListener("focus", () => {
+      this.getAllChatMembers();
+    });
+  }
+
+  componentWillUnmount() {
+    this.onFocusSubscribe();
+  }
+
+  getAllChatMembers = async () => {
+  let url = config.apiUrl + "/chat_list.php";
+
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo, "parsedInfo >>>>>>>>>>>>>");
+
+    let data = new FormData();
+    data.append("user_id", parsedInfo.id);
+
+    axios
+      .post(url, data)
+      .then((res) => {
+        console.log(res, "get all chats");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   renderChats = ({ item }) => {
     let data = {};

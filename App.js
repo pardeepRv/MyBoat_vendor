@@ -12,10 +12,16 @@ import { Colors } from "./src/Constants/Constants";
 import { requestUserPermission } from "./src/Screens/service/FcmService";
 import { createNotificationListener } from "./src/Screens/service/notificationListener";
 import checkPermission from "./src/Screens/service/notificationServices";
+import { UserContext } from "./src/Screens/Main/UserContext";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "prince",
+    };
+  }
   async componentDidMount() {
-    
     checkPermission();
     requestUserPermission();
     createNotificationListener();
@@ -37,6 +43,14 @@ class App extends React.Component {
     firebaseprovider.getMyInboxAllData();
     firebaseprovider.getAllUsers();
   }
+
+  setData = (val) => {
+    alert(val);
+    this.setState({
+      name: "pardeep",
+    });
+  };
+
   render() {
     // console.disableYellowBox = true;
     return (
@@ -48,12 +62,12 @@ class App extends React.Component {
                 backgroundColor: Colors.black,
               }}
             />
-            {/* <StatusBar hidden /> */}
-
             <StatusBar backgroundColor={"transparent"} translucent />
-
-            <Stacks />
-            {/* <TabNav /> */}
+            <UserContext.Provider
+              value={{ value: this.state.name, updateValue: this.setData }}
+            >
+              <Stacks />
+            </UserContext.Provider>
           </Root>
         </NavigationContainer>
       </Provider>

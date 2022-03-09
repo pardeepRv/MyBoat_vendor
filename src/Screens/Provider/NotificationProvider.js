@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import OneSignal from 'react-native-onesignal';
+// import OneSignal from 'react-native-onesignal';
 import { config } from './configProvider';
 
 
@@ -22,7 +22,7 @@ class NotificationProvider {
           group: 10,
           priority: 10,
         };
-        OneSignal.postNotification(contents, data, playerIds, other);
+        // OneSignal.postNotification(contents, data, playerIds, other);
 
         console.log('player_id', player_id)
         console.log('action_json', action_json)
@@ -66,11 +66,11 @@ class NotificationProvider {
             other: other,
           };
           const jsonString = JSON.stringify(notificationObj);
-          OneSignal.postNotification(jsonString, (success) => {
-            console.log("Success:", success);
-          }, (error) => {
-            console.log("Error:", error);
-          });
+          // OneSignal.postNotification(jsonString, (success) => {
+          //   console.log("Success:", success);
+          // }, (error) => {
+          //   console.log("Error:", error);
+          // });
         }
       }
     }

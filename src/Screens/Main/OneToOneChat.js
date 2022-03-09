@@ -5,6 +5,9 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
+  View,
+  Text,
+  Image,
 } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import { connect } from "react-redux";
@@ -37,67 +40,76 @@ class OneToOneChat extends PureComponent {
     return <ChatBubble {...props} />;
   };
 
-  componentDidMount() { 
+  componentDidMount() {
     socketServices.on(`message`, this.onReceiveMessage);
-}
- 
-  onReceiveMessage = param => {
+  }
 
-    console.log(param, 'receive>>>');
+  onReceiveMessage = (param) => {
+    console.log(param, "receive>>>");
 
     const { userData } = this.props;
     const { data } = this.props.route?.params;
 
-
     const message = {
-        _id: param.id,
-        text: param.message,
-        createdAt: param.message_date,
-        user: {
-            _id: param.sender_id,
-            // name: firstName,
-            // avatar: profileImg && profileImg[0].thumbnail,
-        },
+      _id: param.id,
+      text: param.message,
+      createdAt: param.message_date,
+      user: {
+        _id: param.sender_id,
+        // name: firstName,
+        // avatar: profileImg && profileImg[0].thumbnail,
+      },
     };
     // console.log(data,"----------data")
     // console.log(commonConversationId,'the commonejoijoj');
     //To make sure that all the messages are seen if new message comes
 
     if (206 == param.sender_id || data.id == param.receiver_id) {
-        console.log(data.id, 'data.id', param.sender_id, 'sender id', param.receiver_id, 'rec')
-        this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, message),
-        }));
-
+      console.log(
+        data.id,
+        "data.id",
+        param.sender_id,
+        "sender id",
+        param.receiver_id,
+        "rec"
+      );
+      this.setState((previousState) => ({
+        messages: GiftedChat.append(previousState.messages, message),
+      }));
     }
-    console.log(data.id, 'data.id', param.sender_id, 'sender id', param.receiver_id, 'rec')
+    console.log(
+      data.id,
+      "data.id",
+      param.sender_id,
+      "sender id",
+      param.receiver_id,
+      "rec"
+    );
 
-
-    return
+    return;
     if (data.commonConversationId === commonConversationId) {
-        socketServices.emit(`${SOCKET_STRINGS.RECEIVED_MESSAGE}${userData.id}`, {
-            senderId: data.senderId,
-            isRead: true,
-            recieverId: data.recieverId,
-        });
+      socketServices.emit(`${SOCKET_STRINGS.RECEIVED_MESSAGE}${userData.id}`, {
+        senderId: data.senderId,
+        isRead: true,
+        recieverId: data.recieverId,
+      });
 
-        this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, message),
-        }));
+      this.setState((previousState) => ({
+        messages: GiftedChat.append(previousState.messages, message),
+      }));
     }
-};
-
+  };
 
   onSend = (messages = []) => {
-    socketServices.emit('sendMessage', {
+    socketServices.emit("sendMessage", {
       sender_id: 206,
       receiver_id: 209, //if user came to match screen then we sending swipe id instead of _id
-      message_type: 'Text',
+      message_type: "Text",
       message: messages[0].text,
-      timestamp: new Date()
-  });
+      timestamp: new Date(),
+    });
 
-    return
+    return;
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }));
@@ -108,26 +120,102 @@ class OneToOneChat extends PureComponent {
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <TouchableOpacity
+        <View
           style={{
             backgroundColor: Colors.orange,
-            height: 50,
+            height: 60,
             alignItems: "flex-start",
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
           activeOpacity={0.8}
-          onPress={() => this.props.navigation.goBack()}
         >
-          <Icon
-            name="arrow-back"
-            type="ionicons"
-            size={24}
-            color={Colors.white}
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <Icon
+              name="arrow-back"
+              type="ionicons"
+              size={24}
+              color={Colors.white}
+              style={{
+                paddingHorizontal: 10,
+                marginVertical: 10,
+              }}
+            />
+          </TouchableOpacity>
+          <View
             style={{
-              paddingHorizontal: 10,
-              marginVertical: 10,
+              top: 12,
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              backgroundColor: Colors.orange,
             }}
-          />
-        </TouchableOpacity>
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: Colors.orange,
+                alignSelf: "center",
+                alignItems: "center",
+                marginRight: 14,
+                justifyContent: "center",
+                height: 40,
+                width: 40,
+                borderRadius: 50,
+              }}
+            >
+              <Image
+                source={require("../../../src/Images/error.png")}
+                style={{ height: 40, width: 40, resizeMode: "contain" }}
+              />
+            </TouchableOpacity>
+            <View
+              style={{ flexDirection: "column", marginRight: 15, width: "50%" }}
+            >
+              <Text
+                numberOfLines={1}
+                style={{
+                  color: Colors.white,
+                  textAlign: "left",
+                  fontSize: 16,
+                  bottom: 2,
+                  fontFamily: FontFamily.bold,
+                }}
+              >
+                {" "}
+                Jhon Doe
+              </Text>
+              <Text
+                numberOfLines={1}
+                style={{
+                  color: Colors.white,
+                  textAlign: "left",
+                  fontSize: 12,
+                  fontFamily: FontFamily.bold,
+                }}
+              >
+                {" "}
+                online{" "}
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={{
+              top: 13,
+              backgroundColor: Colors.orange,
+              alignItems: "center",
+              marginRight: 14,
+              justifyContent: "center",
+              height: 40,
+              width: 40,
+              borderRadius: 50,
+            }}
+          >
+            {/* <Icon
+              name="dots-three-vertical"
+              type="entypo"
+              color={"#fff"}
+            /> */}
+          </TouchableOpacity>
+        </View>
         <GiftedChat
           messages={messages}
           onSend={(messages) => this.onSend(messages)}

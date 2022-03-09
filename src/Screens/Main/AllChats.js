@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { connect } from "react-redux";
+import Header from "../../Components/Header";
 
 const { width, height } = Dimensions.get("window");
 
@@ -111,6 +112,14 @@ class AllChats extends PureComponent {
           flex: 1,
         }}
       >
+        <Header
+          imgBack={true}
+          notiBtn={false}
+          searchBtn={this.state?.allChatMember?.length > 0 ? true : false}
+          headerHeight={150}
+          name={"Messages"}
+          backImgSource={require("../../../src/Images/back.jpg")}
+        />
         {allChatMember.length > 0 ? (
           <FlatList
             keyboardShouldPersistTaps={"handled"}
@@ -150,7 +159,7 @@ const styles = StyleSheet.create({
   hiddenContainer: {
     flex: 1,
     alignItems: "flex-end",
-  }, 
+  },
   moreText: {
     color: "white",
   },
@@ -159,7 +168,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingRight: 5,
-    width: "70%",
+    width: "80%",
   },
   imageContainer: {
     height: width * 0.15,

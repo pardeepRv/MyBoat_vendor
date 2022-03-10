@@ -131,27 +131,35 @@ class OneToOneChat extends PureComponent {
       user: {
         _id: param.sender_id,
         // name: firstName,
-        // avatar: profileImg && profileImg[0].thumbnail,
+        avatar: config.imageUrl + param.user_image,
       },
     };
 
-    if (
-      this.parsedInfo.id == param.sender_id ||
-      data.other_user_id == param.receiver_id
-    ) {
-      console.log(
-        this.parsedInfo.id,
-        "this.parsedInfo.id",
-        param.sender_id,
-        "sender id",
-        param.receiver_id,
-        "rec"
-      );
+    this.setState((previousState) => ({
+      messages: GiftedChat.append(previousState.messages, message),
+    }));
 
-      this.setState((previousState) => ({
-        messages: GiftedChat.append(previousState.messages, message),
-      }));
-    }
+    // if (
+    //   this.parsedInfo.id == param.sender_id ||
+    //   data.other_user_id == param.receiver_id
+    // ) {
+    //   console.log(
+    //     this.parsedInfo.id,
+    //     "this.parsedInfo.id",
+    //     param.sender_id,
+    //     "sender id",
+    //     param.receiver_id,
+    //     "rec"
+    //   );
+
+    //   this.setState((previousState) => ({
+    //     messages: GiftedChat.append(previousState.messages, message),
+    //   }));
+    // }else{
+    //   this.setState((previousState) => ({
+    //     messages: GiftedChat.append(previousState.messages, message),
+    //   }));
+    // }
 
     return;
     if (data.commonConversationId === commonConversationId) {

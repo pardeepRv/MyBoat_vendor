@@ -180,6 +180,7 @@ class AllChats extends PureComponent {
           <FlatList
             keyboardShouldPersistTaps={"handled"}
             showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             data={allChatMember}
             style={{
               marginTop: 10,

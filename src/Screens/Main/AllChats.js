@@ -15,7 +15,9 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import Header from "../../Components/Header";
+import { Loading } from "../../Components/Loader";
 import config from "../../Constants/config";
+import TimeAgo from "react-native-timeago";
 
 const { width, height } = Dimensions.get("window");
 
@@ -45,7 +47,7 @@ class AllChats extends PureComponent {
     super(props);
     this.state = {
       isLoading: false,
-      allChatMember: dummyChat,
+      allChatMember: [],
     };
   }
 
@@ -60,7 +62,10 @@ class AllChats extends PureComponent {
   }
 
   getAllChatMembers = async () => {
-  let url = config.apiUrl + "/chat_list.php";
+    this.setState({
+      isLoading: true,
+    });
+    let url = config.apiUrl + "/chat_list.php";
 
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
@@ -73,15 +78,26 @@ class AllChats extends PureComponent {
       .post(url, data)
       .then((res) => {
         console.log(res, "get all chats");
+        if (res?.data?.data) {
+          this.setState({
+            allChatMember: res?.data?.data,
+            isLoading: false,
+          });
+        } else {
+          this.setState({
+            isLoading: false,
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
   renderChats = ({ item }) => {
-    let data = {};
-
     return (
       <TouchableOpacity
         style={{
@@ -91,21 +107,26 @@ class AllChats extends PureComponent {
           borderBottomWidth: 0.5,
         }}
         onPress={() => {
-          this.props.navigation.navigate("OneToOneChat", { data: data || {} });
+          this.props.navigation.navigate("OneToOneChat", { data: item });
         }}
       >
         <View style={styles.chat}>
           <View style={styles.left}>
             <View style={styles.imageContainer}>
               <Image
-                source={{
-                  uri: "https://manjeettattooz.com/wp-content/uploads/2018/09/User-dummy-300x300.png",
-                }}
+                source={
+                  item?.image
+                    ? { uri: config.imageUrl + item.image }
+                    : {
+                        uri: "https://manjeettattooz.com/wp-content/uploads/2018/09/User-dummy-300x300.png",
+                      }
+                }
                 style={{
                   height: "80%",
                   width: "80%",
                   alignSelf: "center",
                   marginTop: 5,
+                  borderRadius:10
                 }}
                 resizeMode="cover"
               />
@@ -122,14 +143,14 @@ class AllChats extends PureComponent {
                 }}
               >
                 <Text numberOfLines={1} style={styles.msgText}>
-                  {item.lastMsg}
+                  {item.last_message}
                 </Text>
               </View>
             </View>
           </View>
 
           <View style={styles.right}>
-            <Text style={styles.msgTime}>{item.time}</Text>
+            <TimeAgo time={item?.last_message_time} />
           </View>
         </View>
       </TouchableOpacity>
@@ -154,6 +175,7 @@ class AllChats extends PureComponent {
           name={"Messages"}
           backImgSource={require("../../../src/Images/back.jpg")}
         />
+        {isLoading && <Loading />}
         {allChatMember.length > 0 ? (
           <FlatList
             keyboardShouldPersistTaps={"handled"}

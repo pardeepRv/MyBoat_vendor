@@ -4590,7 +4590,7 @@
   "resolved" "https://registry.npmjs.org/interpret/-/interpret-1.4.0.tgz"
   "version" "1.4.0"
 
-"invariant@^2.2.4":
+"invariant@^2.2.2", "invariant@^2.2.4":
   "integrity" "sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA=="
   "resolved" "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
   "version" "2.2.4"
@@ -6329,7 +6329,7 @@
   "resolved" "https://registry.npmjs.org/mockdate/-/mockdate-3.0.5.tgz"
   "version" "3.0.5"
 
-"moment@^2.22.0", "moment@^2.24.0", "moment@^2.29.1":
+"moment@^2.19.1", "moment@^2.22.0", "moment@^2.24.0", "moment@^2.29.1":
   "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
   "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
   "version" "2.29.1"
@@ -7321,6 +7321,13 @@
     "prop-types" "^15.6.2"
     "react-native-animatable" "1.3.3"
 
+"react-native-onesignal@^4.3.3":
+  "integrity" "sha512-oBTja1n2puwF5XuYPbEaBpvaWGiV5lkVX+zWndQe/dRcIgtIEJzVZqeaqxZ3u30ImxFoyCXqUzup2BiuQFewFw=="
+  "resolved" "https://registry.npmjs.org/react-native-onesignal/-/react-native-onesignal-4.3.7.tgz"
+  "version" "4.3.7"
+  dependencies:
+    "invariant" "^2.2.2"
+
 "react-native-otp-inputs@^7.0.3":
   "integrity" "sha512-o5AGNF7HOzFcQzQ/8D7yngyolIxmgpCpIUi7Wzs1zYpxYtJrPSOXaQn/zYpJ7fhJZi0PxhPsxQdGEbZDGF5jNg=="
   "resolved" "https://registry.npmjs.org/react-native-otp-inputs/-/react-native-otp-inputs-7.1.1.tgz"
@@ -7420,6 +7427,11 @@
   "integrity" "sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw=="
   "resolved" "https://registry.npmjs.org/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz"
   "version" "1.0.5"
+
+"react-native-timeago@^0.5.0":
+  "integrity" "sha512-GYrV36FK8ttkl7BIAdh77OlYLYGIKLGNviJqzPUtKaO8ANEtI8ph7UkSTRv9oMKfvDnA5VKV9hVX7GtYoAztRg=="
+  "resolved" "https://registry.npmjs.org/react-native-timeago/-/react-native-timeago-0.5.0.tgz"
+  "version" "0.5.0"
 
 "react-native-typing-animation@^0.1.7":
   "integrity" "sha512-4H3rF9M+I2yAZpYJcY0Mb29TXkn98QK12rrKSY6LZj1BQD9NNmRZuNXzwX4XHapsIz+N/J8M3p27FOQPbfzqeg=="
@@ -7521,7 +7533,7 @@
     "raf" "^3.1.0"
     "tween-functions" "^1.0.1"
 
-"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.3.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@>= 16.0 || < 17.0", "react@>=15.0.0", "react@>=16.0", "react@>=16.0.0-alpha.3", "react@>=16.3.0", "react@>=16.4.1", "react@16 || 17", "react@17.0.1":
+"react@*", "react@^16.0.0", "react@^16.0.0 || ^17.0.0", "react@^16.3.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@>= 16.0 || < 17.0", "react@>=15.0.0", "react@>=16.0", "react@>=16.0.0-alpha.3", "react@>=16.3.0", "react@>=16.4.1", "react@16 || 17", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"

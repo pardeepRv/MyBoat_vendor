@@ -1,9 +1,12 @@
-import messaging from '@react-native-firebase/messaging';
-import {useNavigation} from '@react-navigation/native';
+import messaging from "@react-native-firebase/messaging";
+import { useNavigation } from "@react-navigation/native";
+import { Platform } from "react-native";
+import {showMessage} from "react-native-flash-message";
+import { FontFamily } from "../../Constants/Constants";
 
 export const createNotificationListener = async () => {
-  const {navigation} = useNavigation;
-  console.log('coming in noification');
+  const { navigation } = useNavigation;
+  console.log("coming in noification");
 
   // messaging().onNotificationOpenedApp(async (remoteMessage) => {
   //     console.log('Notification caused app to open from background state bla bla:', remoteMessage);
@@ -11,7 +14,7 @@ export const createNotificationListener = async () => {
   //     // navigation.navigate('Haulage')
   // });
 
-  messaging().onNotificationOpenedApp(async remoteMessage => {
+  messaging().onNotificationOpenedApp(async (remoteMessage) => {
     // setTimeout(() => {
     //   console.log(
     //     NavigationService,
@@ -25,22 +28,32 @@ export const createNotificationListener = async () => {
     // }, 3000);
   });
 
-  messaging().onMessage(async remoteMessage => {
-    console.log('recived in foreground', remoteMessage);
-    alert(remoteMessage?.notification?.body)
+  messaging().onMessage(async (remoteMessage) => {
+    console.log("recived in foreground", remoteMessage);
+    // alert(remoteMessage?.notification?.body);
+    showMessage({
+      message: "info",
+      description: remoteMessage?.notification?.body,
+      type: "info",
+      floating: true,
+      duration: 4000,
+      style: { marginTop: Platform.OS == "ios" ? 0 : 20 },
+      textStyle: { fontFamily: FontFamily.default },
+      titleStyle: { fontFamily: FontFamily.default },
+    });
   });
 
   // Check whether an initial notification is available
   messaging()
     .getInitialNotification()
-    .then(remoteMessage => {
+    .then((remoteMessage) => {
       if (remoteMessage) {
-        console.log('remote message', remoteMessage);
+        console.log("remote message", remoteMessage);
       }
     });
 
-  messaging().setBackgroundMessageHandler(async remoteMessage => {
-    console.log('Message handled in the background!', remoteMessage);
+  messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+    console.log("Message handled in the background!", remoteMessage);
   });
 };
 

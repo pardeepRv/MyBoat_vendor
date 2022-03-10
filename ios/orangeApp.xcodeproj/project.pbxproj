@@ -41,6 +41,10 @@
 		E1634D5C0E95415DA6E716C5 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37347DD09DAC4A239ACA487C /* Montserrat-Black.ttf */; };
 		F193CA4505064E5985030966 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20948EC86A43423F9321D8B8 /* Ubuntu-Medium.ttf */; };
 		F57ED864BE754F4FACF67188 /* Ubuntu-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75491A97F33C481B9AF51177 /* Ubuntu-Bold.ttf */; };
+		B86FBFA5596F4E408314540C /* NotoNaskhArabic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 767B618796EA428E8943524E /* NotoNaskhArabic-Bold.ttf */; };
+		70822A964AE24634AA648CA5 /* NotoNaskhArabic-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C4063AC7A584B509D774DCC /* NotoNaskhArabic-Medium.ttf */; };
+		FFE01F2EA2C24375B99AE61D /* NotoNaskhArabic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 454D9B2D82F947479E45D20D /* NotoNaskhArabic-Regular.ttf */; };
+		A4F03E68828540269A46F912 /* NotoNaskhArabic-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7D8044324BC4CD39389C60F /* NotoNaskhArabic-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +139,10 @@
 		E944ABF52DA34C2BBEAA929F /* Ubuntu-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-BoldItalic.ttf"; path = "../assets/fonts/Ubuntu-BoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F445A6539113491B8F448FFC /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		767B618796EA428E8943524E /* NotoNaskhArabic-Bold.ttf */ = {isa = PBXFileReference; name = "NotoNaskhArabic-Bold.ttf"; path = "../assets/fonts/NotoNaskhArabic-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8C4063AC7A584B509D774DCC /* NotoNaskhArabic-Medium.ttf */ = {isa = PBXFileReference; name = "NotoNaskhArabic-Medium.ttf"; path = "../assets/fonts/NotoNaskhArabic-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		454D9B2D82F947479E45D20D /* NotoNaskhArabic-Regular.ttf */ = {isa = PBXFileReference; name = "NotoNaskhArabic-Regular.ttf"; path = "../assets/fonts/NotoNaskhArabic-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D7D8044324BC4CD39389C60F /* NotoNaskhArabic-SemiBold.ttf */ = {isa = PBXFileReference; name = "NotoNaskhArabic-SemiBold.ttf"; path = "../assets/fonts/NotoNaskhArabic-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +315,10 @@
 				CB2D29454D5549D391931988 /* rubicon-icon-font.ttf */,
 				0934AC74EA384F2C8CE00AE4 /* SimpleLineIcons.ttf */,
 				364A15629AD54BB391690343 /* Zocial.ttf */,
+				767B618796EA428E8943524E /* NotoNaskhArabic-Bold.ttf */,
+				8C4063AC7A584B509D774DCC /* NotoNaskhArabic-Medium.ttf */,
+				454D9B2D82F947479E45D20D /* NotoNaskhArabic-Regular.ttf */,
+				D7D8044324BC4CD39389C60F /* NotoNaskhArabic-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -433,6 +445,10 @@
 				F193CA4505064E5985030966 /* Ubuntu-Medium.ttf in Resources */,
 				11D3F2140F3049079AACC526 /* Ubuntu-MediumItalic.ttf in Resources */,
 				3D7D2D1DC05D44FB9BB8484E /* Ubuntu-Regular.ttf in Resources */,
+				B86FBFA5596F4E408314540C /* NotoNaskhArabic-Bold.ttf in Resources */,
+				70822A964AE24634AA648CA5 /* NotoNaskhArabic-Medium.ttf in Resources */,
+				FFE01F2EA2C24375B99AE61D /* NotoNaskhArabic-Regular.ttf in Resources */,
+				A4F03E68828540269A46F912 /* NotoNaskhArabic-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

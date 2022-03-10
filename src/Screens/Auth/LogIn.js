@@ -47,6 +47,7 @@ const handleEmail = () => {
   }).catch(console.error);
 };
 const Login = (props) => {
+  console.log(FontFamily,'FontFamily in login');
   let passRef = null;
   const nav = useNavigation();
   const [email, setemail] = useState("owner@yopmail.com"); // boat1@yopmail.com

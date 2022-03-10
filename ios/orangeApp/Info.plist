@@ -92,6 +92,10 @@
 		<string>Roboto_medium.ttf</string>
 		<string>Roboto.ttf</string>
 		<string>rubicon-icon-font.ttf</string>
+		<string>NotoNaskhArabic-Bold.ttf</string>
+		<string>NotoNaskhArabic-Medium.ttf</string>
+		<string>NotoNaskhArabic-Regular.ttf</string>
+		<string>NotoNaskhArabic-SemiBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

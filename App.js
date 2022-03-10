@@ -8,11 +8,12 @@ import { Root } from "native-base";
 import Stacks from "./src/Navi/Stack";
 import { firebaseprovider } from "./src/Screens/Provider/FirebaseProvider";
 import { SafeAreaView, StatusBar } from "react-native";
-import { Colors } from "./src/Constants/Constants";
+import { Colors, langCheck } from "./src/Constants/Constants";
 import { requestUserPermission } from "./src/Screens/service/FcmService";
 import { createNotificationListener } from "./src/Screens/service/notificationListener";
 import checkPermission from "./src/Screens/service/notificationServices";
 import { UserContext } from "./src/Screens/Main/UserContext";
+import FlashMessage from "react-native-flash-message";
 
 class App extends React.Component {
   constructor(props) {
@@ -66,6 +67,7 @@ class App extends React.Component {
             <UserContext.Provider
               value={{ value: this.state.name, updateValue: this.setData }}
             >
+              <FlashMessage position="top" />
               <Stacks />
             </UserContext.Provider>
           </Root>

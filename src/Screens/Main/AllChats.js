@@ -106,9 +106,9 @@ class AllChats extends PureComponent {
           flex: 1,
           borderBottomWidth: 0.5,
         }}
-        onPress={() => {
-          this.props.navigation.navigate("OneToOneChat", { data: item });
-        }}
+        // onPress={() => {
+        //   this.props.navigation.navigate("OneToOneChat", { data: item });
+        // }}
       >
         <View style={styles.chat}>
           <View style={styles.left}>

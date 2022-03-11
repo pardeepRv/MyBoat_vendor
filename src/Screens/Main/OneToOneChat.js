@@ -28,15 +28,15 @@ class OneToOneChat extends PureComponent {
     super(props);
     this.state = {
       messages: [
-        // {
-        //   _id: 1,
-        //   text: "My boat owner",
-        //   createdAt: new Date(),
-        //   user: {
-        //     _id: 2,
-        //     name: "Prince",
-        //   },
-        // },
+        {
+          _id: 1,
+          text: "My boat owner",
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            // name: "Prince",
+          },
+        },
       ],
       isLoading: false,
     };
@@ -47,19 +47,9 @@ class OneToOneChat extends PureComponent {
   };
 
   componentDidMount() {
-    this.getChatListing();
-    socketServices.on(`message`, this.onReceiveMessage);
-  }
-
-  // componentDidMount() {
-  //   this.onFocusSubscribe = this.props.navigation.addListener("focus", () => {
-  //     this.getChatListing();
-  //     socketServices.on(`message`, this.onReceiveMessage);
-  //   });
-  // }
-  // componentWillUnmount() {
-  //   this.onFocusSubscribe();
-  // }
+    // this.getChatListing();
+    // socketServices.on(`message`, this.onReceiveMessage);
+  } 
 
   getChatListing = async () => {
     this.setState({
@@ -189,9 +179,9 @@ class OneToOneChat extends PureComponent {
         avatar: "cYCz7Q4sFzr4He616539749.jpeg",
       });
 
-      // this.setState((previousState) => ({
-      //   messages: GiftedChat.append(previousState.messages, messages),
-      // }));
+      this.setState((previousState) => ({
+        messages: GiftedChat.append(previousState.messages, messages),
+      }));
     }
   };
 
@@ -318,8 +308,8 @@ class OneToOneChat extends PureComponent {
             _id: this.parsedInfo.id,
           }}
           alwaysShowSend
-          showUserAvatar={true}
-          showAvatarForEveryMessage={true}
+          // showUserAvatar={true}
+          // showAvatarForEveryMessage={true}
           keyboardShouldPersistTaps="handled"
           textInputStyle={styles.messageTextInput}
           placeholder="Type here"

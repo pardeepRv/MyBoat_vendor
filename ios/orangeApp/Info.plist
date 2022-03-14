@@ -97,6 +97,11 @@
 		<string>NotoNaskhArabic-Regular.ttf</string>
 		<string>NotoNaskhArabic-SemiBold.ttf</string>
 	</array>
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>tel</string>
+    <string>telprompt</string>
+  </array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

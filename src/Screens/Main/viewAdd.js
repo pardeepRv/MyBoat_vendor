@@ -13,9 +13,11 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Platform
+  Platform,
+  Linking,
+  Alert,
 } from "react-native";
-import { AirbnbRating } from "react-native-elements";
+import { AirbnbRating, colors } from "react-native-elements";
 import { connect } from "react-redux";
 import config from "../../Constants/config";
 import { Colors, FontFamily } from "../../Constants/Constants";
@@ -25,9 +27,8 @@ import DatePicker from "react-native-datepicker";
 class ViewAdd extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props, 'consoling here in viewAdd');
+    console.log(props, "consoling here in viewAdd");
     this.state = {
-
       id: this.props.route.params.item.advertisement_id,
       boatDetails: null,
       item: null,
@@ -46,16 +47,25 @@ class ViewAdd extends React.Component {
       endTime: new Date(),
       startTime: new Date(),
       boat_brand: "",
-      status1: ''
+      status1: "",
+      dob: "",
+      other_user_id: null,
+      other_user_img: "",
+      mobile: "",
     };
     this.addOnData();
     this.getAdvertismentDetails();
   }
+
+  setdob = (date) => {
+    return console.log("date is>>", date);
+    this.setState({});
+  };
   componentDidMount() {
     // var userInfo =  AsyncStorage.getItem("user_id");
     // alert(JSON.stringify(userInfo))
 
-    if (Platform.OS == 'android') {
+    if (Platform.OS == "android") {
       StatusBar.setTranslucent(true);
     }
     StatusBar.setBarStyle("light-content");
@@ -66,19 +76,36 @@ class ViewAdd extends React.Component {
     this.getBoatDetails(this.state.item?.boat_id);
   }
 
+  callNumber = (phone) => {
+    console.log("callNumber ----> ", phone);
+    let phoneNumber = phone;
+    if (Platform.OS !== "android") {
+      phoneNumber = `telprompt:${phone}`;
+    } else {
+      phoneNumber = `tel:${phone}`;
+    }
+    Linking.canOpenURL(phoneNumber)
+      .then((supported) => {
+        if (!supported) {
+          Alert.alert("Phone number is not available");
+        } else {
+          return Linking.openURL(phoneNumber);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   /// use for caNCEL AND CONFI9RM BOOKING
   cancelConfirmBooking = async (id) => {
     this.setState({
-      loader: true
-    })
+      loader: true,
+    });
 
     console.log(id, " id from cancvel confirm ");
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-    console.log(parsedInfo, ' parsedInfo in url');
-    let url =
-      config.apiUrl +
-      "/booking_list_owner_manage.php";
+    console.log(parsedInfo, " parsedInfo in url");
+    let url = config.apiUrl + "/booking_list_owner_manage.php";
 
     var data = new FormData();
     data.append("user_id_post", parsedInfo.id);
@@ -86,25 +113,23 @@ class ViewAdd extends React.Component {
     data.append("status", id);
 
     console.log(data);
-     console.log(url, 'url');
+    console.log(url, "url");
     axios
       .post(url, data)
       .then((res) => {
-        console.log(res, 'res in cancel api ');
+        console.log(res, "res in cancel api ");
         this.setState({
-          loader: false
-        })
+          loader: false,
+        });
 
         if (res.data.success === "true") {
-          this.goBack()
-        }
-        else {
+          this.goBack();
+        } else {
           if (this.props.language_id == 0) alert(res.data.msg[0]);
           else alert(res.data.msg[1]);
           this.setState({
-            loader: false
-          })
-
+            loader: false,
+          });
         }
       })
       .catch((err) => console.log(err));
@@ -119,14 +144,16 @@ class ViewAdd extends React.Component {
       parsedInfo.id +
       "&advertisement_id=" +
       this.state.id +
-      "&booking_id=" + this.props.route.params.item.booking_id
+      "&booking_id=" +
+      this.props.route.params.item.booking_id;
+
+    console.log(url, "url on api calling");
     axios
       .get(url)
       .then((res) => {
         console.log(res, "view ad");
         if (res) {
           this.setState(
-
             {
               item: res.data.adver_arr,
               img_arr: res.data.adver_arr?.img_arr,
@@ -134,7 +161,10 @@ class ViewAdd extends React.Component {
               toiletCount: res.data.adver_arr?.boat_toilets,
               numberOfPeople: res.data.adver_arr?.no_of_people,
               boat_brand: this.props.route.params.item?.boat_brand,
-              status1: res.data.status
+              status1: res.data.status,
+              other_user_id: res.data.adver_arr?.other_user_id,
+              other_user_img: res.data.adver_arr?.other_user_img,
+              mobile: res.data.adver_arr?.mobile,
               // boatDropdown: res.data.boat_arr,
               // cityDropdown: res.data.city_arr,
             },
@@ -299,7 +329,7 @@ class ViewAdd extends React.Component {
     axios
       .get(url)
       .then((res) => {
-        console.log("test==>>", res)
+        console.log("test==>>", res);
 
         if (res.data.success === "true") {
           this.setState({ boatDetails: res.data?.boat_arr });
@@ -493,6 +523,10 @@ class ViewAdd extends React.Component {
     this.setState({ endTime: endTimeUpdated, startTime: startTimeUpdated });
   };
   render() {
+    let item = {};
+    item["other_user_id"] = this.state.other_user_id;
+    item["image"] = this.state.other_user_img;
+
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         {/* <StatusBar
@@ -517,11 +551,17 @@ class ViewAdd extends React.Component {
 
         <ScrollView showsVerticalScrollIndicator={false}>
           {this.state.loader ? (
-            <View style={{ justifyContent: "center", alignItems: "center", bottom: 40 }}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                bottom: 40,
+              }}
+            >
               <ActivityIndicator size={30} color={Colors.orange} />
             </View>
           ) : (
-            <View >
+            <View>
               <View style={styles.adressbox}>
                 <View
                   style={{
@@ -583,10 +623,10 @@ class ViewAdd extends React.Component {
                     >
                       {this.props.language_id == 0
                         ? this.state.item?.captain_name[0] &&
-                        this.state.item?.captain_name[0]
+                          this.state.item?.captain_name[0]
                         : (this.state.item?.captain_name[1] &&
-                          this.state.item?.captain_name[1]) ||
-                        ""}
+                            this.state.item?.captain_name[1]) ||
+                          ""}
                     </Text>
                   </View>
                 </View>
@@ -959,9 +999,38 @@ class ViewAdd extends React.Component {
               </View> */}
             </View>
           )}
-          {this.state.status1 == 0 ?
-            <View style={{ alignItems: "center", bottom: 15, height: 150, top: 20 }}>
 
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("OneToOneChat", { data: item });
+              }}
+            >
+              <Image
+                style={{ height: 25, width: 30, resizeMode: "contain" }}
+                source={require("../../../assets/icons/active_inbox.png")}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => this.callNumber(this.state.mobile)}
+            >
+              <Image
+                style={{ height: 25, width: 30, resizeMode: "contain" }}
+                source={require("../../../assets/icons/phone_call.png")}
+              />
+            </TouchableOpacity>
+          </View>
+
+          {this.state.status1 == 0 ? (
+            <View
+              style={{ alignItems: "center", bottom: 15, height: 150, top: 20 }}
+            >
               {/* <View style={{flexDirection:'row',flex:1,}}> */}
 
               {/* <Text style={styles.booking}>
@@ -974,9 +1043,8 @@ class ViewAdd extends React.Component {
                 mode="date"
                 showIcon={false}
                 placeholder="Change Booking Date"
-
                 format="YYYY-MM-DD"
-                // minDate="2016-05-01"
+                minDate={new Date()}
                 // maxDate="2016-06-01"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -1001,38 +1069,42 @@ class ViewAdd extends React.Component {
                   placeholderText: {
                     fontSize: 17,
                     color: "white",
-                    textAlign: 'center',
-                    alignSelf: 'center'
+                    textAlign: "center",
+                    alignSelf: "center",
                   },
                 }}
-                onDateChange={(date) => setdob(date)}
+                onDateChange={(date) => this.setdob(date)}
               />
               {/* </View> */}
 
-
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '85%', }}>
-
-                <TouchableOpacity style={styles.bookingStatus} onPress={() => {
-                  this.cancelConfirmBooking(1)
-
-                }}>
-                  <Text style={styles.bookingtext}>
-                    Confirm
-                  </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  width: "85%",
+                }}
+              >
+                <TouchableOpacity
+                  style={styles.bookingStatus}
+                  onPress={() => {
+                    this.cancelConfirmBooking(1);
+                  }}
+                >
+                  <Text style={styles.bookingtext}>Confirm</Text>
                 </TouchableOpacity>
-                <View style={{ width: 10, }}></View>
+                <View style={{ width: 10 }}></View>
 
-                <TouchableOpacity style={styles.bookingStatus} onPress={() => {
-                  this.cancelConfirmBooking(4)
-                }}>
-
-                  <Text style={styles.bookingtext}>
-                    Cancel</Text>
+                <TouchableOpacity
+                  style={styles.bookingStatus}
+                  onPress={() => {
+                    this.cancelConfirmBooking(4);
+                  }}
+                >
+                  <Text style={styles.bookingtext}>Cancel</Text>
                 </TouchableOpacity>
               </View>
             </View>
-            : null}
-
+          ) : null}
         </ScrollView>
       </View>
     );
@@ -1105,65 +1177,63 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
-    backgroundColor: "orange",
+    backgroundColor: Colors.orange,
   },
   border: {
     height: 40,
     width: 160,
-    backgroundColor: "orange",
+    backgroundColor: Colors.orange,
     elevation: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "orange",
+    borderColor: Colors.orange,
     justifyContent: "center",
     alignItems: "center",
   },
   booking: {
     height: 40,
     width: "90%",
-    backgroundColor: "orange",
+    backgroundColor: Colors.orange,
     elevation: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "orange",
+    borderColor: Colors.orange,
     justifyContent: "center",
     alignItems: "center",
-    textAlign: 'center',
+    textAlign: "center",
     color: "white",
     padding: 8,
     top: 10,
-    overflow: 'hidden'
+    overflow: "hidden",
   },
   bookingStatus: {
     height: 40,
     width: "50%",
-    backgroundColor: "orange",
+    backgroundColor: Colors.orange,
     elevation: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "orange",
+    borderColor: Colors.orange,
     alignItems: "center",
     color: "white",
     padding: 8,
     top: 20,
-    overflow: 'hidden',
-
+    overflow: "hidden",
   },
   bookingtext: {
     height: 40,
     // width: "50%",
-    backgroundColor: "orange",
+    backgroundColor: Colors.orange,
     elevation: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "orange",
+    borderColor: Colors.orange,
     alignItems: "center",
     color: "white",
     padding: 8,
-    overflow: 'hidden',
+    overflow: "hidden",
     left: 8,
     top: -8,
-    fontSize: 15
-
+    fontSize: 15,
   },
 });

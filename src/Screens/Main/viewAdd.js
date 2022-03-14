@@ -59,7 +59,6 @@ class ViewAdd extends React.Component {
 
   setdob = (date) => {
     return console.log("date is>>", date);
-    this.setState({});
   };
   componentDidMount() {
     // var userInfo =  AsyncStorage.getItem("user_id");
@@ -539,15 +538,17 @@ class ViewAdd extends React.Component {
           source={back_img}
           imageStyle={styles.ImageBackground_Img}
         /> */}
-
-        <MyCarousel
-          data={
-            (this.props.route?.params?.item?.img_arr !== "NA" &&
-              this.props.route?.params?.item?.img_arr) ||
-            []
-          }
-          goBack={this.goBack}
-        />
+        {this.state.img_arr && this.state.img_arr.length > 0 && (
+          <MyCarousel
+            data={
+              this.state.img_arr
+              // (this.props.route?.params?.item?.img_arr !== "NA" &&
+              //   this.props.route?.params?.item?.img_arr) ||
+              // []
+            }
+            goBack={this.goBack}
+          />
+        )}
 
         <ScrollView showsVerticalScrollIndicator={false}>
           {this.state.loader ? (

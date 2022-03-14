@@ -52,7 +52,6 @@ const ManageAdd = (props) => {
     setData(item);
   };
   useEffect(async () => {
-    
     const unsubscribe = props.navigation.addListener("focus", () => {
       getLoginuserInfo();
     });
@@ -434,7 +433,7 @@ const ManageAdd = (props) => {
                                     resizeMode: "cover",
                                   }}
                                   source={{
-                                    uri: config.imageUrl + item.user_image,
+                                    uri: config.imageUrl + userInfo.image,
                                   }}
                                   PlaceholderContent={
                                     <ActivityIndicator

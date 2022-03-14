@@ -109,7 +109,7 @@ const NotificationsPage = () => {
                   return (
                     <TouchableOpacity
                       onPress={() =>
-                        gotoNotifications_Details({ data: "Test" })
+                        gotoNotifications_Details({ data: item })
                       }
                     >
                       <Card containerStyle={{ borderRadius: 12, padding: 5 }}>

@@ -59,6 +59,7 @@ class OneToOneChat extends PureComponent {
     console.log(data, "getting from all chat");
     let userInfo = await AsyncStorage.getItem("userInfo");
     this.parsedInfo = JSON.parse(userInfo);
+    console.log(this.parsedInfo,'this.parsedInfo');
 
     let url =
       config.apiUrl +
@@ -176,7 +177,7 @@ class OneToOneChat extends PureComponent {
         message_type: "Text",
         message: messages[0].text,
         timestamp: new Date(),
-        avatar: "cYCz7Q4sFzr4He616539749.jpeg",
+        avatar:this.parsedInfo.image,
       });
 
       // this.setState((previousState) => ({

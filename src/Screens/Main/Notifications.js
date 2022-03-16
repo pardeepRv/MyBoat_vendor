@@ -108,9 +108,7 @@ const NotificationsPage = () => {
                 renderItem={(item) => {
                   return (
                     <TouchableOpacity
-                      onPress={() =>
-                        gotoNotifications_Details({ data: item })
-                      }
+                      onPress={() => gotoNotifications_Details({ data: item })}
                     >
                       <Card containerStyle={{ borderRadius: 12, padding: 5 }}>
                         <View
@@ -134,7 +132,7 @@ const NotificationsPage = () => {
                                 borderRadius: 12,
                               }}
                               source={{
-                                uri: "https://source.unsplash.com/weekly?face",
+                                uri: config.imageUrl + item?.item?.user_image,
                               }}
                             />
                             <View style={{ marginLeft: 7 }}>

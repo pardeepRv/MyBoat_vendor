@@ -1,27 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
   Image,
-  StatusBar,
-  I18nManager,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { Icon, Input, Card, Rating, AirbnbRating } from "react-native-elements";
-import { connect, useDispatch } from "react-redux";
-import Header, { s } from "../../Components/Header";
-import {
-  back_img4,
-  Colors,
-  FontFamily,
-  Sizes,
-} from "../../Constants/Constants";
-import { useNavigation } from "@react-navigation/core";
-import { Switch } from "react-native-elements";
+import { connect } from "react-redux";
+import Header from "../../Components/Header";
+import { Colors, FontFamily } from "../../Constants/Constants";
+import config from "../../Constants/config";
 
 const Notifications_Details = ({ route, navigation }) => {
   console.log(route, "props in noti details");
@@ -41,7 +30,7 @@ const Notifications_Details = ({ route, navigation }) => {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image
                   style={{ height: 50, width: 50, borderRadius: 10 }}
-                  source={{ uri: "https://source.unsplash.com/weekly?face" }}
+                  source={{ uri: config.imageUrl + obj?.user_image }}
                 />
                 <Text
                   style={{
@@ -50,7 +39,7 @@ const Notifications_Details = ({ route, navigation }) => {
                     marginLeft: 7,
                   }}
                 >
-                  Name
+                  {obj?.user_name}
                 </Text>
               </View>
               <Text

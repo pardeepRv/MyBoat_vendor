@@ -134,6 +134,46 @@ class ViewAdd extends React.Component {
       .catch((err) => console.log(err));
   };
 
+  /// Mark bookin complete
+  completeBooking = async (id) => {
+    this.setState({
+      loader: true,
+    });
+
+    console.log(id, " id from cancvel confirm ");
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo, " parsedInfo in url");
+    let url = config.apiUrl + "/booking_complete.php";
+
+    var data = new FormData();
+    data.append("user_id", parsedInfo.id);
+    data.append("booking_id", this.props.route.params.item.booking_id);
+    // data.append("status", id);
+
+    console.log(data);
+    console.log(url, "url");
+    axios
+      .post(url, data)
+      .then((res) => {
+        console.log(res, "res in cnfirm api ");
+        this.setState({
+          loader: false,
+        });
+
+        if (res.data.success === "Success") {
+          this.goBack();
+        } else {
+          if (this.props.language_id == 0) alert(res.data.msg);
+          else alert(res.data.msg);
+          this.setState({
+            loader: false,
+          });
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   getAdvertismentDetails = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
@@ -528,16 +568,6 @@ class ViewAdd extends React.Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
-        {/* <StatusBar
-          translucent
-          backgroundColor={'transparent'}
-          barStyle={'light-content'}
-        /> */}
-        {/* <ImageBackground
-          style={styles.ImageBackground}
-          source={back_img}
-          imageStyle={styles.ImageBackground_Img}
-        /> */}
         {this.state.img_arr && this.state.img_arr.length > 0 && (
           <MyCarousel
             data={
@@ -550,7 +580,12 @@ class ViewAdd extends React.Component {
           />
         )}
 
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={{
+            flex: 1,
+          }}
+          showsVerticalScrollIndicator={false}
+        >
           {this.state.loader ? (
             <View
               style={{
@@ -1032,12 +1067,6 @@ class ViewAdd extends React.Component {
             <View
               style={{ alignItems: "center", bottom: 15, height: 150, top: 20 }}
             >
-              {/* <View style={{flexDirection:'row',flex:1,}}> */}
-
-              {/* <Text style={styles.booking}>
-                Change Booking Date
-              </Text> */}
-
               <DatePicker
                 style={styles.booking}
                 // date={dob}
@@ -1065,7 +1094,6 @@ class ViewAdd extends React.Component {
                   dateText: {
                     color: "#fff",
                     fontFamily: FontFamily.semi_bold,
-                    // fontSize:30
                   },
                   placeholderText: {
                     fontSize: 17,
@@ -1076,8 +1104,6 @@ class ViewAdd extends React.Component {
                 }}
                 onDateChange={(date) => this.setdob(date)}
               />
-              {/* </View> */}
-
               <View
                 style={{
                   flexDirection: "row",
@@ -1105,6 +1131,15 @@ class ViewAdd extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
+          ) : this.state.status1 == 1 ? (
+            <TouchableOpacity
+              style={[styles.bookingStatus, { alignSelf: "center" }]}
+              onPress={() => {
+                this.completeBooking();
+              }}
+            >
+              <Text style={styles.bookingtext}>Complete Booking</Text>
+            </TouchableOpacity>
           ) : null}
         </ScrollView>
       </View>

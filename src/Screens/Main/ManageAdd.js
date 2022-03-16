@@ -1,39 +1,29 @@
-import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
-import I18n from "../../Translations/i18";
-import {
-  Icon,
-  Input,
-  Card,
-  AirbnbRating,
-  Overlay,
-  Image,
-} from "react-native-elements";
-import { color } from "react-native-elements/dist/helpers";
-import { baseProps } from "react-native-gesture-handler/lib/typescript/handlers/gestureHandlers";
-import Header from "../../Components/Header";
-import {
-  back_img3,
-  boat_img1,
-  Colors,
-  FontFamily,
-  Sizes,
-} from "../../Constants/Constants";
-import Ad from "../../Data/Ad";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import config from "../../Constants/config";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  AirbnbRating,
+  Card,
+  Icon,
+  Image,
+  Overlay,
+} from "react-native-elements";
+import { connect } from "react-redux";
+import Header from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
-import { connect, useDispatch } from "react-redux";
+import config from "../../Constants/config";
+import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
+import I18n from "../../Translations/i18";
 const ManageAdd = (props) => {
   console.log(props, "props in ManageAdd");
   const [visible, setVisible] = useState(false);
@@ -45,6 +35,7 @@ const ManageAdd = (props) => {
   const [destination, setDestination] = useState([]);
   const [permissionArr, setPermissionArr] = useState([]);
   const [userInfo, setUserInfo] = useState({});
+  const [search, setSearch] = useState("");
 
   // --------------------------------------- //
   const toggleOverlay = ({ item }) => {
@@ -272,6 +263,44 @@ const ManageAdd = (props) => {
     }
     return destination;
   };
+
+  //filter search
+  const searchByKeyword = async (text) => {
+    console.log(text, "text by searching");
+    setSearch(text);
+    // if (text && text.length > 0) {
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo, "get");
+    setLoader(true);
+    let url =
+      config.apiUrl +
+      "/advertisement_list_vender.php?user_id_post=" +
+      parsedInfo.id +
+      "&adver_keyword=" +
+      text;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res, "after search");
+        setLoader(false);
+        if (res.data.success === "true") {
+          setAllData(res.data.adver_arr);
+
+          if (allData !== "NA" && allData?.length) {
+            allData.map((item, index) => {
+              getDestinations(item, index, true);
+            });
+          }
+        } else {
+          if (props.language_id == 0) alert(res.data.msg[0]);
+          else alert(res.data.msg[1]);
+        }
+      })
+      .catch((err) => console.log(err));
+    // }
+  };
+
   return (
     <View style={{ backgroundColor: Colors.white, flex: 1 }}>
       <Header
@@ -279,6 +308,7 @@ const ManageAdd = (props) => {
         searchBtn={true}
         imgBack={true}
       />
+
       {/* Buttons */}
       <View style={s.btn_1}>
         <TouchableOpacity
@@ -296,6 +326,13 @@ const ManageAdd = (props) => {
           <Text style={[s.btn1Text]}>{I18n.translate("add_ad")}</Text>
         </TouchableOpacity>
       </View>
+
+      <TextInput
+        onChangeText={(search) => searchByKeyword(search)}
+        value={search}
+        placeholder="Search here..."
+        style={s.searchStyle}
+      />
       {/* View */}
       <View style={s.SEC2}>
         {loader ? (
@@ -686,5 +723,16 @@ const s = StyleSheet.create({
     alignItems: "center",
     marginTop: 19.2,
     marginLeft: -26,
+  },
+  searchStyle: {
+    margin: 10,
+    width: "90%",
+    height: 35,
+    position: "absolute",
+    top: 40,
+    left: 10,
+    backgroundColor: "white",
+    paddingHorizontal: 10,
+    borderRadius: 10,
   },
 });

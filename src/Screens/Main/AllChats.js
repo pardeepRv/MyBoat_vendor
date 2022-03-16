@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -48,6 +49,7 @@ class AllChats extends PureComponent {
     this.state = {
       isLoading: false,
       allChatMember: [],
+      searchText: "",
     };
   }
 
@@ -67,6 +69,46 @@ class AllChats extends PureComponent {
     });
     let url = config.apiUrl + "/chat_list.php";
 
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    console.log(parsedInfo, "parsedInfo >>>>>>>>>>>>>");
+
+    let data = new FormData();
+    data.append("user_id", parsedInfo.id);
+
+    axios
+      .post(url, data)
+      .then((res) => {
+        console.log(res, "get all chats");
+        if (res?.data?.data) {
+          this.setState({
+            allChatMember: res?.data?.data,
+            isLoading: false,
+          });
+        } else {
+          this.setState({
+            isLoading: false,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({
+          isLoading: false,
+        });
+      });
+  };
+
+  //filter search
+  searchByKeyword = async (text) => {
+    console.log(text, " searching chat");
+    this.setState({
+      searchText: text,
+      isLoading: true,
+    });
+
+    let url = config.apiUrl + "/chat_list.php";
+    return;
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     console.log(parsedInfo, "parsedInfo >>>>>>>>>>>>>");
@@ -126,7 +168,7 @@ class AllChats extends PureComponent {
                   width: "80%",
                   alignSelf: "center",
                   marginTop: 5,
-                  borderRadius:10
+                  borderRadius: 10,
                 }}
                 resizeMode="cover"
               />
@@ -170,11 +212,17 @@ class AllChats extends PureComponent {
         <Header
           imgBack={true}
           notiBtn={false}
-          searchBtn={this.state?.allChatMember?.length > 0 ? true : false}
+          // searchBtn={this.state?.allChatMember?.length > 0 ? true : false}
           headerHeight={150}
           name={"Messages"}
-          backImgSource={require("../../../src/Images/back.jpg")}
         />
+        {/* <TextInput
+          onChangeText={(search) => this.searchByKeyword(search)}
+          value={this.state.searchText}
+          placeholder="Search here..."
+          style={styles.searchStyle}
+        /> */}
+
         {isLoading && <Loading />}
         {allChatMember.length > 0 ? (
           <FlatList
@@ -254,6 +302,17 @@ const styles = StyleSheet.create({
   msgTime: {
     fontSize: 14,
     textAlign: "right",
+  },
+  searchStyle: {
+    margin: 10,
+    width: "90%",
+    height: 35,
+    position: "absolute",
+    top: 40,
+    left: 10,
+    backgroundColor: "white",
+    paddingHorizontal: 10,
+    borderRadius: 10,
   },
 });
 

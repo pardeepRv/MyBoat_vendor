@@ -28,7 +28,7 @@ import { UserContext } from "./UserContext";
 
 const Home = (props) => {
   const value = React.useContext(UserContext);
-  console.log(value,'in home');
+  console.log(value, "in home");
   console.log(props, "pro[s in home");
   const [btn1Style, setBtn1Style] = useState({
     backColor: Colors.orange,
@@ -233,7 +233,104 @@ const Home = (props) => {
                     {I18n.translate("kwd")}
                     {item.total_amt}
                   </Text>
-                  <Text style={s.status}>{item.status}</Text>
+
+                  {item.booking_status === 0 ? (
+                    <View
+                      style={{
+                        backgroundColor: "#ebd34e",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={[
+                          s.status,
+                          {
+                            color: Colors.white,
+                          },
+                        ]}
+                      >
+                        Pending
+                      </Text>
+                    </View>
+                  ) : null}
+                  {item.booking_status === 1 ? (
+                    <View
+                      style={{
+                        backgroundColor: "green",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={[
+                          s.status,
+                          {
+                            color: Colors.white,
+                          },
+                        ]}
+                      >
+                        Confirmed
+                      </Text>
+                    </View>
+                  ) : null}
+                  {item.booking_status === 4 ? (
+                    <View
+                      style={{
+                        backgroundColor: Colors.red,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={[
+                          s.status,
+                          {
+                            color: Colors.white,
+                          },
+                        ]}
+                      >
+                        Cancelled
+                      </Text>
+                    </View>
+                  ) : null}
+                  {item.booking_status === 3 ? (
+                    <View
+                      style={{
+                        backgroundColor: Colors.red,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={[
+                          s.status,
+                          {
+                            textAlign: "center",
+                            color: Colors.white,
+                          },
+                        ]}
+                      >
+                        Cancelled
+                      </Text>
+                    </View>
+                  ) : null}
+                  {item.booking_status === 2 ? (
+                    <View
+                      style={{
+                        backgroundColor: Colors.orange,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={[
+                          s.status,
+                          {
+                            textAlign: "center",
+                            color: Colors.white,
+                          },
+                        ]}
+                      >
+                        Completed
+                      </Text>
+                    </View>
+                  ) : null}
                 </View>
               </View>
             </View>

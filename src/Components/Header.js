@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,10 @@ import {
   ImageBackground,
   StyleSheet,
   StatusBar,
-} from 'react-native';
-import {Icon} from 'react-native-elements';
-import {back_img, Colors, FontFamily} from '../Constants/Constants';
-import {useNavigation} from '@react-navigation/core';
+} from "react-native";
+import { Icon } from "react-native-elements";
+import { back_img, Colors, FontFamily } from "../Constants/Constants";
+import { useNavigation } from "@react-navigation/core";
 
 const Header = ({
   backBtn,
@@ -20,7 +20,7 @@ const Header = ({
   backColor,
   headerHeight,
   backImgSource,
-  chatModule
+  chatModule,
 }) => {
   const navigation = useNavigation();
   const [state, setState] = useState({
@@ -28,7 +28,7 @@ const Header = ({
     notiBtn: false || notiBtn,
     searchBtn: false || searchBtn,
     imgBack: false || imgBack,
-    name: ' ' || name,
+    name: " " || name,
     backColor: Colors.orange || backColor,
     headerHeight: headerHeight || 200,
     back_img_source: back_img || backImgSource,
@@ -37,23 +37,25 @@ const Header = ({
     navigation.goBack();
   };
   const gotoNotification = () => {
-    navigation.navigate('Notifications');
+    navigation.navigate("Notifications");
   };
   return state.imgBack ? (
     <ImageBackground
-      style={[s.ImageBackground, {height: state.headerHeight}]}
+      style={[s.ImageBackground, { height: state.headerHeight }]}
       source={state.back_img_source}
-      imageStyle={s.ImageBackground_Img}>
+      imageStyle={s.ImageBackground_Img}
+    >
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: '90%',
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "90%",
           marginTop: StatusBar.currentHeight + 15,
-          alignSelf: 'center',
-        
-          alignItems: 'center',
-        }}>
+          alignSelf: "center",
+
+          alignItems: "center",
+        }}
+      >
         {state.backBtn ? (
           <TouchableOpacity onPress={() => gotoBack()}>
             <Icon
@@ -73,17 +75,18 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : (
-          <View style={{height: 25, width: 25}} />
+          <View style={{ height: 25, width: 25 }} />
         )}
         <Text
           style={{
             fontFamily: FontFamily.semi_bold,
             color: Colors.white,
-            textAlign: 'center',
-          }}>
+            textAlign: "center",
+          }}
+        >
           {name}
         </Text>
-        {state.searchBtn ? (
+        {state.searchBtn == false ? (
           <TouchableOpacity>
             <Icon
               name="search1"
@@ -93,7 +96,7 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : (
-          <View style={{height: 25, width: 25}} />
+          <View style={{ height: 25, width: 25 }} />
         )}
       </View>
     </ImageBackground>
@@ -101,18 +104,20 @@ const Header = ({
     <View
       style={[
         s.ImageBackground,
-        {backgroundColor: state.backColor, height: state.headerHeight},
-      ]}>
+        { backgroundColor: state.backColor, height: state.headerHeight },
+      ]}
+    >
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: '90%',
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "90%",
           marginTop: StatusBar.currentHeight + 15,
-          alignSelf: 'center',
-          backgroundColor: 'transparent',
-          alignItems: 'center',
-        }}>
+          alignSelf: "center",
+          backgroundColor: "transparent",
+          alignItems: "center",
+        }}
+      >
         {state.backBtn ? (
           <TouchableOpacity onPress={() => gotoBack()}>
             <Icon
@@ -132,14 +137,15 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : (
-          <View style={{height: 25, width: 25}} />
+          <View style={{ height: 25, width: 25 }} />
         )}
         <Text
           style={{
             fontFamily: FontFamily.semi_bold,
             color: Colors.white,
-            textAlign: 'center',
-          }}>
+            textAlign: "center",
+          }}
+        >
           {name}
         </Text>
         {state.searchBtn ? (
@@ -152,7 +158,7 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : (
-          <View style={{height: 25, width: 25}} />
+          <View style={{ height: 25, width: 25 }} />
         )}
       </View>
     </View>
@@ -163,7 +169,7 @@ export const s = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   ImageBackground_Img: {
-    resizeMode:'cover',
+    resizeMode: "cover",
     opacity: 0.5,
   },
 });

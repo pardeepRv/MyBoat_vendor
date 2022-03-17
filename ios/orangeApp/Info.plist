@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>
@@ -42,12 +42,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string> $(PRODUCT_NAME) Upload image</string>
-  <key>NSLocationAlwaysAndWhenInUsageDescription</key>
-  <string>$(PRODUCT_NAME) wants to access your location for saving your Lat and long in database.</string>
-  <key>NSLocationAlwaysUsageDescription</key>
-  <string>$(PRODUCT_NAME) wants to access your location for saving your Lat and long in database.</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>$(PRODUCT_NAME) wants to access your location for saving your Lat and long in database.</string>
+	<key>NSLocationAlwaysAndWhenInUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants to access your location for saving your Lat and long in database.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants to access your location for saving your Lat and long in database.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants to access your location for saving your Lat and long in database.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) to upload boat stories</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

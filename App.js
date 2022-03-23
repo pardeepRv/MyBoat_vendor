@@ -41,8 +41,9 @@ class App extends React.Component {
       AsyncStorage.setItem("locale", "en");
     }
     I18n.locale = appLang;
-    firebaseprovider.getMyInboxAllData();
-    firebaseprovider.getAllUsers();
+    //commented by pardeep
+    // firebaseprovider.getMyInboxAllData();
+    // firebaseprovider.getAllUsers();
   }
 
   setData = (val) => {
@@ -58,12 +59,12 @@ class App extends React.Component {
       <Provider store={store}>
         <NavigationContainer>
           <Root>
-            <SafeAreaView
+            {/* <SafeAreaView
               style={{
                 backgroundColor: Colors.black,
               }}
-            />
-            <StatusBar backgroundColor={"transparent"} translucent />
+            /> */}
+            <StatusBar  backgroundColor={"transparent"} translucent />
             <UserContext.Provider
               value={{ value: this.state.name, updateValue: this.setData }}
             >

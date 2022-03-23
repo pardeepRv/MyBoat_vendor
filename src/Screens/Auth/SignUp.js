@@ -49,7 +49,7 @@ player_id
 */
 
 const SignUp = (props) => {
-  console.log(props,'props in signup');
+  console.log(props, "props in signup");
   const Navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -58,6 +58,7 @@ const SignUp = (props) => {
   const [isChecked, setChecked] = useState(false);
   const [isconfirm, setconfirm] = useState(false);
   const [notconfirm, setNotconfirm] = useState(false);
+  const [ownerAdded, setOwnerAdded] = useState(false);
 
   const [loader, setloader] = useState(false);
   const [Boatfacality, setBoatfacality] = useState([
@@ -164,7 +165,7 @@ const SignUp = (props) => {
   signup_data.append("city", city);
   signup_data.append("phone_number", m_number);
   signup_data.append("password", password);
-  signup_data.append("gender", Gender  == 1 ? 1 : 2);
+  signup_data.append("gender", Gender == 1 ? 1 : 2);
   signup_data.append("player_id", config.player_id);
   signup_data.append("user_type_post", config.user_type_post);
   // ------------------------------------//
@@ -200,9 +201,7 @@ const SignUp = (props) => {
         .then((res) => {
           console.log("res :>> ", res);
           setAllData(res.data),
-            res.data.success === "true"
-              ? toggleOverlay()
-              : alert(res.data.msg);
+            res.data.success === "true" ? toggleOverlay() : alert(res.data.msg);
         })
         .catch((err) => console.log("sign_up_error", err));
       // return  console.log('res :>> ', res);
@@ -241,7 +240,7 @@ const SignUp = (props) => {
     mailData.append("mailsubject", mailsubject);
     mailData.append("fromName", fromName);
     mailData.append("mail_file", "NA");
-    // console.log('mailData==', mailData);
+    console.log("mailData==", mailData);
     axios
       .post(mailSendUrl, mailData)
       .then((res) => console.log(res.data))
@@ -281,16 +280,16 @@ const SignUp = (props) => {
       .then((res) => {
         console.log(res);
         if (res.data.success === "true") {
-
-          dataObj.associated_with_company = res.data.extra_details[0].associated_with_company;
+          dataObj.associated_with_company =
+            res.data.extra_details[0].associated_with_company;
           dataObj.boat_id = res.data.extra_details[0].boat_id;
           dataObj.registered = res.data.extra_details[0].registered;
           dataObj.role_id = res.data.extra_details[0].role_id;
 
           data_arr = JSON.stringify(dataObj);
           user_arr = JSON.stringify(res.data.user_details);
-          console.log(data_arr, 'saving to local 1');
-          console.log(user_arr, 'saving to local 2');
+          console.log(data_arr, "saving to local 1");
+          console.log(user_arr, "saving to local 2");
 
           let userInfo = JSON.stringify({
             id: res.data.user_details.user_id,
@@ -299,7 +298,7 @@ const SignUp = (props) => {
             fname: res.data.user_details.f_name,
             lname: res.data.user_details.l_name,
             image: res.data.user_details.image,
-            role_id:res.data.user_details.role_id
+            role_id: res.data.user_details.role_id,
           });
           let jsonUserDataMe = {
             name: res.data.user_details.name,
@@ -323,35 +322,35 @@ const SignUp = (props) => {
         } else {
           null;
         }
-        console.log(user_arr, 'saving to local storage>>>>>>>>>>');
+        console.log(user_arr, "saving to local storage>>>>>>>>>>");
         if (res.data.extra_details[0].role_id === 2) {
           res.data.success === "true"
             ? (ToastAndroid.show(
-              res.data.msg[0],
-              ToastAndroid.SHORT,
-              ToastAndroid.BOTTOM
-            ),
+                res.data.msg[0],
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+              ),
               setVisible(false),
               gotoAddstaff())
             : ToastAndroid.show(
-              res.data.msg[0],
-              ToastAndroid.SHORT,
-              ToastAndroid.BOTTOM
-            );
+                res.data.msg[0],
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+              );
         } else {
           res.data.success === "true"
             ? (ToastAndroid.show(
-              res.data.msg[0],
-              ToastAndroid.SHORT,
-              ToastAndroid.BOTTOM
-            ),
+                res.data.msg[0],
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+              ),
               setVisible(false),
               gotoAddBoatPage())
             : ToastAndroid.show(
-              res.data.msg[0],
-              ToastAndroid.SHORT,
-              ToastAndroid.BOTTOM
-            );
+                res.data.msg[0],
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+              );
         }
       })
       .catch((err) => console.log(err));
@@ -377,38 +376,35 @@ const SignUp = (props) => {
   // };
   const gotoAddstaff = async () => {
     setloader(true);
-    let userInfo = await AsyncStorage.getItem('user_arr');
-    console.log('userInfo :>> ', userInfo);
+    let userInfo = await AsyncStorage.getItem("user_arr");
+    console.log("userInfo :>> ", userInfo);
     let parsedInfo = JSON.parse(userInfo);
-    console.log('parsedInfo', parsedInfo.user_id);
+    console.log("parsedInfo", parsedInfo.user_id);
 
-    let dataArr = await AsyncStorage.getItem('data_arr');
-    console.log('dataArr :>> ', dataArr);
+    let dataArr = await AsyncStorage.getItem("data_arr");
+    console.log("dataArr :>> ", dataArr);
     let parsedInfoData = JSON.parse(dataArr);
 
-    let url =
-      config.apiUrl +
-      '/view_staff_member.php';
+    let url = config.apiUrl + "/view_staff_member.php";
     let data = new FormData();
-    data.append('staff_id', parsedInfo.user_id);
-    data.append('boat_owner_id', parsedInfoData.boat_id);
+    data.append("staff_id", parsedInfo.user_id);
+    data.append("boat_owner_id", parsedInfoData.boat_id);
     axios
       .post(url, data)
-      .then(res => {
-        console.log('view_staff_member >>>>>>>>>>>1', res);
+      .then((res) => {
+        console.log("view_staff_member >>>>>>>>>>>1", res);
         setloader(false);
         if (res && res.data && res.data.data) {
           dispatch(props.addPermissions(res.data.data[0]));
-          Navigation.navigate('Home');
+          Navigation.navigate("Home");
         } else {
           setloader(false);
-          alert('Something went wrong!');
+          alert("Something went wrong!");
           console.log(res.data.msg);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
-
 
   const searchCity = (e) => {
     let text = e.toLowerCase();
@@ -436,6 +432,11 @@ const SignUp = (props) => {
     array[index].isSelected = !array[index].isSelected;
     setBoatfacality(array);
     console.log(array);
+    if (array[1].isSelected) {
+      setF_name("");
+      setm_number("");
+      setb_name("");
+    }
   };
   const toggleGender = (index) => {
     const array = Gender.map((v) => {
@@ -474,6 +475,42 @@ const SignUp = (props) => {
           // alert(res.data.msg);
           setconfirm(false);
           setNotconfirm(true);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // ////////////////////////////////////////////  api of email for staff
+
+  const onBlurInputEmailOwner = async () => {
+    // setLoader(true);
+
+    if (!email.length) {
+      return alert("enter something");
+    }
+    let url = config.apiUrl + "/check_valid_boat_owner.php";
+    var formData = new FormData();
+    formData.append("boat_owner_email_id", email);
+
+    console.log(formData);
+
+    axios
+      .post(url, formData)
+      .then((res) => {
+        console.log("boat owner id", res);
+        if (res?.data?.success === "true") {
+          setOwnerAdded(true);
+          if (
+            res?.data?.user_detail &&
+            Boatfacality[0].value == 1 &&
+            Boatfacality[0].isSelected
+          ) {
+            setF_name(res?.data?.user_detail?.name);
+            setm_number(res?.data?.user_detail?.mobile);
+            setb_name(res?.data?.user_detail?.bussness_name);
+          }
+        } else {
+          setOwnerAdded(false);
         }
       })
       .catch((err) => console.log(err));
@@ -707,16 +744,37 @@ const SignUp = (props) => {
             </View>
 
             {Boatfacality[0].value == 1 && Boatfacality[0].isSelected ? (
-              <Input
-                placeholder="Email"
-                containerStyle={s.Input}
-                inputContainerStyle={s.Input}
-                placeholderTextColor={Colors.white}
-                inputStyle={{ color: Colors.white }}
-                keyboardType="email-address"
-                onChangeText={(t) => setemail(t)}
-                value={email}
-              />
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  marginHorizontal: 20,
+                  marginTop: 10,
+                  alignItems: "center",
+                }}
+              >
+                <Input
+                  placeholder="Email"
+                  containerStyle={s.Input}
+                  inputContainerStyle={s.Input}
+                  placeholderTextColor={Colors.white}
+                  inputStyle={{ color: Colors.white }}
+                  keyboardType="email-address"
+                  onChangeText={(t) => setemail(t)}
+                  value={email}
+                  onBlur={() => onBlurInputEmailOwner()}
+                />
+                <Feather
+                  name={ownerAdded ? "check-circle" : "x-circle"}
+                  size={25}
+                  color={ownerAdded ? "#00FF00" : "#FF0000"}
+                  style={{
+                    marginHorizontal: 5,
+                    borderBottomColor: Colors.white,
+                    marginTop: -35,
+                  }}
+                />
+              </View>
             ) : (
               <View>
                 {isconfirm ? (
@@ -876,7 +934,7 @@ const SignUp = (props) => {
                 height: 60,
                 color: "#fff",
               }}
-              // date={dob}
+              date={dob}
               mode="date"
               placeholder="Date of Birth"
               format="YYYY-MM-DD"
@@ -926,8 +984,8 @@ const SignUp = (props) => {
               <Picker.Item label="Female" value="female" />
             </Picker> */}
 
-            <View style={{marginTop:10 , height:100,}}>
-            {/* <Input
+            <View style={{ marginTop: 10, height: 100 }}>
+              {/* <Input
                 placeholder="Gender"
                 containerStyle={s.Input}
                 inputContainerStyle={s.Input}
@@ -938,51 +996,59 @@ const SignUp = (props) => {
                 value={b_name}
                 editable={false}
               /> */}
-              <Text style={{ width: Sizes.width * 0.60,fontFamily: FontFamily.default,
-    marginLeft: 5,
-    color: "white",
-    fontSize: 18,
-    paddingHorizontal: 10,marginBottom:10}}> Please Select Gender</Text>
-<FlatList
-              extraData={Gender}
-              data={Gender}
-              style={{
-                marginTop: 5,
-                paddingHorizontal: 10,
-                marginBottom: 10,
-              }}
-              renderItem={_renderGender}
-              keyExtractor={(item, index) => "key" + index}
-              horizontal
-            />
-<View
-              style={{ flexDirection: "row", justifyContent: "space-around" }}
-            >
               <Text
                 style={{
-                  fontWeight: "bold",
+                  width: Sizes.width * 0.6,
+                  fontFamily: FontFamily.default,
+                  marginLeft: 5,
                   color: "white",
-                  fontSize: 16,
+                  fontSize: 18,
                   paddingHorizontal: 10,
-                  marginTop: -60,
+                  marginBottom: 10,
                 }}
               >
-                Male
+                {" "}
+                Please Select Gender
               </Text>
-              <Text
+              <FlatList
+                extraData={Gender}
+                data={Gender}
                 style={{
-                  fontWeight: "bold",
-                  color: "white",
-                  fontSize: 16,
+                  marginTop: 5,
                   paddingHorizontal: 10,
-                  marginTop: -60,
+                  marginBottom: 10,
                 }}
+                renderItem={_renderGender}
+                keyExtractor={(item, index) => "key" + index}
+                horizontal
+              />
+              <View
+                style={{ flexDirection: "row", justifyContent: "space-around" }}
               >
-Female
-              </Text>
-            </View>
-              
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: "white",
+                    fontSize: 16,
+                    paddingHorizontal: 10,
+                    marginTop: -60,
+                  }}
+                >
+                  Male
+                </Text>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: "white",
+                    fontSize: 16,
+                    paddingHorizontal: 10,
+                    marginTop: -60,
+                  }}
+                >
+                  Female
+                </Text>
               </View>
+            </View>
             <Input
               placeholder="Password"
               secureTextEntry
@@ -1246,10 +1312,8 @@ const s = StyleSheet.create({
   },
 });
 
-
 const mapDispatchToProps = {
   addPermissions: addPermissions,
 };
 
 export default connect(null, mapDispatchToProps)(SignUp);
-

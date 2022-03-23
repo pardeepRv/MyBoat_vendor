@@ -52,7 +52,7 @@ const Header = ({
           width: "90%",
           marginTop: StatusBar.currentHeight + 15,
           alignSelf: "center",
-
+          
           alignItems: "center",
         }}
       >
@@ -66,7 +66,7 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : state.notiBtn ? (
-          <TouchableOpacity onPress={() => gotoNotification()}>
+          <TouchableOpacity onPress={() => gotoNotification()} style={{marginTop:10}}>
             <Icon
               name="bell"
               type="simple-line-icon"
@@ -82,6 +82,7 @@ const Header = ({
             fontFamily: FontFamily.semi_bold,
             color: Colors.white,
             textAlign: "center",
+            marginTop:20
           }}
         >
           {name}

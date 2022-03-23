@@ -143,10 +143,17 @@ class AllChats extends PureComponent {
     return (
       <TouchableOpacity
         style={{
-          margin: 5,
+          margin: 10,
           borderRadius: 10,
-          flex: 1,
-          borderBottomWidth: 0.5,
+          backgroundColor: "white",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
         }}
         onPress={() => {
           this.props.navigation.navigate("OneToOneChat", { data: item });
@@ -204,7 +211,7 @@ class AllChats extends PureComponent {
     const { isLoading, allChatMember } = this.state;
 
     return (
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
         }}
@@ -230,10 +237,7 @@ class AllChats extends PureComponent {
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             data={allChatMember}
-            style={{
-              marginTop: 10,
-              alignSelf: "center",
-            }}
+            style={{}}
             extraData={allChatMember}
             renderItem={this.renderChats}
             item={(item, index) => index.toString()}
@@ -245,7 +249,7 @@ class AllChats extends PureComponent {
             <Text style={{}}>No chat yet</Text>
           </View>
         )}
-      </SafeAreaView>
+      </View>
     );
   }
 }

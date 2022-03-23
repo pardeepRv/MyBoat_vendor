@@ -126,7 +126,7 @@ const ManageStaff = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    // <SafeAreaView style={{ flex: 1 }}>
       <View style={{ backgroundColor: Colors.white, flex: 1 }}>
         <Header
           name={I18n.translate('Add_Staff')}
@@ -464,7 +464,7 @@ const ManageStaff = () => {
           </View>
         </Modal>
       </View>
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 };
 const s = StyleSheet.create({

@@ -418,11 +418,11 @@ const AddStaff = (props) => {
   );
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-      }}
-    >
+    // <SafeAreaView
+    //   style={{
+    //     flex: 1,
+    //   }}
+    // >
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
         <Header imgBack={true} name= {pageType + " Staff"} backBtn={true} />
         <View style={s.SEC2}>
@@ -499,7 +499,7 @@ const AddStaff = (props) => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 };
 const s = StyleSheet.create({

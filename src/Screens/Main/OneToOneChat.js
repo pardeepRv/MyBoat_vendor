@@ -191,7 +191,7 @@ class OneToOneChat extends PureComponent {
     const { data } = this.props.route?.params;
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <View
           style={{
             backgroundColor: Colors.orange,
@@ -316,7 +316,7 @@ class OneToOneChat extends PureComponent {
           placeholder="Type here"
           minComposerHeight={40}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 }

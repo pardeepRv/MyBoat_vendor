@@ -122,7 +122,7 @@ const Ratings = () => {
               showRating={false}
               size={14}
               count={5}
-              defaultRating={5}
+              defaultRating={count5}
               isDisabled
               selectedColor="#FFCC39"
               starContainerStyle={{
@@ -139,7 +139,7 @@ const Ratings = () => {
               showRating={false}
               size={14}
               count={5}
-              defaultRating={4}
+              defaultRating={count4}
               isDisabled
               selectedColor="#FFCC39"
               starContainerStyle={{
@@ -156,7 +156,7 @@ const Ratings = () => {
               showRating={false}
               size={14}
               count={5}
-              defaultRating={3}
+              defaultRating={count3}
               isDisabled
               selectedColor="#FFCC39"
               starContainerStyle={{
@@ -173,7 +173,7 @@ const Ratings = () => {
               showRating={false}
               size={14}
               count={5}
-              defaultRating={2}
+              defaultRating={count2}
               isDisabled
               selectedColor="#FFCC39"
               starContainerStyle={{
@@ -190,7 +190,7 @@ const Ratings = () => {
               showRating={false}
               size={14}
               count={5}
-              defaultRating={1}
+              defaultRating={count1}
               isDisabled
               selectedColor="#FFCC39"
               starContainerStyle={{
@@ -207,7 +207,7 @@ const Ratings = () => {
               showRating={false}
               size={14}
               count={5}
-              defaultRating={1}
+              defaultRating={count1}
               isDisabled
               selectedColor="#FFCC39"
               starContainerStyle={{
@@ -224,7 +224,7 @@ const Ratings = () => {
               showRating={false}
               size={14}
               count={5}
-              defaultRating={1}
+              defaultRating={count1}
               isDisabled
               selectedColor="#FFCC39"
               starContainerStyle={{

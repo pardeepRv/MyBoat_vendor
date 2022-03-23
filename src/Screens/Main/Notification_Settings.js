@@ -76,7 +76,13 @@ class Noti_Setting extends React.Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: Colors.white}}>
-        <Header backBtn={true} imgBack={true} headerHeight={300} />
+        <Header
+         backBtn={true}
+          imgBack={true}
+           headerHeight={300}
+          name={'Notification Settings'}
+
+            />
         <View style={styles.SEC2}>
           {this.state.loader ? (
             <Loading />

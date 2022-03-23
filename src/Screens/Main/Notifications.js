@@ -170,14 +170,14 @@ const NotificationsPage = () => {
                             <TouchableOpacity onPress={deleteNotification}>
                               <Card
                                 containerStyle={{
-                                  height: 30,
-                                  width: 30,
+                                  height: 15,
+                                  width: 15,
                                   padding: 0,
                                   alignItems: "center",
                                   justifyContent: "center",
                                 }}
                               >
-                                <Icon name="cross" type="entypo" />
+                                <Icon name="cross" type="entypo" size={15} />
                               </Card>
                             </TouchableOpacity>
                           </View>

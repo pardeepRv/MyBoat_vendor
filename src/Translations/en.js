@@ -128,7 +128,7 @@ export default {
   address_not_available: 'Address not available',
   //
   profile: 'Profile',
-  kwd: 'KWD',
+  kwd: 'KD',
   manage_boat: 'Manage Boats',
   withdrawal: 'My Withdrawals',
   history: 'History',

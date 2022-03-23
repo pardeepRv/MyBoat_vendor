@@ -217,15 +217,21 @@ const Home = (props) => {
                 style={{
                   flexDirection: "row",
                   marginLeft: 8,
+                  flex: 0.9,
                 }}
               >
                 <View style={{}}>
                   <Text style={s.name}>{item.boat_name}</Text>
                   <Text style={s.type}>{I18n.translate("boat")}</Text>
                   <Text style={s.id}>{item.booking_no}</Text>
-                  <Text style={s.type}>{item.time}</Text>
+                  {/* <Text style={s.type}>{item.time}</Text>
+                   */}
+                   <Text style={s.type}>{item.expiry_datetime}</Text>
+                  
                 </View>
-                <View style={{ justifyContent: "space-around" }}>
+                <View
+                  style={{ justifyContent: "space-between", marginLeft: 50 }}
+                >
                   <Text style={[s.type, { textAlign: "right" }]}>
                     {item.createtime}
                   </Text>
@@ -354,135 +360,135 @@ const Home = (props) => {
     );
   };
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-      }}
-    >
-      <View style={{ backgroundColor: Colors.white, flex: 1 }}>
-        <StatusBar
-          translucent
-          barStyle={"light-content"}
-          backgroundColor={"transparent"}
-        />
-        <Header
-          imgBack={true}
-          notiBtn={true}
-          searchBtn={true}
-          name={I18n.translate("home")}
-        />
+    // <SafeAreaView
+    //   style={{
+    //     flex: 1,
+    //   }}
+    // >
+    <View style={{ backgroundColor: Colors.white, flex: 1 }}>
+      <StatusBar
+        translucent
+        // barStyle={"light-content"}
+        backgroundColor={"transparent"}
+      />
+      <Header
+        imgBack={true}
+        notiBtn={true}
+        searchBtn={true}
+        name={I18n.translate("home")}
+      />
 
-        {/* Buttons */}
-        <View
-          style={{
-            position: "absolute",
-            alignItems: "center",
-            width: "100%",
-            top: 100,
-          }}
-        >
-          <View style={s.btn_1}>
-            <TouchableOpacity
-              style={[s.btn1, { backgroundColor: btn1Style.backColor }]}
-              onPress={() => OutgoingBtn()}
-              // onPress={() =>value.updateValue(2)}
-              activeOpacity={0.8}
-            >
-              <Text style={[s.btn1Text, { color: btn1Style.textCOlor }]}>
-                {I18n.translate("outgoing")}
-              </Text>
-              {/* <Text>{value.value}</Text> */}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[s.btn1, { backgroundColor: btn2Style.backColor }]}
-              onPress={() => UpcomingBtn()}
-              // onPress={() => props.navigation.navigate('MapView')}
-              activeOpacity={0.8}
-            >
-              <Text style={[s.btn1Text, { color: btn2Style.textCOlor }]}>
-                {I18n.translate("upcoming")}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {/* View */}
-        <View style={s.SEC2}>
-          {loader ? (
-            <Loading />
-          ) : (
-            <View>
-              {data ? (
-                <View>
-                  {outgoing ? (
-                    <FlatList
-                      data={outgoing}
-                      renderItem={CardView}
-                      keyExtractor={(i, ind) => ind}
-                      style={{
-                        marginTop: 30,
-                      }}
-                      contentContainerStyle={
-                        {
-                          //    paddingBottom: 20,
-                          //    height:"100%"
-                        }
-                      }
-                      // ListFooterComponentStyle={{height:200}}
-                      contentInsetAdjustmentBehavior="automatic"
-                    />
-                  ) : (
-                    <View style={{ alignItems: "center", marginTop: "10%" }}>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: "bold",
-                          color: "#ccc",
-                        }}
-                      >
-                        {I18n.translate("no_data")}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-              ) : (
-                <View>
-                  {upcoming ? (
-                    <FlatList
-                      data={upcoming}
-                      renderItem={CardView}
-                      keyExtractor={(i, ind) => ind}
-                      style={{
-                        marginTop: 30,
-                      }}
-                      contentContainerStyle={
-                        {
-                          //    paddingBottom: 20,
-                          //    height:"100%"
-                        }
-                      }
-                      // ListFooterComponentStyle={{height:200}}
-                      contentInsetAdjustmentBehavior="automatic"
-                    />
-                  ) : (
-                    <View style={{ alignItems: "center", marginTop: "10%" }}>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: "bold",
-                          color: "#ccc",
-                        }}
-                      >
-                        {I18n.translate("no_data")}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-              )}
-            </View>
-          )}
+      {/* Buttons */}
+      <View
+        style={{
+          position: "absolute",
+          alignItems: "center",
+          width: "100%",
+          top: 100,
+        }}
+      >
+        <View style={s.btn_1}>
+          <TouchableOpacity
+            style={[s.btn1, { backgroundColor: btn1Style.backColor }]}
+            onPress={() => OutgoingBtn()}
+            // onPress={() =>value.updateValue(2)}
+            activeOpacity={0.8}
+          >
+            <Text style={[s.btn1Text, { color: btn1Style.textCOlor }]}>
+              {I18n.translate("outgoing")}
+            </Text>
+            {/* <Text>{value.value}</Text> */}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[s.btn1, { backgroundColor: btn2Style.backColor }]}
+            onPress={() => UpcomingBtn()}
+            // onPress={() => props.navigation.navigate('MapView')}
+            activeOpacity={0.8}
+          >
+            <Text style={[s.btn1Text, { color: btn2Style.textCOlor }]}>
+              {I18n.translate("upcoming")}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+      {/* View */}
+      <View style={s.SEC2}>
+        {loader ? (
+          <Loading />
+        ) : (
+          <View>
+            {data ? (
+              <View>
+                {outgoing ? (
+                  <FlatList
+                    data={outgoing}
+                    renderItem={CardView}
+                    keyExtractor={(i, ind) => ind}
+                    style={{
+                      marginTop: 30,
+                    }}
+                    contentContainerStyle={
+                      {
+                        //    paddingBottom: 20,
+                        //    height:"100%"
+                      }
+                    }
+                    // ListFooterComponentStyle={{height:200}}
+                    contentInsetAdjustmentBehavior="automatic"
+                  />
+                ) : (
+                  <View style={{ alignItems: "center", marginTop: "10%" }}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: "#ccc",
+                      }}
+                    >
+                      {I18n.translate("no_data")}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            ) : (
+              <View>
+                {upcoming ? (
+                  <FlatList
+                    data={upcoming}
+                    renderItem={CardView}
+                    keyExtractor={(i, ind) => ind}
+                    style={{
+                      marginTop: 30,
+                    }}
+                    contentContainerStyle={
+                      {
+                        //    paddingBottom: 20,
+                        //    height:"100%"
+                      }
+                    }
+                    // ListFooterComponentStyle={{height:200}}
+                    contentInsetAdjustmentBehavior="automatic"
+                  />
+                ) : (
+                  <View style={{ alignItems: "center", marginTop: "10%" }}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: "#ccc",
+                      }}
+                    >
+                      {I18n.translate("no_data")}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+          </View>
+        )}
+      </View>
+    </View>
+    // </SafeAreaView>
   );
 };
 const mapStateToProps = (state) => ({

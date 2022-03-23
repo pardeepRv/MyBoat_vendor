@@ -110,6 +110,7 @@ const CalenderView = (props) => {
     axios
       .get(url)
       .then((res) => {
+        console.log(res,'res in getBookingListForOwner');
         setLoader(false);
         setIsFetching(false);
         if (res.data.success === "true") {

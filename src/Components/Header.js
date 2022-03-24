@@ -66,7 +66,7 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : state.notiBtn ? (
-          <TouchableOpacity onPress={() => gotoNotification()} style={{marginTop:10}}>
+          <TouchableOpacity onPress={() => gotoNotification()} style={{marginTop:35}}>
             <Icon
               name="bell"
               type="simple-line-icon"

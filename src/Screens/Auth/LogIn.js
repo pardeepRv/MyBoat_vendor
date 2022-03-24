@@ -51,6 +51,8 @@ const Login = (props) => {
   let passRef = null;
   const nav = useNavigation();
   const [email, setemail] = useState("owner@yopmail.com"); // boat1@yopmail.com
+  // const [email, setemail] = useState("arun_sharma@rvtechnologies.com"); // boat1@yopmail.com
+
   const [password, setpassword] = useState("qwerty123"); // 123456
   const [isLogin, setIsLogin] = useState(false);
   const [language_id, setLanguageId] = useState(0);
@@ -156,17 +158,13 @@ const Login = (props) => {
   // --------------------------------------- //
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-      }}
-    >
+    // <SafeAreaView
+    //   style={{
+    //     flex: 1,
+    //   }}
+    // >
       <View style={{ flex: 1 }}>
-        <StatusBar
-          translucent
-          barStyle={"light-content"}
-          backgroundColor={"transparent"}
-        />
+         
         <ImageBackground
           style={styles.ImageBackground}
           source={back_img}
@@ -329,7 +327,7 @@ const Login = (props) => {
           </KeyboardAwareScrollView>
         </ImageBackground>
       </View>
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 };
 
@@ -363,8 +361,9 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   SEC2: {
-    paddingTop: StatusBar.currentHeight,
+    // paddingTop: StatusBar.currentHeight,
     paddingHorizontal: 20,
+    marginTop:30
   },
   Login: {
     fontFamily: FontFamily.semi_bold,

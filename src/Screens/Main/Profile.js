@@ -156,7 +156,6 @@ const Profile = (props) => {
   useEffect(async () => {
     review_data();
     setLoader(true);
-    getData();
     navigation.addListener("focus", () => {
       getData();
     });
@@ -170,12 +169,16 @@ const Profile = (props) => {
     axios
       .get(url)
       .then((res) => {
+        console.log(res, "res aain");
         if (res.data.success === "true") {
           console.log("user details---", res.data.user_details);
           setLoader(false);
           setData(res.data.user_details);
         } else {
           setLoader(false);
+          if (res?.data?.account_active_status == "deactivate") {
+            logout();
+          }
           if (props.language_id == 0) alert(res.data.msg[0]);
           else alert(res.data.msg[1]);
         }
@@ -184,6 +187,14 @@ const Profile = (props) => {
         setLoader(false);
       });
   };
+  const logout = async () => {
+    await AsyncStorage.clear();
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
+
   const review_data = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);

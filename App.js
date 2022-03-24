@@ -64,7 +64,12 @@ class App extends React.Component {
                 backgroundColor: Colors.black,
               }}
             /> */}
-            <StatusBar  backgroundColor={"transparent"} translucent />
+
+            <StatusBar
+              barStyle={"light-content"}
+              backgroundColor={"transparent"}
+              translucent
+            />
             <UserContext.Provider
               value={{ value: this.state.name, updateValue: this.setData }}
             >

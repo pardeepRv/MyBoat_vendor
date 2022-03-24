@@ -63,6 +63,14 @@ class AllChats extends PureComponent {
     this.onFocusSubscribe();
   }
 
+  logout = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
+
   getAllChatMembers = async () => {
     this.setState({
       isLoading: true,
@@ -86,6 +94,10 @@ class AllChats extends PureComponent {
             isLoading: false,
           });
         } else {
+          if (res?.data?.status_code == 405) {
+            this.logout();
+            alert(res?.data?.msg[0]);
+          }
           this.setState({
             isLoading: false,
           });

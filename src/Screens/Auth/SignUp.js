@@ -585,11 +585,11 @@ const SignUp = (props) => {
   console.log("city", cityArr);
   return (
     <View style={{ flex: 1, paddingTop: StatusBar.currentHeight + 10 }}>
-      <StatusBar
+      {/* <StatusBar
         barStyle={"light-content"}
         translucent
         backgroundColor={"transparent"}
-      />
+      /> */}
       <ImageBackground
         style={s.ImageBackground}
         source={back_img}
@@ -670,6 +670,7 @@ const SignUp = (props) => {
         />
       ) : (
         <KeyboardAwareScrollView>
+          <View style={{height:25}}></View>
           <Image source={require("../../Images/orange.png")} style={s.Logo} />
           {Boatfacality[0].value == 1 && Boatfacality[0].isSelected ? (
             <Text style={s.Text1}>Boat Owner</Text>

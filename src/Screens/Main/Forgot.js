@@ -116,14 +116,6 @@ class Forgot extends Component {
         activeOpacity={1}
         onPress={Keyboard.dismiss}
         style={{flex: 1, height: '100%', backgroundColor: '#ffffff'}}>
-        <SafeAreaView style={{flex: 0, backgroundColor: '#fff'}} />
-        <StatusBar
-          backgroundColor={'transparent'}
-          barStyle="light-content"
-          // hidden={false}
-          translucent={true}
-          // networkActivityIndicatorVisible={true}
-        />
 
         {/* <ActivityIndicator loading={this.state.loading} /> */}
         <ImageBackground
@@ -157,7 +149,6 @@ class Forgot extends Component {
               <TextInput
                 textAlign={this.props.language_id == 0? 'left':'right'}
                 style={styles.enter_emaol_login}
-                onChangeText={this.handleTextChange}
                 placeholder={I18n.translate('email')}
                 placeholderTextColor="#b8b8b8"
                 returnKeyLabel="done"
@@ -203,6 +194,7 @@ const styles = StyleSheet.create({
   forgot_back: {
     width: 35,
     height: 20,
+    marginTop:10
   },
   firgot_header: {
     marginTop: 25,

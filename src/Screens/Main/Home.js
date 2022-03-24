@@ -149,6 +149,13 @@ const Home = (props) => {
     });
     // setData(UpcomingData);
   };
+  const logout = async () => {
+    await AsyncStorage.clear();
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
   const getBookingDetails = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
@@ -171,6 +178,9 @@ const Home = (props) => {
             setOutgoing([]);
           }
         } else {
+          if (res?.data?.status_code == 405) {
+            logout();
+          }
           if (props.language_id == 0) alert(res.data.msg[0]);
           else alert(res.data.msg[1]);
         }
@@ -226,8 +236,7 @@ const Home = (props) => {
                   <Text style={s.id}>{item.booking_no}</Text>
                   {/* <Text style={s.type}>{item.time}</Text>
                    */}
-                   <Text style={s.type}>{item.expiry_datetime}</Text>
-                  
+                  <Text style={s.type}>{item.expiry_datetime}</Text>
                 </View>
                 <View
                   style={{ justifyContent: "space-between", marginLeft: 50 }}

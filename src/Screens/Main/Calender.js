@@ -80,6 +80,14 @@ const CalenderView = (props) => {
     }
   };
 
+  const logout = async () => {
+    await AsyncStorage.clear();
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
+
   const getData = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
@@ -95,6 +103,11 @@ const CalenderView = (props) => {
           getBookingListForOwner();
           setAllData(res.data.unavailabe_arr);
         } else {
+          if (res?.data?.status_code == 405) {
+            logout();
+          }
+          if (props.language_id == 0) alert(res.data.msg[0]);
+          else alert(res.data.msg[1]);
           setLoader(false);
         }
       })

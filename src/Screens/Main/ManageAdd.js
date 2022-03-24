@@ -89,6 +89,14 @@ const ManageAdd = (props) => {
     }
   };
 
+  const logout = async () => {
+    await AsyncStorage.clear();
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
+
   const getData = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
@@ -113,6 +121,9 @@ const ManageAdd = (props) => {
             });
           }
         } else {
+          if (res?.data?.status_code == 405) {
+            logout();
+          }
           if (props.language_id == 0) alert(res.data.msg[0]);
           else alert(res.data.msg[1]);
         }
@@ -651,7 +662,7 @@ const s = StyleSheet.create({
     justifyContent: "space-around",
     position: "absolute",
     alignSelf: "center",
-    top: 100,
+    top: 110,
   },
   SEC2: {
     backgroundColor: Colors.white,
@@ -725,11 +736,11 @@ const s = StyleSheet.create({
     marginLeft: -26,
   },
   searchStyle: {
-    margin: 10,
+    margin: 15,
     width: "90%",
     height: 35,
     position: "absolute",
-    top: 40,
+    top: 50,
     left: 10,
     backgroundColor: "white",
     paddingHorizontal: 10,

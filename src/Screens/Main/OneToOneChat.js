@@ -191,11 +191,11 @@ class OneToOneChat extends PureComponent {
     const { data } = this.props.route?.params;
 
     return (
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1  ,backgroundColor:Colors.orange}}>
         <View
           style={{
             backgroundColor: Colors.orange,
-            height: 60,
+            height: 100,
             alignItems: "flex-start",
             flexDirection: "row",
             justifyContent: "space-between",
@@ -266,7 +266,7 @@ class OneToOneChat extends PureComponent {
                 {" "}
                 {data.name}
               </Text>
-              {/* <Text
+              <Text
                 numberOfLines={1}
                 style={{
                   color: Colors.white,
@@ -277,7 +277,7 @@ class OneToOneChat extends PureComponent {
               >
                 {" "}
                 online{" "}
-              </Text> */}
+              </Text>
             </View>
           </View>
           <TouchableOpacity
@@ -299,6 +299,15 @@ class OneToOneChat extends PureComponent {
             /> */}
           </TouchableOpacity>
         </View>
+        <View style={{
+          backgroundColor: Colors.white,
+          borderTopLeftRadius: 25,
+          borderTopEndRadius: 25,
+          marginTop: -30,
+          // marginBottom:40,
+          flex: 1
+        }}
+        >
         {this.state.isLoading && <Loading />}
 
         <GiftedChat
@@ -316,7 +325,8 @@ class OneToOneChat extends PureComponent {
           placeholder="Type here"
           minComposerHeight={40}
         />
-      </View>
+         </View>
+      </SafeAreaView>
     );
   }
 }

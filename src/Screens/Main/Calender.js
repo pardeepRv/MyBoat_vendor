@@ -28,7 +28,7 @@ const CalenderView = (props) => {
   const [upcomingTripData, setUpcomingTripData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  
+
   const [permissionArr, serPermissionArr] = useState([]);
 
   // useEffect(() => {
@@ -123,7 +123,7 @@ const CalenderView = (props) => {
     axios
       .get(url)
       .then((res) => {
-        console.log(res,'res in getBookingListForOwner');
+        console.log(res, "res in getBookingListForOwner");
         setLoader(false);
         setIsFetching(false);
         if (res.data.success === "true") {
@@ -180,6 +180,7 @@ const CalenderView = (props) => {
       .catch((err) => console.log(err));
   };
   const getDayColor = (date, preference) => {
+    console.log(upcomingTripData,'upcomingTripDataupcomingTripData');
     let color = "white";
     let textColor = "#000";
     let found = false;
@@ -191,8 +192,8 @@ const CalenderView = (props) => {
           textColor = "#fff";
           color = "red";
         }
-        upcomingTripData !== "NA" &&
-          upcomingTripData?.length &&
+        upcomingTripData !== "NA2" &&
+          upcomingTripData.length > 0 &&
           upcomingTripData.filter((innerItem) => {
             if (item.date === innerItem.date) {
               if (date.dateString === innerItem.date) {
@@ -203,8 +204,8 @@ const CalenderView = (props) => {
             }
           });
       });
-    upcomingTripData !== "NA" &&
-      upcomingTripData?.length &&
+    upcomingTripData !== "NA2" &&
+      upcomingTripData.length > 0 &&
       upcomingTripData.filter((innerItem) => {
         if (date.dateString === innerItem.date && !found) {
           color = "green";
@@ -225,7 +226,7 @@ const CalenderView = (props) => {
     );
     return (
       <View>
-        <Calendar 
+        <Calendar
           // onDayPress={(day) => { selecteddate.push(day.dateString), gotoSelectedDate({ data: day }) }}
           dayComponent={({ date, state }) => {
             return (
@@ -274,7 +275,6 @@ const CalenderView = (props) => {
             borderTopLeftRadius: 30,
             borderTopEndRadius: 30,
           }}
-        
           theme={{
             "stylesheet.calendar.header": {
               week: {

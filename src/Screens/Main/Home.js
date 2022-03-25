@@ -290,7 +290,7 @@ const Home = (props) => {
                   {item.booking_status === 4 ? (
                     <View
                       style={{
-                        backgroundColor: Colors.red,
+                        backgroundColor: 'red',
                         alignItems: "center",
                       }}
                     >
@@ -309,7 +309,7 @@ const Home = (props) => {
                   {item.booking_status === 3 ? (
                     <View
                       style={{
-                        backgroundColor: Colors.red,
+                        backgroundColor: 'red',
                         alignItems: "center",
                       }}
                     >

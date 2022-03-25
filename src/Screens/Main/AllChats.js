@@ -243,24 +243,38 @@ class AllChats extends PureComponent {
         /> */}
 
         {isLoading && <Loading />}
-        {allChatMember.length > 0 ? (
-          <FlatList
-            keyboardShouldPersistTaps={"handled"}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            data={allChatMember}
-            style={{}}
-            extraData={allChatMember}
-            renderItem={this.renderChats}
-            item={(item, index) => index.toString()}
-          />
-        ) : (
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Text style={{}}>No chat yet</Text>
-          </View>
-        )}
+        <View
+          style={{
+            backgroundColor: "white",
+            borderTopLeftRadius: 25,
+            borderTopEndRadius: 25,
+            marginTop: -30,
+            flex: 1,
+          }}
+        >
+          {allChatMember.length > 0 ? (
+            <FlatList
+              keyboardShouldPersistTaps={"handled"}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              data={allChatMember}
+              style={{}}
+              extraData={allChatMember}
+              renderItem={this.renderChats}
+              item={(item, index) => index.toString()}
+            />
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{}}>No chat yet</Text>
+            </View>
+          )}
+        </View>
       </View>
     );
   }

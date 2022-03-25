@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/core";
-import messaging from '@react-native-firebase/messaging';
+import messaging from "@react-native-firebase/messaging";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
@@ -47,13 +47,17 @@ const handleEmail = () => {
   }).catch(console.error);
 };
 const Login = (props) => {
-  console.log(FontFamily,'FontFamily in login');
+  console.log(FontFamily, "FontFamily in login");
   let passRef = null;
   const nav = useNavigation();
-  const [email, setemail] = useState("owner@yopmail.com"); // boat1@yopmail.com
+  const [email, setemail] = useState(""); // boat1@yopmail.com
+
+  // const [email, setemail] = useState("owner@yopmail.com"); // boat1@yopmail.com
   // const [email, setemail] = useState("arun_sharma@rvtechnologies.com"); // boat1@yopmail.com
 
-  const [password, setpassword] = useState("qwerty123"); // 123456
+  // const [password, setpassword] = useState("qwerty123"); // 123456
+  const [password, setpassword] = useState(""); // 123456
+
   const [isLogin, setIsLogin] = useState(false);
   const [language_id, setLanguageId] = useState(0);
   const [loader, setLoader] = useState(false);
@@ -80,10 +84,9 @@ const Login = (props) => {
   data.append("user_type", config.user_type_post);
 
   const logIn = async () => {
-
     const fcmToken = await messaging().getToken();
-    data.append('device_token', fcmToken);
-    console.log(data,'data in log in');
+    data.append("device_token", fcmToken);
+    console.log(data, "data in log in");
 
     setLoader(true);
     // nav.navigate("Home");
@@ -91,7 +94,7 @@ const Login = (props) => {
       .post(url, data)
       .then((res) => {
         setLoader(false);
-        console.log(res,'login res');
+        console.log(res, "login res");
         if (res.data.success == "true") {
           let user_arr = JSON.stringify(res.data);
           let userInfo = JSON.stringify({
@@ -163,170 +166,167 @@ const Login = (props) => {
     //     flex: 1,
     //   }}
     // >
-      <View style={{ flex: 1 }}>
-         
-        <ImageBackground
-          style={styles.ImageBackground}
-          source={back_img}
-          imageStyle={styles.ImageBackground_Img}
-        >
-          <KeyboardAwareScrollView>
-            <View style={styles.SEC2}>
-              {loader ? (
-                <Modal
-                  transparent={true}
-                  //translucent={true}
-                  visible={loader}
-                  animationType={"slide"}
-                  animationInTiming={500}
-                  animationOutTiming={500}
+    <View style={{ flex: 1 }}>
+      <ImageBackground
+        style={styles.ImageBackground}
+        source={back_img}
+        imageStyle={styles.ImageBackground_Img}
+      >
+        <KeyboardAwareScrollView>
+          <View style={styles.SEC2}>
+            {loader ? (
+              <Modal
+                transparent={true}
+                //translucent={true}
+                visible={loader}
+                animationType={"slide"}
+                animationInTiming={500}
+                animationOutTiming={500}
+              >
+                <View
+                  style={{
+                    height: 150,
+                    width: 150,
+                    alignSelf: "center",
+                    backgroundColor: "white",
+                    justifyContent: "center",
+                    backgroundColor: "#000",
+                    opacity: 0.8,
+                    borderRadius: 10,
+                  }}
                 >
-                  <View
-                    style={{
-                      height: 150,
-                      width: 150,
-                      alignSelf: "center",
-                      backgroundColor: "white",
-                      justifyContent: "center",
-                      backgroundColor: "#000",
-                      opacity: 0.8,
-                      borderRadius: 10,
-                    }}
-                  >
-                    <ActivityIndicator size={60} color={Colors.orange} />
-                  </View>
-                </Modal>
-              ) : null}
-              <TouchableOpacity
-                onPress={() => {
-                  changeLanguage(restartApp);
+                  <ActivityIndicator size={60} color={Colors.orange} />
+                </View>
+              </Modal>
+            ) : null}
+            <TouchableOpacity
+              onPress={() => {
+                changeLanguage(restartApp);
+              }}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                alignSelf: "flex-end",
+                marginTop: 15,
+              }}
+            >
+              <MaterialCommunityIcons
+                name="web"
+                style={{ fontSize: 15, color: Colors.white }}
+              />
+              <Text style={{ color: Colors.white, marginHorizontal: 5 }}>
+                {props.language_id == 0 ? "Eng" : "Ar"}
+              </Text>
+              <AntDesign
+                name="caretdown"
+                style={{ fontSize: 10, color: Colors.white }}
+              />
+            </TouchableOpacity>
+            <Image
+              style={{
+                resizeMode: "contain",
+                height: 120,
+                width: 120,
+                alignSelf: "center",
+                marginVertical: 50,
+              }}
+              source={require("../../Images/orange.png")}
+            />
+            <WelComeNote />
+            <View style={{ marginVertical: 5, marginBottom: 20 }}>
+              <Text style={styles.Login}>{I18n.translate("login")}</Text>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderColor: "#fff",
+                  marginVertical: 10,
                 }}
+              >
+                <TextInput
+                  placeholder={I18n.translate("username")}
+                  value={email}
+                  placeholderTextColor={"#fff"}
+                  textAlign={props.language_id == 0 ? "left" : "right"}
+                  fontSize={16}
+                  opacity={email && email.length >= 1 ? 1 : 0.6}
+                  //fontFamily={FontFamily.semi_bold}
+                  //   style={{borderBottomWidth:1,borderColor:'#fff',marginVertical:10}}
+                  color={"#fff"}
+                  // inputStyle={{color: Colors.white,fontSiz}}
+                  keyboardType="email-address"
+                  onChangeText={(txt) => setemail(txt)}
+                />
+              </View>
+
+              <View
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  alignSelf: "flex-end",
-                  marginTop: 15,
+                  borderBottomWidth: 1,
+                  borderColor: "#fff",
+                  justifyContent: "space-between",
                 }}
               >
-                <MaterialCommunityIcons
-                  name="web"
-                  style={{ fontSize: 15, color: Colors.white }}
+                <TextInput
+                  placeholder={I18n.translate("password")}
+                  value={password}
+                  opacity={password && password.length >= 1 ? 1 : 0.6}
+                  fontSize={16}
+                  placeholderTextColor={"#fff"}
+                  alignSelf="flex-start"
+                  textAlign={props.language_id == 0 ? "left" : "right"}
+                  // ref={(ref)=>{
+                  //   passRef = ref
+                  // }}
+                  fontFamily={FontFamily.semi_bold}
+                  // containerStyle={styles.Input}
+                  // inputContainerStyle={styles.Input}
+                  color={"#fff"}
+                  style={{ width: "70%" }}
+                  inputStyle={{ color: "#fff" }}
+                  secureTextEntry
+                  selectTextOnFocus
+                  onChangeText={(pass) => setpassword(pass)}
                 />
-                <Text style={{ color: Colors.white, marginHorizontal: 5 }}>
-                  {props.language_id == 0 ? "Eng" : "Ar"}
-                </Text>
-                <AntDesign
-                  name="caretdown"
-                  style={{ fontSize: 10, color: Colors.white }}
-                />
-              </TouchableOpacity>
-              <Image
-                style={{
-                  resizeMode: "contain",
-                  height: 120,
-                  width: 120,
-                  alignSelf: "center",
-                  marginVertical: 50,
-                }}
-                source={require("../../Images/orange.png")}
-              />
-              <WelComeNote />
-              <View style={{ marginVertical: 5, marginBottom: 20 }}>
-                <Text style={styles.Login}>{I18n.translate("login")}</Text>
-                <View
-                  style={{
-                    borderBottomWidth: 1,
-                    borderColor: "#fff",
-                    marginVertical: 10,
+                <TouchableOpacity
+                  onPress={() => {
+                    nav.navigate("forgot");
                   }}
+                  style={{ marginRight: 200, marginTop: 15 }}
                 >
-                  <TextInput
-                    placeholder={I18n.translate("username")}
-                    value={email}
-                    placeholderTextColor={"#fff"}
-                    textAlign={props.language_id == 0 ? "left" : "right"}
-                    fontSize={16}
-                    opacity={email && email.length >= 1 ? 1 : 0.6}
-                    //fontFamily={FontFamily.semi_bold}
-                    //   style={{borderBottomWidth:1,borderColor:'#fff',marginVertical:10}}
-                    color={"#fff"}
-                    // inputStyle={{color: Colors.white,fontSiz}}
-                    keyboardType="email-address"
-                    onChangeText={(txt) => setemail(txt)}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    borderBottomWidth: 1,
-                    borderColor: "#fff",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <TextInput
-                    placeholder={I18n.translate("password")}
-                    value={password}
-                    opacity={password && password.length >= 1 ? 1 : 0.6}
-                    fontSize={16}
-                    placeholderTextColor={"#fff"}
-                    alignSelf="flex-start"
-                    textAlign={props.language_id == 0 ? "left" : "right"}
-                    // ref={(ref)=>{
-                    //   passRef = ref
-                    // }}
-                    fontFamily={FontFamily.semi_bold}
-                    // containerStyle={styles.Input}
-                    // inputContainerStyle={styles.Input}
-                    color={"#fff"}
-                    style={{ width: "70%" }}
-                    inputStyle={{ color: "#fff" }}
-                    secureTextEntry
-                    selectTextOnFocus
-                    onChangeText={(pass) => setpassword(pass)}
-                  />
-                  <TouchableOpacity
-                    onPress={() => {
-                      nav.navigate("forgot");
-                    }}
-                    style={{ marginRight: 200, marginTop: 15 }}
-                  >
-                    <Text style={styles.FGPASS}>
-                      {I18n.translate("forgotPassword")}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View>
-                <View style={{ alignItems: "center" }}>
-                  <TouchableOpacity style={styles.Btn1} onPress={() => logIn()}>
-                    <Text style={styles.Btn1Text}>
-                      {I18n.translate("login")}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.Btn1}
-                    onPress={() => nav.navigate("SignUp")}
-                  >
-                    <Text style={styles.Btn1Text}>
-                      {I18n.translate("signUp")}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => handleEmail()}
-                    style={{ marginTop: 25 }}
-                  >
-                    <Text style={styles.contact_admin}>
-                      {I18n.translate("contact_admin")}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                  <Text style={styles.FGPASS}>
+                    {I18n.translate("forgotPassword")}
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
-          </KeyboardAwareScrollView>
-        </ImageBackground>
-      </View>
+            <View>
+              <View style={{ alignItems: "center" }}>
+                <TouchableOpacity style={styles.Btn1} onPress={() => logIn()}>
+                  <Text style={styles.Btn1Text}>{I18n.translate("login")}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.Btn1}
+                  onPress={() => nav.navigate("SignUp")}
+                >
+                  <Text style={styles.Btn1Text}>
+                    {I18n.translate("signUp")}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleEmail()}
+                  style={{ marginTop: 25 }}
+                >
+                  <Text style={styles.contact_admin}>
+                    {I18n.translate("contact_admin")}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </KeyboardAwareScrollView>
+      </ImageBackground>
+    </View>
     // </SafeAreaView>
   );
 };
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
   SEC2: {
     // paddingTop: StatusBar.currentHeight,
     paddingHorizontal: 20,
-    marginTop:30
+    marginTop: 30,
   },
   Login: {
     fontFamily: FontFamily.semi_bold,

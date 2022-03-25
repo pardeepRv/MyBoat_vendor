@@ -1,40 +1,23 @@
-import React, {useState, useEffect} from 'react';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/core";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
   FlatList,
-  ActivityIndicator,
+  Modal,
   Platform,
-} from 'react-native';
-import I18n from '../../Translations/i18'
-import {
-  Icon,
-  Input,
-  Card,
-  AirbnbRating,
-  Overlay,
-  Image,
-} from 'react-native-elements';
-import {connect, useDispatch} from 'react-redux';
-import {color} from 'react-native-elements/dist/helpers';
-import Header from '../../Components/Header';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/core';
-import {
-  back_img3,
-  boat_img1,
-  Colors,
-  FontFamily,
-  Sizes,
-} from '../../Constants/Constants';
-import Ad from '../../Data/Ad';
-import axios from 'axios';
-import config from '../../Constants/config';
-import {Loading} from '../../Components/Loader';
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Card, Icon } from "react-native-elements";
+import { connect } from "react-redux";
+import Header from "../../Components/Header";
+import { Loading } from "../../Components/Loader";
+import config from "../../Constants/config";
+import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
+import I18n from "../../Translations/i18";
 
 const ManageBoats = () => {
   const navigation = useNavigation();
@@ -44,75 +27,72 @@ const ManageBoats = () => {
   const [data, setData] = useState([]);
   const [itemData, setItemData] = useState([]);
   // --------------------------------------- //
-  const toggleOverlay = ({item}) => {
+  const toggleOverlay = ({ item }) => {
     setVisible(!visible);
     setItemData(item);
   };
   useEffect(async () => {
-    navigation.addListener('focus', () => {
+    navigation.addListener("focus", () => {
       allData();
     });
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     allData();
   }, []);
   const allData = async () => {
     setLoader(true);
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-    let url = config.apiUrl + '/boat_list.php?user_id_post=' + parsedInfo.id;
+    let url = config.apiUrl + "/boat_list.php?user_id_post=" + parsedInfo.id;
     axios
       .get(url)
-      .then(res => {
+      .then((res) => {
         setLoader(false);
         setIsFetching(false);
         let data = JSON.stringify(res.data, null, 1);
-        if (res.data.success === 'true') {
+        if (res.data.success === "true") {
           setData(res.data.boat_arr);
         } else {
-          if(this.props.language_id == 0)
-          alert(res.data.msg[0]);
-          else  alert(res.data.msg[1]);
+          if (this.props.language_id == 0) alert(res.data.msg[0]);
+          else alert(res.data.msg[1]);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
-  const deleteBoat = async id => {
+  const deleteBoat = async (id) => {
     setLoader(true);
-    let userInfo = await AsyncStorage.getItem('userInfo');
+    let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     let url =
       config.apiUrl +
-      '/boat_delete.php?user_id_post=' +
+      "/boat_delete.php?user_id_post=" +
       parsedInfo.id +
-      '&boat_id=' +
+      "&boat_id=" +
       id;
     axios
       .get(url)
-      .then(res => {
+      .then((res) => {
         setLoader(false);
         let data = JSON.stringify(res.data, null, 1);
-        if (res.data.success === 'true') {
+        if (res.data.success === "true") {
           setVisible(!visible);
           setItemData(null);
           allData();
         } else {
-          if(this.props.language_id == 0)
-          alert(res.data.msg[0]);
-          else
-          alert(res.data.msg[1]);
+          if (this.props.language_id == 0) alert(res.data.msg[0]);
+          else alert(res.data.msg[1]);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
   const onRefresh = () => {
     setIsFetching(true);
     allData();
   };
   return (
-    <View style={{backgroundColor: Colors.white, flex: 1}}>
+    <View style={{ backgroundColor: Colors.white, flex: 1 }}>
       <Header
-        name={I18n.translate('choose_boat')}
+        name={I18n.translate("choose_boat")}
         backBtn={true}
         headerHeight={Sizes.height * 0.2}
         // searchBtn={true}
@@ -124,39 +104,48 @@ const ManageBoats = () => {
         <TouchableOpacity
           style={[
             s.btn1,
-            Platform.OS === 'ios'
+            Platform.OS === "ios"
               ? {
-                  shadowColor: 'rgba(0, 0, 0, 0.25)',
+                  shadowColor: "rgba(0, 0, 0, 0.25)",
                   shadowOpacity: 1,
                   // shadowRadius: 5,
-                  backgroundColor: '#fff',
-                  shadowOffset: {width: 2, height: 2},
+                  backgroundColor: "#fff",
+                  shadowOffset: { width: 2, height: 2 },
                 }
-              : {elevation: 2},
+              : { elevation: 2 },
           ]}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('AddBoat', {type: 'Add'})}>
-          <Text style={{letterSpacing: 0.75, fontFamily:FontFamily.default}}>{I18n.translate('add')}</Text>
+          onPress={() => navigation.navigate("AddBoat", { type: "Add" })}
+        >
+          <Text style={{ letterSpacing: 0.75, fontFamily: FontFamily.default }}>
+            {I18n.translate("add")}
+          </Text>
         </TouchableOpacity>
         {loader ? (
           <Loading />
         ) : (
           <View>
-            {data === 'NA' ? (
-              <View style={{alignItems: 'center', marginTop: '10%'}}>
-                <Text style={{fontSize: 20,fontFamily:FontFamily.semi_bold, color: '#ccc'}}>
-                 { I18n.translate('no_boats_added')}
+            {data === "NA" ? (
+              <View style={{ alignItems: "center", marginTop: "10%" }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontFamily: FontFamily.semi_bold,
+                    color: "#ccc",
+                  }}
+                >
+                  {I18n.translate("no_boats_added")}
                 </Text>
               </View>
             ) : (
               <FlatList
-                data={data === 'NA' ? [] : data}
+                data={data === "NA" ? [] : data}
                 showsVerticalScrollIndicator={false}
                 refreshing={isFetching}
                 onRefresh={onRefresh}
-                renderItem={({item}) => {
+                renderItem={({ item }) => {
                   return (
-                    <View style={{padding: 5}}>
+                    <View style={{ padding: 5 }}>
                       <Card
                         containerStyle={{
                           padding: 0,
@@ -165,61 +154,75 @@ const ManageBoats = () => {
                           margin: 7.5,
                           marginHorizontal: 10,
                           elevation: 5,
-                        }}>
+                        }}
+                      >
                         {/*  */}
                         <TouchableOpacity
                           style={[
                             s.SEC3,
-                            Platform.OS === 'ios'
+                            Platform.OS === "ios"
                               ? {
-                                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+                                  shadowColor: "rgba(0, 0, 0, 0.5)",
                                   borderRadius: 10,
                                   borderWidth: 1,
-                                  borderColor: 'rgba(0, 0, 0, 0.1)',
-                                  backgroundColor: '#fff',
-                                  shadowOffset: {width: 3, height: 6},
+                                  borderColor: "rgba(0, 0, 0, 0.1)",
+                                  backgroundColor: "#fff",
+                                  shadowOffset: { width: 3, height: 6 },
                                 }
                               : {},
                           ]}
                           onPress={() => {
-                            navigation.navigate('viewBoat', {item: item});
-                          }}>
+                            navigation.navigate("viewBoat", { item: item });
+                          }}
+                        >
                           <View
                             style={{
-                              width: '100%',
+                              width: "100%",
                               paddingStart: 10,
-                              flexDirection: 'row',
-                            }}>
+                              flexDirection: "row",
+                            }}
+                          >
                             <View
                               style={{
-                                width: '45%',
-                                justifyContent: 'space-between',
-                              }}>
-                              <Text style={{fontFamily:FontFamily.semi_bold}}>
-                                {I18n.translate('year')}-{item.manufacturing_year.split('-')[0]}
+                                width: "45%",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <Text
+                                style={{ fontFamily: FontFamily.semi_bold }}
+                              >
+                                {I18n.translate("year")}-
+                                {item.manufacturing_year.split("-")[0]}
                               </Text>
-                              <Text style={{fontFamily:FontFamily.default}}>{I18n.translate('capacity')} - {item.boat_capacity}</Text>
+                              <Text style={{ fontFamily: FontFamily.default }}>
+                                {I18n.translate("capacity")} -{" "}
+                                {item.boat_capacity}
+                              </Text>
                             </View>
                             <View
                               style={{
-                                width: '45%',
-                                justifyContent: 'center',
+                                width: "45%",
+                                justifyContent: "center",
 
-                                alignItems: 'flex-end',
+                                alignItems: "flex-end",
                                 paddingRight: 10,
-                              }}>
-                              <Text style={{fontFamily:FontFamily.default}}>{item.name}</Text>
+                              }}
+                            >
+                              <Text style={{ fontFamily: FontFamily.default }}>
+                                {item.name}
+                              </Text>
                               {/* <Text style={{color: '#ccc'}}>
                                 #{item.boat_id}
                               </Text> */}
                             </View>
                             <TouchableOpacity
-                              style={{justifyContent: 'center'}}
-                              onPress={() => toggleOverlay({item})}>
+                              style={{ justifyContent: "center" }}
+                              onPress={() => toggleOverlay({ item })}
+                            >
                               <Icon
                                 name="dots-three-vertical"
                                 type="entypo"
-                                color={'#888'}
+                                color={"#888"}
                               />
                             </TouchableOpacity>
                           </View>
@@ -243,113 +246,122 @@ const ManageBoats = () => {
         )}
       </View>
       {/* Overlay */}
-      <Overlay
-        isVisible={visible}
+      <Modal
+        animationType={"none"}
+        transparent={true}
+        visible={visible}
         onBackdropPress={toggleOverlay}
-        overlayStyle={{borderRadius: 20}}
-        supportedOrientations
-        statusBarTranslucent>
-        <View style={{padding: 10, width: Sizes.width * 0.8}}>
-          {/* <TouchableOpacity onPress={() => {
-            setVisible(!visible)
-            navigation.navigate('viewBoat', { item: itemData })}} >
-            <Text
-              style={{
-                fontFamily: FontFamily.semi_bold,
-                fontSize: 16,
-                lineHeight: 39,
-                color: 'rgba(0, 0, 0, 0.55)',
-              }}>
-              View
-            </Text>
-          </TouchableOpacity> */}
-          {/* <View
-            style={{
-              width: '100%',
-              borderWidth: 0.5,
-              marginTop: 5,
-              borderColor: 'rgba(0, 0, 0, 0.55)',
-              backgroundColor: 'rgba(0, 0, 0, 0.55)',
-            }}
-          /> */}
-          <TouchableOpacity
-            onPress={() => {
-              setVisible(!visible);
-              navigation.navigate('AddBoat', {type: 'Edit', item: itemData});
-            }}>
-            <Text
-              style={{
-                fontFamily: FontFamily.semi_bold,
-                fontSize: 16,
-                lineHeight: 39,
-                color: 'rgba(0, 0, 0, 0.55)',
-              }}>
-             {I18n.translate('edit')}
-            </Text>
-          </TouchableOpacity>
+        overlayStyle={{ borderRadius: 20 }}
+        onRequestClose={() => {}}
+      >
+        <View
+          style={{
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#ffffff25",
+          }}
+        >
           <View
             style={{
-              width: '100%',
-              borderWidth: 0.5,
-              marginTop: 5,
-              borderColor: 'rgba(0, 0, 0, 0.55)',
-              backgroundColor: 'rgba(0, 0, 0, 0.55)',
+              width: 300,
+              justifyContent: "center",
+              elevation: 1,
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 1,
+              borderRadius: 20,
+              backgroundColor: "white",
+              alignItems: "center",
             }}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setVisible(!visible);
-              deleteBoat(itemData.boat_id);
-            }}>
-            <Text
+          >
+            <TouchableOpacity
+              onPress={() => {
+                setVisible(!visible);
+                navigation.navigate("AddBoat", {
+                  type: "Edit",
+                  item: itemData,
+                });
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FontFamily.semi_bold,
+                  fontSize: 16,
+                  lineHeight: 40,
+                  color: "rgba(0, 0, 0, 0.55)",
+                }}
+              >
+                {I18n.translate("edit")}
+              </Text>
+            </TouchableOpacity>
+            <View
               style={{
-                fontFamily: FontFamily.semi_bold,
-                fontSize: 16,
-                lineHeight: 39,
-                color: 'rgba(0, 0, 0, 0.55)',
-              }}>
-           {I18n.translate('delete')}
-            </Text>
-          </TouchableOpacity>
-          {/* <View
-            style={{
-              width: '100%',
-              borderWidth: 0.5,
-              marginTop: 5,
-              borderColor: 'rgba(0, 0, 0, 0.55)',
-              backgroundColor: 'rgba(0, 0, 0, 0.55)',
-            }}
-          /> */}
-          {/* <TouchableOpacity onPress={() => toggleOverlay({ item: undefined })}>
-            <Text
+                width: "100%",
+                borderWidth: 0.5,
+                marginTop: 5,
+                borderColor: "rgba(0, 0, 0, 0.55)",
+                backgroundColor: "rgba(0, 0, 0, 0.55)",
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                setVisible(!visible);
+                deleteBoat(itemData.boat_id);
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FontFamily.semi_bold,
+                  fontSize: 16,
+                  lineHeight: 39,
+                  color: "rgba(0, 0, 0, 0.55)",
+                }}
+              >
+                {I18n.translate("delete")}
+              </Text>
+            </TouchableOpacity>
+            <View
               style={{
-                fontFamily: FontFamily.semi_bold,
-                fontSize: 16,
-                lineHeight: 39,
-                color: 'rgba(0, 0, 0, 0.55)',
-              }}>
-              Back
-            </Text>
-          </TouchableOpacity> */}
+                width: "100%",
+                borderWidth: 0.5,
+                marginTop: 5,
+                borderColor: "rgba(0, 0, 0, 0.55)",
+                backgroundColor: "rgba(0, 0, 0, 0.55)",
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => toggleOverlay({ item: undefined })}
+            >
+              <Text
+                style={{
+                  fontFamily: FontFamily.semi_bold,
+                  fontSize: 16,
+                  lineHeight: 39,
+                  color: "rgba(0, 0, 0, 0.55)",
+                }}
+              >
+                {I18n.translate("back")}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </Overlay>
+      </Modal>
     </View>
   );
 };
-const mapStateToProps = (state)=>({
-  language_id: state.data_Reducer.language_id
-
-})
-export default connect(mapStateToProps)(ManageBoats)
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+});
+export default connect(mapStateToProps)(ManageBoats);
 
 const s = StyleSheet.create({
   btn1: {
     borderRadius: 5,
 
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
     marginTop: 20,
     borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.25)',
+    borderColor: "rgba(0, 0, 0, 0.25)",
     marginRight: 20,
 
     paddingHorizontal: 15,
@@ -361,10 +373,10 @@ const s = StyleSheet.create({
     color: Colors.black,
   },
   btn_1: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     // position: "absolute",
-    alignSelf: 'center',
+    alignSelf: "center",
     top: 100,
   },
   SEC2: {
@@ -376,24 +388,24 @@ const s = StyleSheet.create({
   },
   ImageBackground: {
     height: 215,
-    width: '100%',
+    width: "100%",
     borderRadius: 15,
-    alignSelf: 'center',
+    alignSelf: "center",
     // marginHorizontal:10,
     elevation: 0,
   },
   imgStyle: {
     borderRadius: 15,
     height: 215,
-    width: '100%',
-    alignSelf: 'center',
+    width: "100%",
+    alignSelf: "center",
   },
   SEC3: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
     paddingHorizontal: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     fontFamily: FontFamily.semi_bold,
@@ -429,15 +441,14 @@ const s = StyleSheet.create({
     borderBottomWidth: 25,
     borderBottomColor: Colors.orange,
     borderLeftWidth: 25,
-    borderLeftColor: 'transparent',
+    borderLeftColor: "transparent",
     borderRightWidth: 25,
-    borderRightColor: 'transparent',
-    borderStyle: 'solid',
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    transform: [{rotate: '-45deg'}],
+    borderRightColor: "transparent",
+    borderStyle: "solid",
+    backgroundColor: "transparent",
+    alignItems: "center",
+    transform: [{ rotate: "-45deg" }],
     marginTop: 19.2,
     marginLeft: -26,
   },
 });
-

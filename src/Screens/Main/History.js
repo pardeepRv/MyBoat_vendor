@@ -64,7 +64,7 @@ class History extends React.Component {
   };
   render() {
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <View style={{flex: 1}}>
         <Header imgBack={true} name={I18n.translate('history')} backBtn={true} />
         <View
           style={{
@@ -160,7 +160,7 @@ class History extends React.Component {
             )}
           </View>
         )}
-      </SafeAreaView>
+      </View>
     );
   }
 }

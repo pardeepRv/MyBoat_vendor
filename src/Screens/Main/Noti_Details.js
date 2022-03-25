@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   ScrollView,
@@ -79,7 +79,7 @@ const Notifications_Details = ({ route, navigation }) => {
                   color: "rgba(153, 153, 153, 1)",
                 }}
               >
-                5m ago
+                {obj?.booking_details?.booking_arr?.createtime_ago}
               </Text>
             </View>
             <View style={{ marginVertical: 20 }}>
@@ -90,7 +90,7 @@ const Notifications_Details = ({ route, navigation }) => {
                   color: "rgba(0, 0, 0, 0.58)",
                 }}
               >
-                You have recieved booking #7451250556561
+                {obj.message[0]}
               </Text>
             </View>
             <View style={sb.DIVIDER} />
@@ -109,49 +109,59 @@ const Notifications_Details = ({ route, navigation }) => {
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Customer Name :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>{obj?.user_name}</Text>
+                      <Text style={sb.values}> {obj?.user_name}</Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Book date :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>28-02-2021</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.date}
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Trip time :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>8:00 PM</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.time}
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Number of guests :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>123456</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.no_of_guest}
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Trip hours :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>2hr</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.minimum_hours} hr
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Extra hours :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>1hr</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.extra_time} hr
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Equipment :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Cupidatat reprehenderit</Text>
+                      <Text style={sb.values}>Equipment</Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Entertainment :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Ipsum officia amet</Text>
+                      <Text style={sb.values}>Entertainment</Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
@@ -163,44 +173,54 @@ const Notifications_Details = ({ route, navigation }) => {
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Boat Place :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Kuwait</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.location_address}
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Trip Destination :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Ea amet non aliquip</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.location_address}
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Trip type :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Ex sint in cupidata</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.trip_name[0]}
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Discount :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>50%</Text>
+                      <Text style={sb.values}>
+                        {obj?.booking_details?.booking_arr?.discount} %
+                      </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Coupon discount :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>30%</Text>
+                      <Text style={sb.values}></Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Total price :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>3000</Text>
+                      <Text style={sb.values}>
+                        kD {obj?.booking_details?.booking_arr?.total_amt}
+                      </Text>
                     </View>
                   </View>
 
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>Extra requests :</Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Velit cillum aute eiusmod</Text>
+                      <Text style={sb.values}>No Request</Text>
                     </View>
                   </View>
                 </View>

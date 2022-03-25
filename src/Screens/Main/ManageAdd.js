@@ -5,24 +5,19 @@ import {
   ActivityIndicator,
   FlatList,
   ImageBackground,
+  Modal,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  AirbnbRating,
-  Card,
-  Icon,
-  Image,
-  Overlay,
-} from "react-native-elements";
+import { AirbnbRating, Card, Icon, Image } from "react-native-elements";
 import { connect } from "react-redux";
 import Header from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
 import config from "../../Constants/config";
-import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
+import { Colors, FontFamily } from "../../Constants/Constants";
 import I18n from "../../Translations/i18";
 const ManageAdd = (props) => {
   console.log(props, "props in ManageAdd");
@@ -505,11 +500,13 @@ const ManageAdd = (props) => {
                                 <AirbnbRating
                                   showRating={false}
                                   size={12}
-                                  //isDisabled
+                                  isDisabled
                                   defaultRating={
-                                    item.rating !== null && item.rating !== "NA"
+                                    item &&
+                                    item.rating !== null &&
+                                    item.rating !== "NA"
                                       ? item.rating
-                                      : 3
+                                      : 0
                                   }
                                   //starContainerStyle={{alignSelf: 'flex-start'}}
                                 />
@@ -579,58 +576,103 @@ const ManageAdd = (props) => {
         )}
       </View>
       {/* Overlay */}
-      <Overlay
-        isVisible={visible}
+      <Modal
+        animationType={"none"}
+        transparent={true}
+        visible={visible}
         onBackdropPress={toggleOverlay}
         overlayStyle={{ borderRadius: 20 }}
-        supportedOrientations
-        statusBarTranslucent
+        onRequestClose={() => {}}
       >
-        <View style={{ padding: 10, width: Sizes.width * 0.8 }}>
-          <TouchableOpacity
-            onPress={() => {
-              setVisible(false);
-              loadAdDetails(Data.advertisement_id);
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: FontFamily.semi_bold,
-                fontSize: 16,
-                lineHeight: 39,
-                color: "rgba(0, 0, 0, 0.55)",
-              }}
-            >
-              {I18n.translate("edit")}
-            </Text>
-          </TouchableOpacity>
+        <View
+          style={{
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#ffffff25",
+          }}
+        >
           <View
             style={{
-              width: "100%",
-              borderWidth: 0.5,
-              marginTop: 5,
-              borderColor: "rgba(0, 0, 0, 0.55)",
-              backgroundColor: "rgba(0, 0, 0, 0.55)",
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              deleteAd(Data.advertisement_id);
+              width: 300,
+              justifyContent: "center",
+              elevation: 1,
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 1,
+              borderRadius: 20,
+              backgroundColor: "white",
+              alignItems: "center",
             }}
           >
-            <Text
-              style={{
-                fontFamily: FontFamily.semi_bold,
-                fontSize: 16,
-                lineHeight: 39,
-                color: "rgba(0, 0, 0, 0.55)",
+            <TouchableOpacity
+              onPress={() => {
+                setVisible(false);
+                loadAdDetails(Data.advertisement_id);
               }}
             >
-              {I18n.translate("delete")}
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: FontFamily.semi_bold,
+                  fontSize: 16,
+                  lineHeight: 40,
+                  color: "rgba(0, 0, 0, 0.55)",
+                }}
+              >
+                {I18n.translate("edit")}
+              </Text>
+            </TouchableOpacity>
+
+            <View
+              style={{
+                width: "100%",
+                borderWidth: 0.5,
+                marginTop: 5,
+                borderColor: "rgba(0, 0, 0, 0.55)",
+                backgroundColor: "rgba(0, 0, 0, 0.55)",
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                deleteAd(Data.advertisement_id);
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FontFamily.semi_bold,
+                  fontSize: 16,
+                  lineHeight: 39,
+                  color: "rgba(0, 0, 0, 0.55)",
+                }}
+              >
+                {I18n.translate("delete")}
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{
+                width: "100%",
+                borderWidth: 0.5,
+                marginTop: 5,
+                borderColor: "rgba(0, 0, 0, 0.55)",
+                backgroundColor: "rgba(0, 0, 0, 0.55)",
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => toggleOverlay({ item: undefined })}
+            >
+              <Text
+                style={{
+                  fontFamily: FontFamily.semi_bold,
+                  fontSize: 16,
+                  lineHeight: 39,
+                  color: "rgba(0, 0, 0, 0.55)",
+                }}
+              >
+                {I18n.translate("back")}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </Overlay>
+      </Modal>
     </View>
   );
 };
@@ -740,7 +782,7 @@ const s = StyleSheet.create({
     width: "90%",
     height: 35,
     position: "absolute",
-    top: 50,
+    top: 58,
     left: 10,
     backgroundColor: "white",
     paddingHorizontal: 10,

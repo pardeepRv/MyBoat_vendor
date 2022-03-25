@@ -57,7 +57,7 @@ const Header = ({
         }}
       >
         {state.backBtn ? (
-          <TouchableOpacity onPress={() => gotoBack()}>
+          <TouchableOpacity onPress={() => gotoBack()} style={{marginTop:35}}>
             <Icon
               name="arrow-back"
               type="ionicons"
@@ -82,13 +82,13 @@ const Header = ({
             fontFamily: FontFamily.semi_bold,
             color: Colors.white,
             textAlign: "center",
-            marginTop:20
+            marginTop:40
           }}
         >
           {name}
         </Text>
         {state.searchBtn == false ? (
-          <TouchableOpacity>
+          <TouchableOpacity  style={{marginTop:35}}>
             <Icon
               name="search1"
               type="antdesign"
@@ -120,7 +120,7 @@ const Header = ({
         }}
       >
         {state.backBtn ? (
-          <TouchableOpacity onPress={() => gotoBack()}>
+          <TouchableOpacity onPress={() => gotoBack()} style={{marginTop:35}}>
             <Icon
               name="arrow-back"
               type="ionicons"
@@ -129,7 +129,7 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : state.notiBtn ? (
-          <TouchableOpacity onPress={() => gotoNotification()}>
+          <TouchableOpacity onPress={() => gotoNotification()} style={{marginTop:35}}>
             <Icon
               name="bell"
               type="simple-line-icon"
@@ -145,12 +145,13 @@ const Header = ({
             fontFamily: FontFamily.semi_bold,
             color: Colors.white,
             textAlign: "center",
+            marginTop:30
           }}
         >
           {name}
         </Text>
         {state.searchBtn ? (
-          <TouchableOpacity>
+          <TouchableOpacity >
             <Icon
               name="search1"
               type="antdesign"

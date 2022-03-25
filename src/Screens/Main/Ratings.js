@@ -288,7 +288,7 @@ const Ratings = () => {
                               showRating={false}
                               size={10}
                               count={5}
-                              defaultRating={item.rating}
+                              defaultRating={item.item.total_rating}
                               isDisabled
                               selectedColor="#FFCC39"
                               starContainerStyle={{

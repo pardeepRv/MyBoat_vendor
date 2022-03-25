@@ -127,7 +127,8 @@ const CalenderView = (props) => {
         setLoader(false);
         setIsFetching(false);
         if (res.data.success === "true") {
-          res.data.upcoming_booking_arr?.length && res.data.booking_arr?.length&&
+          // && res.data.booking_arr?.length
+          res.data.upcoming_booking_arr?.length &&
             setUpcomingTripData(res.data.upcoming_booking_arr);
         } else {
           if (props.language_id == 0) alert(res.data.msg[0]);
@@ -224,7 +225,7 @@ const CalenderView = (props) => {
     );
     return (
       <View>
-        <Calendar
+        <Calendar 
           // onDayPress={(day) => { selecteddate.push(day.dateString), gotoSelectedDate({ data: day }) }}
           dayComponent={({ date, state }) => {
             return (
@@ -273,6 +274,7 @@ const CalenderView = (props) => {
             borderTopLeftRadius: 30,
             borderTopEndRadius: 30,
           }}
+        
           theme={{
             "stylesheet.calendar.header": {
               week: {

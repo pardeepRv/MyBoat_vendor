@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/core";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
-  Text,
-  View,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
   FlatList,
   Image,
-  I18nManager,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { connect, useDispatch } from "react-redux";
-import I18n from "../../Translations/i18";
-import { Icon, Input, Card, Rating, AirbnbRating } from "react-native-elements";
-import Header, { s } from "../../Components/Header";
-import {
-  back_img4,
-  Colors,
-  FontFamily,
-  Sizes,
-} from "../../Constants/Constants";
-import { useNavigation } from "@react-navigation/core";
-import { Switch } from "react-native-elements";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import config from "../../Constants/config";
-import axios from "axios";
+import { Card, Icon } from "react-native-elements";
+import { connect } from "react-redux";
+import Header from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
+import config from "../../Constants/config";
+import { Colors, FontFamily } from "../../Constants/Constants";
+import I18n from "../../Translations/i18";
 
 const NotificationsPage = () => {
   const navigation = useNavigation();
@@ -36,14 +27,17 @@ const NotificationsPage = () => {
   const gotoNotifications_Details = ({ data }) => {
     navigation.navigate("Notifications_Details", { data });
   };
-  useEffect(async () => {
+  useEffect(() => {
+    getAllNotifications();
+  }, []);
+
+  const getAllNotifications = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     setUser_id_post(parsedInfo.id);
     setLoader(true);
     let url =
       config.apiUrl + "/notificationList.php?user_id_post=" + parsedInfo.id;
-    // + parsedInfo.id;
     axios
       .get(url)
       .then((res) => {
@@ -57,16 +51,43 @@ const NotificationsPage = () => {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
-  const deleteNotification = () => {
-    alert("delete");
   };
+
+  const deleteNotification = async (type, id) => {
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+    setLoader(true);
+    let url =
+      config.apiUrl +
+      "/notificationDelete.php?user_id_post=" +
+      parsedInfo.id +
+      "&delete_type=" +
+      type +
+      "&notification_message_id=" +
+      id;
+    console.log(url, "url of notify");
+    axios
+      .get(url)
+      .then((res) => {
+        setLoader(false);
+        console.log(res, "res of notification del");
+        if (res?.data?.success === "true") {
+          getAllNotifications();
+          alert(res?.data?.msg[0]);
+        } else {
+          if (props.language_id == 0) alert(res.data.msg[0]);
+          else alert(res.data.msg[1]);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
       <Header backBtn={true} name={I18n.translate("notifications")} />
       {/* Clear */}
       <View style={{ position: "absolute", right: 30, top: 32 }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>deleteNotification('all',null)}>
           <Text
             style={{
               fontFamily: FontFamily.semi_bold,
@@ -167,17 +188,28 @@ const NotificationsPage = () => {
                             >
                               {item.item.createtime_ago}
                             </Text>
-                            <TouchableOpacity onPress={deleteNotification}>
+                            <TouchableOpacity
+                              onPress={() =>
+                                deleteNotification(
+                                  "single",
+                                  item?.item?.notification_message_id
+                                )
+                              }
+                            >
                               <Card
                                 containerStyle={{
-                                  height: 15,
-                                  width: 15,
+                                  height: 30,
+                                  width: 30,
                                   padding: 0,
                                   alignItems: "center",
                                   justifyContent: "center",
                                 }}
                               >
-                                <Icon name="cross" type="entypo" size={15} />
+                                <Icon
+                                  name="trash-outline"
+                                  type="ionicon"
+                                  color={Colors.orange}
+                                />
                               </Card>
                             </TouchableOpacity>
                           </View>

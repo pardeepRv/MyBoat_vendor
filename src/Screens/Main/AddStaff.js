@@ -13,6 +13,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Input } from "react-native-elements";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ActivityIndicator } from "react-native-paper";
 import Header from "../../Components/Header";
 import config from "../../Constants/config";
@@ -22,33 +23,58 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 let togglearr = [
-  { key: "1", switch: false, text:I18n.translate('view_home'), v: "view_home_permission" },
-  { key: "2", switch: false, text: I18n.translate('manage_home'), v: "manage_home_permission" },
-  { key: "3", switch: false, text: I18n.translate('view_my_add') , v: "view_add_permission" },
-  { key: "4", switch: false, text: I18n.translate('manage_my_add'), v: "manage_add_permission" },
-  { key: "5", switch: false, text: I18n.translate('chat'), v: "chat_permission" },
+  {
+    key: "1",
+    switch: false,
+    text: I18n.translate("view_home"),
+    v: "view_home_permission",
+  },
+  {
+    key: "2",
+    switch: false,
+    text: I18n.translate("manage_home"),
+    v: "manage_home_permission",
+  },
+  {
+    key: "3",
+    switch: false,
+    text: I18n.translate("view_my_add"),
+    v: "view_add_permission",
+  },
+  {
+    key: "4",
+    switch: false,
+    text: I18n.translate("manage_my_add"),
+    v: "manage_add_permission",
+  },
+  {
+    key: "5",
+    switch: false,
+    text: I18n.translate("chat"),
+    v: "chat_permission",
+  },
   {
     key: "6",
     switch: false,
-    text: I18n.translate('view_unavailability'),
+    text: I18n.translate("view_unavailability"),
     v: "view_unavailability_permission",
   },
   {
     key: "7",
     switch: false,
-    text: I18n.translate('manage_unavailability'),
+    text: I18n.translate("manage_unavailability"),
     v: "manage_unavailability_permission",
   },
   {
     key: "8",
     switch: false,
-    text:I18n.translate('view_my_wallet') ,
+    text: I18n.translate("view_my_wallet"),
     v: "view_my_wallet_permission",
   },
   {
     key: "9 ",
     switch: false,
-    text: I18n.translate('view_withdraw'),
+    text: I18n.translate("view_withdraw"),
     v: "view_withdrawl_permission",
   },
 ];
@@ -101,54 +127,59 @@ const AddStaff = (props) => {
   const [boat_brand, setBoat_brand] = useState("");
   const [boat_number, setBoat_number] = useState("");
   const [permissionList, setpermissionList] = useState([
-    { key: "1", switch: Items && Items.view_home_permission == 1 ? true : false, text: I18n.translate('view_home'), v: "view_home_permission" },
+    {
+      key: "1",
+      switch: Items && Items.view_home_permission == 1 ? true : false,
+      text: I18n.translate("view_home"),
+      v: "view_home_permission",
+    },
     {
       key: "2",
       switch: Items && Items.manage_home_permission == 1 ? true : false,
-      text: I18n.translate('manage_home'),
+      text: I18n.translate("manage_home"),
       v: "manage_home_permission",
     },
     {
       key: "3",
       switch: Items && Items.view_add_permission == 1 ? true : false,
-      text: I18n.translate('view_my_add') ,
+      text: I18n.translate("view_my_add"),
       v: "view_add_permission",
     },
     {
       key: "4",
       switch: Items && Items.manage_add_permission == 1 ? true : false,
-      text: I18n.translate('manage_my_add'),
+      text: I18n.translate("manage_my_add"),
       v: "manage_add_permission",
     },
     {
       key: "5",
       switch: Items && Items.chat_permission == 1 ? true : false,
-      text: I18n.translate('chat'),
+      text: I18n.translate("chat"),
       v: "chat_permission",
     },
     {
       key: "6",
       switch: Items && Items.view_unavailability_permission == 1 ? true : false,
-      text: I18n.translate('view_unavailability'),
+      text: I18n.translate("view_unavailability"),
       v: "view_unavailability_permission",
     },
     {
       key: "7",
       switch:
         Items && Items.manage_unavailability_permission == 1 ? true : false,
-      text: I18n.translate('manage_unavailability'),
+      text: I18n.translate("manage_unavailability"),
       v: "manage_unavailability_permission",
     },
     {
       key: "8",
       switch: Items && Items.view_my_wallet_permission == 1 ? true : false,
-      text:I18n.translate('view_my_wallet') ,
+      text: I18n.translate("view_my_wallet"),
       v: "view_my_wallet_permission",
     },
     {
       key: "9 ",
       switch: Items && Items.view_withdrawl_permission == 1 ? true : false,
-      text: I18n.translate('view_withdraw'),
+      text: I18n.translate("view_withdraw"),
       v: "view_withdrawl_permission",
     },
   ]);
@@ -165,7 +196,6 @@ const AddStaff = (props) => {
   const [pageType, setPageType] = useState("Add");
 
   useEffect(async () => {
-    
     if (props.route.params) {
       if (props.route.params.type === "Edit") {
         setPageType("Edit");
@@ -418,14 +448,18 @@ const AddStaff = (props) => {
   );
 
   return (
-    // <SafeAreaView
-    //   style={{
-    //     flex: 1,
-    //   }}
-    // >
-      <View style={{ flex: 1, backgroundColor: Colors.white }}>
-        <Header imgBack={true} name= {pageType + " Staff"} backBtn={true} />
-        <View style={s.SEC2}>
+    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+      <Header imgBack={true} name={pageType + " Staff"} backBtn={true} />
+
+      <View style={s.SEC2}>
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps="handled"
+          style={{
+            backgroundColor: "#fff",
+          }}
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true}
+        >
           {pageType === "Edit" ? (
             <View style={{ marginTop: 15 }}>
               <Input
@@ -452,13 +486,14 @@ const AddStaff = (props) => {
           )}
           <View style={{ marginbottom: 5, marginHorizontal: 10 }}>
             <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-              {I18n.translate('permission')} :
+              {I18n.translate("permission")} :
             </Text>
           </View>
           <View style={{ marginTop: 5, flex: 1 }}>
             <FlatList
               extraData={fishTypeId}
               data={permissionList}
+              scrollEnabled={false}
               contentInset={{ bottom: 20 }}
               renderItem={_renderDateView}
               keyExtractor={(item, index) => "key" + index}
@@ -491,15 +526,15 @@ const AddStaff = (props) => {
                   <ActivityIndicator size="small" color="#000" />
                 ) : (
                   <Text style={s.btn1Text}>
-                    {pageType === "Edit" ? I18n.translate('save') : "Submit"}
+                    {pageType === "Edit" ? I18n.translate("save") : "Submit"}
                   </Text>
                 )}
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </KeyboardAwareScrollView>
       </View>
-    // </SafeAreaView>
+    </View>
   );
 };
 const s = StyleSheet.create({

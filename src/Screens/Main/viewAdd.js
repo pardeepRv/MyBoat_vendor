@@ -51,6 +51,7 @@ class ViewAdd extends React.Component {
       dob: "",
       other_user_id: null,
       other_user_img: "",
+      other_user_name:"",
       mobile: "",
     };
     this.addOnData();
@@ -201,8 +202,9 @@ class ViewAdd extends React.Component {
               numberOfPeople: res.data.adver_arr?.no_of_people,
               boat_brand: this.props.route.params.item?.boat_brand,
               status1: res.data.status,
-              other_user_id: res.data.adver_arr?.other_user_id,
+              other_user_id: res.data.adver_arr?.other_user_id?.user_id,
               other_user_img: res.data.adver_arr?.other_user_img,
+              other_user_name: res.data.adver_arr?.other_user_name,
               mobile: res.data.adver_arr?.mobile,
               // boatDropdown: res.data.boat_arr,
               // cityDropdown: res.data.city_arr,
@@ -565,6 +567,7 @@ class ViewAdd extends React.Component {
     let item = {};
     item["other_user_id"] = this.state.other_user_id;
     item["image"] = this.state.other_user_img;
+    item["name"] = this.state.other_user_name;
 
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -583,6 +586,9 @@ class ViewAdd extends React.Component {
         <ScrollView
           style={{
             flex: 1,
+          }}
+          contentInset={{
+            bottom: 50,
           }}
           showsVerticalScrollIndicator={false}
         >

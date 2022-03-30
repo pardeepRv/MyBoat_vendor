@@ -50,13 +50,13 @@ const Login = (props) => {
   console.log(FontFamily, "FontFamily in login");
   let passRef = null;
   const nav = useNavigation();
-  const [email, setemail] = useState(""); // boat1@yopmail.com
+  // const [email, setemail] = useState(""); // boat1@yopmail.com
 
-  // const [email, setemail] = useState("owner@yopmail.com"); // boat1@yopmail.com
+  const [email, setemail] = useState("owner@yopmail.com"); // boat1@yopmail.com
   // const [email, setemail] = useState("arun_sharma@rvtechnologies.com"); // boat1@yopmail.com
 
-  // const [password, setpassword] = useState("qwerty123"); // 123456
-  const [password, setpassword] = useState(""); // 123456
+  const [password, setpassword] = useState("qwerty123"); // 123456
+  // const [password, setpassword] = useState(""); // 123456
 
   const [isLogin, setIsLogin] = useState(false);
   const [language_id, setLanguageId] = useState(0);

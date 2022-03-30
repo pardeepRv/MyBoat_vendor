@@ -50,9 +50,7 @@ const Header = ({
           flexDirection: "row",
           justifyContent: "space-between",
           width: "90%",
-          marginTop: StatusBar.currentHeight + 15,
           alignSelf: "center",
-          
           alignItems: "center",
         }}
       >
@@ -113,7 +111,6 @@ const Header = ({
           flexDirection: "row",
           justifyContent: "space-between",
           width: "90%",
-          marginTop: StatusBar.currentHeight + 15,
           alignSelf: "center",
           backgroundColor: "transparent",
           alignItems: "center",

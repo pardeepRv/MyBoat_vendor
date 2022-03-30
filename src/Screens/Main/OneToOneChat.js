@@ -194,6 +194,7 @@ class OneToOneChat extends PureComponent {
       <SafeAreaView style={{ flex: 1  ,backgroundColor:Colors.orange}}>
         <View
           style={{
+            top:15,
             backgroundColor: Colors.orange,
             height: 100,
             alignItems: "flex-start",
@@ -266,7 +267,7 @@ class OneToOneChat extends PureComponent {
                 {" "}
                 {data.name}
               </Text>
-              <Text
+              {/* <Text
                 numberOfLines={1}
                 style={{
                   color: Colors.white,
@@ -277,7 +278,7 @@ class OneToOneChat extends PureComponent {
               >
                 {" "}
                 online{" "}
-              </Text>
+              </Text> */}
             </View>
           </View>
           <TouchableOpacity

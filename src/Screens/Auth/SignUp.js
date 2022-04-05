@@ -28,6 +28,7 @@ import config from "../../Constants/config";
 import { back_img, Colors, FontFamily, Sizes } from "../../Constants/Constants";
 import { addPermissions } from "../../Data_Service/actions";
 import { firebaseprovider } from "../Provider/FirebaseProvider";
+import I18n from "../../Translations/i18";
 
 /*
 email, 
@@ -602,6 +603,7 @@ const SignUp = (props) => {
         animationOutTiming={500}
       >
         <View style={{ flex: 1 }}>
+          <View style={{height:25 , margin:10}}></View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <AntDesign
               name={"arrowleft"}
@@ -623,8 +625,9 @@ const SignUp = (props) => {
                 borderWidth: 1,
                 borderColor: Colors.orange,
                 width: "85%",
-                borderRadius: 10,
-                marginVertical: 10,
+                height:30,
+                borderRadius: 15,
+                marginVertical: 15,
               }}
             />
           </View>
@@ -673,9 +676,9 @@ const SignUp = (props) => {
           <View style={{height:25}}></View>
           <Image source={require("../../Images/orange.png")} style={s.Logo} />
           {Boatfacality[0].value == 1 && Boatfacality[0].isSelected ? (
-            <Text style={s.Text1}>Boat Owner</Text>
+            <Text style={s.Text1}>{I18n.translate("boat_owner")}</Text>
           ) : (
-            <Text style={s.Text1}>Boat Staff</Text>
+            <Text style={s.Text1}>{I18n.translate("Boat_Staff")}</Text>
           )}
           <View style={{ marginTop: 15 }}>
             <FlatList
@@ -702,7 +705,7 @@ const SignUp = (props) => {
                   marginTop: -33,
                 }}
               >
-                Boat Owner
+                {I18n.translate("boat_owner")}
               </Text>
               <Text
                 style={{
@@ -713,7 +716,7 @@ const SignUp = (props) => {
                   marginTop: -33,
                 }}
               >
-                Boat Staff
+                {I18n.translate("Boat_Staff")}
               </Text>
             </View>
             <View
@@ -725,7 +728,7 @@ const SignUp = (props) => {
               }}
             >
               <Input
-                placeholder="First Name"
+                placeholder={I18n.translate("first_name")}
                 containerStyle={s.Input1}
                 inputContainerStyle={s.Input1}
                 placeholderTextColor={Colors.white}
@@ -734,7 +737,7 @@ const SignUp = (props) => {
                 value={f_name}
               />
               <Input
-                placeholder="Last Name"
+                placeholder={I18n.translate("last_name")}
                 containerStyle={s.Input1}
                 inputContainerStyle={s.Input1}
                 placeholderTextColor={Colors.white}
@@ -755,7 +758,7 @@ const SignUp = (props) => {
                 }}
               >
                 <Input
-                  placeholder="Email"
+                  placeholder={I18n.translate("email")}
                   containerStyle={s.Input}
                   inputContainerStyle={s.Input}
                   placeholderTextColor={Colors.white}
@@ -789,7 +792,7 @@ const SignUp = (props) => {
                     }}
                   >
                     <Input
-                      placeholder="Email"
+                      placeholder={I18n.translate("email")}
                       containerStyle={s.Input}
                       inputContainerStyle={s.Input}
                       placeholderTextColor={Colors.white}
@@ -826,7 +829,7 @@ const SignUp = (props) => {
                         }}
                       >
                         <Input
-                          placeholder="Email"
+                          placeholder={I18n.translate("email")}
                           containerStyle={s.Input}
                           inputContainerStyle={s.Input}
                           placeholderTextColor={Colors.white}
@@ -851,7 +854,7 @@ const SignUp = (props) => {
                       </View>
                     ) : (
                       <Input
-                        placeholder="Email"
+                        placeholder={I18n.translate("email")}
                         containerStyle={s.Input}
                         inputContainerStyle={s.Input}
                         placeholderTextColor={Colors.white}
@@ -868,7 +871,7 @@ const SignUp = (props) => {
               </View>
             )}
             <Input
-              placeholder="Mobile"
+              placeholder={I18n.translate("mobile")}
               containerStyle={s.Input}
               inputContainerStyle={s.Input}
               placeholderTextColor={Colors.white}
@@ -881,7 +884,7 @@ const SignUp = (props) => {
 
             {Boatfacality[0].value == 1 && Boatfacality[0].isSelected ? (
               <Input
-                placeholder="Business Name"
+                placeholder={I18n.translate("business_name")}
                 containerStyle={s.Input}
                 inputContainerStyle={s.Input}
                 placeholderTextColor={Colors.white}
@@ -937,7 +940,7 @@ const SignUp = (props) => {
               }}
               date={dob}
               mode="date"
-              placeholder="Date of Birth"
+              placeholder={I18n.translate("date_of_birth")}
               format="YYYY-MM-DD"
               // minDate="2016-05-01"
               // maxDate="2016-06-01"
@@ -1051,7 +1054,7 @@ const SignUp = (props) => {
               </View>
             </View>
             <Input
-              placeholder="Password"
+              placeholder={I18n.translate("confirm_password")}
               secureTextEntry
               containerStyle={s.Input}
               inputContainerStyle={s.Input}
@@ -1061,7 +1064,7 @@ const SignUp = (props) => {
               value={password}
             />
             <Input
-              placeholder="Confirm Password"
+              placeholder={I18n.translate("confirm_password")}
               containerStyle={s.Input}
               secureTextEntry
               inputContainerStyle={s.Input}
@@ -1134,7 +1137,7 @@ const SignUp = (props) => {
                 signUp();
               }}
             >
-              <Text style={s.btn1Text}>Sign Up</Text>
+              <Text style={s.btn1Text}>{I18n.translate("signUp")}</Text>
             </TouchableOpacity>
           </View>
           <View>
@@ -1150,7 +1153,7 @@ const SignUp = (props) => {
                 suppressHighlighting={true}
                 onPress={() => Navigation.navigate("Login")}
               >
-                Login
+                {I18n.translate("login")}
               </Text>
             </Text>
           </View>

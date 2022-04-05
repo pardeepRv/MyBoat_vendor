@@ -2,6 +2,7 @@ export default {
   open_time_not_available: 'لا يمكن اختيار وقت مفتوح للرحلات العامة',
   search_places: 'البحث في الأماكن',
   boat_owner: 'صاحب القارب',
+  Boat_Staff: 'طاقم القارب',
   male: 'الذكر',
   boat: 'قارب',
   female: 'أنثى',

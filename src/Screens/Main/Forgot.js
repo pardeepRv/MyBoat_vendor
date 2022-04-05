@@ -15,6 +15,7 @@ import {
 import I18n from '../../Translations/i18'
 import config from '../../Constants/config';
 import {connect, useDispatch} from 'react-redux';
+import AntDesign from "react-native-vector-icons/dist/AntDesign";
 // import { msgProvider, msgTitle, msgText } from './Provider/messageProvider';
 // import { Lang_chg } from './Provider/Language_provider'
 // import Loader from './Loader';
@@ -22,6 +23,8 @@ import NetInfo from '@react-native-community/netinfo';
 import {localStorage} from './Provider/localStorageProvider';
 import axios from 'axios';
 import {ActivityIndicator} from 'react-native-paper';
+import { color } from 'react-native-reanimated';
+import { Colors } from '../../Constants/Constants';
 class Forgot extends Component {
   state = {
     email: '',
@@ -129,10 +132,16 @@ class Forgot extends Component {
               onPress={() => {
                 this.backpress();
               }}>
-              <Image
+                <AntDesign
+              name={"arrowleft"}
+              size={25}
+              // style={{ padding: 5, marginHorizontal: 10 }}
+              style={styles.forgot_back}
+            />
+              {/* <Image
                 resizeMode="contain"
                 style={styles.forgot_back}
-                source={require('../../Images/email.png')}></Image>
+                source={require('../../Images/email.png')}></Image> */}
             </TouchableOpacity>
           </View>
 
@@ -194,7 +203,8 @@ const styles = StyleSheet.create({
   forgot_back: {
     width: 35,
     height: 20,
-    marginTop:10
+    marginTop:10,
+    color:Colors.orange
   },
   firgot_header: {
     marginTop: 25,

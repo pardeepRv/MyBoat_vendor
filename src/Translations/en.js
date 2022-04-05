@@ -2,6 +2,7 @@ export default {
   open_time_not_available: 'Open time not available for Public trips',
   search_places: 'Search Places',
   boat_owner: 'Boat Owner',
+  Boat_Staff:'Boat Staff' ,
   male: 'Male',
   boat: 'boat',
   female: 'Female',

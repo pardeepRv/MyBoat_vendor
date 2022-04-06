@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {Platform} from 'react-native';
+import { useState } from "react";
+import { Platform } from "react-native";
 /** New Parameters = 
  * email, 
  * login_type (0 for App, 1 for Facebook, 2 for Google, 3 for twitter, 4 for Instagram, 5 for apple), 
@@ -23,15 +23,16 @@ import {Platform} from 'react-native';
 let config = {
   // apiUrl: 'https://freshandfine.xyz/app/webservice',
   // apiUrl: 'https://server3.rvtechnologies.in/My-Boat/app/app/webservice',
-  apiUrl: 'https://myboatonline.com/app/webservice',
+  // apiUrl: 'https://myboatonline.com/app/webservice',
+  apiUrl: "http://webservice.myboatonline.com",
 
-  imageUrl: 'https://myboatonline.com/app/webservice/images/',
+  imageUrl: "http://webservice.myboatonline.com/images/",
   device_type: Platform.OS,
   login_type: 0, //login_type (0 for App, 1 for Facebook, 2 for Google, 3 for twitter, 4 for Instagram, 5 for apple)
   player_id: 123456,
   language_id: 0,
   country_code: 965,
   user_type_post: 2,
-  onesignalappid : 'c4baf33f-e0bf-410c-8fd4-894b0ca2aa1a'
-}
-export default config ;
+  onesignalappid: "c4baf33f-e0bf-410c-8fd4-894b0ca2aa1a",
+};
+export default config;

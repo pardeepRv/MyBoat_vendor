@@ -1,5 +1,6 @@
 import io from "socket.io-client";
-const SOCKET_URL = "http://server3.rvtechnologies.in:3005";
+// const SOCKET_URL = "http://server3.rvtechnologies.in:3005";
+const SOCKET_URL = "http://chat.myboatonline.com:3008";
 
 class WSService {
   initializeSocket = (user_id) => {

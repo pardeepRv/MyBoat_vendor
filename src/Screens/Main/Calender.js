@@ -21,7 +21,11 @@ import config from "../../Constants/config";
 import axios from "axios";
 import { Loading } from "../../Components/Loader";
 import { connect, useDispatch } from "react-redux";
+import moment from "moment";
 const CalenderView = (props) => {
+  const today = moment().format("YYYY-MM-DD");
+
+  console.log(today, "today");
   const navigation = useNavigation();
   const [Data, setData] = useState([]);
   const [allData, setAllData] = useState(null);
@@ -140,6 +144,12 @@ const CalenderView = (props) => {
   // var dates = ['2021-08-23', '2021-08-26', '2021-08-10']
 
   const gotoSelectedDate = ({ data }) => {
+    console.log(data, "on press 147");
+    if (data && data.dateString < today) {
+      return alert(
+        "Please select current or above date for unavailibity."
+      );
+    }
     navigation.navigate("SelectedDate", {
       data,
       manage_unavailability_permission:
@@ -180,11 +190,15 @@ const CalenderView = (props) => {
       .catch((err) => console.log(err));
   };
   const getDayColor = (date, preference) => {
-    console.log(upcomingTripData,'upcomingTripDataupcomingTripData');
+    console.log(upcomingTripData, "upcomingTripDataupcomingTripData");
     let color = "white";
     let textColor = "#000";
     let found = false;
     let upcomingTripCount = 0;
+    // if (today == moment().format("YYYY-MM-DD")) {
+    //   color = Colors.orange;
+    //   textColor = "#000";
+    // }
     allData != "NA" &&
       allData?.length &&
       allData.map((item) => {
@@ -228,6 +242,8 @@ const CalenderView = (props) => {
       <View>
         <Calendar
           // onDayPress={(day) => { selecteddate.push(day.dateString), gotoSelectedDate({ data: day }) }}
+          current={today}
+          minDate={new Date()}
           dayComponent={({ date, state }) => {
             return (
               <TouchableOpacity
@@ -256,11 +272,11 @@ const CalenderView = (props) => {
               </TouchableOpacity>
             );
           }}
-          // onDayLongPress={(day) => { console.log(selecteddate) }}
+          onDayLongPress={(day) => {
+            console.log(selecteddate);
+          }}
           monthFormat={"MMMM , yyyy"}
-          //firstDay={1}
           hideExtraDays
-          //minDate={'2021-12-09'}
           onMonthChange={(month) => {}}
           renderArrow={(direction) =>
             direction === "left" ? <IconLeft /> : <IconRight />

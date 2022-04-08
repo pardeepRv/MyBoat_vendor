@@ -137,7 +137,7 @@ class ViewAdd extends React.Component {
               cabinsCount: res.data.adver_arr?.boat_cabins,
               toiletCount: res.data.adver_arr?.boat_toilets,
               numberOfPeople: res.data.adver_arr?.no_of_people,
-              boat_brand: this.props.route.params.item?.boat_brand,
+              boat_brand: res.data.adver_arr?.boat_brand,
               status1: res.data.status
               // boatDropdown: res.data.boat_arr,
               // cityDropdown: res.data.city_arr,

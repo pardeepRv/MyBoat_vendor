@@ -45,6 +45,7 @@ class AddAd extends React.Component {
     super(props);
     console.log(props, 'props in Add Add');
     this.state = {
+      addon_arr:[],
       loader: false,
       Arbic_captain: props?.route?.params?.captain_ar || '',
       English_captain: props?.route?.params?.captain_en ?? '',
@@ -368,6 +369,7 @@ class AddAd extends React.Component {
                   boatDropdown: res.data.boat_arr,
                   cityDropdown: arr,
                   cityDropdownCopy: arr,
+                  addon_arr:res?.data?.addon_arr || []
                 },
                 () => {
                   if (this.props?.route?.params?.edit)
@@ -498,6 +500,9 @@ class AddAd extends React.Component {
         (data.addon_arr =
           JSON.parse(JSON.stringify(this.props?.route?.params?.addon_arr)) ||
           []),
+        // (data.addon_arr =
+        //   JSON.parse(JSON.stringify(this.state.addon_arr)) ||
+        //   []),
           (data.destination_arr =
             JSON.parse(
               JSON.stringify(this.props?.route?.params?.destination_arr),

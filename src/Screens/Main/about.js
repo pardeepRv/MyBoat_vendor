@@ -33,7 +33,7 @@ const about = () => {
       config.apiUrl +
       '/get_all_content.php?user_id=' +
       parsedInfo.id +
-      '&&user_type=2';
+      '&user_type=2';
     // axios.get(url).then(res=>{
 
     // }).catch(error=>{

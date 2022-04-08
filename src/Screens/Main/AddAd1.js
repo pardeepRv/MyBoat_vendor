@@ -34,6 +34,7 @@ const width = Dimensions.get("window").width;
 class AddAd1 extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props, "props in AddAd1");
     this.state = {
       loader: false,
       equibments: [],
@@ -44,19 +45,23 @@ class AddAd1 extends React.Component {
       entainmentCheck: [],
       destination: [],
       destinationCheck: [],
-      openTime: props?.route?.params?.data?.trip_time_start
-        ? new Date(JSON.parse(props?.route?.params?.data?.trip_time_start))
-        : new Date(),
+      // openTime: props?.route?.params?.data?.trip_time_start
+      //   ? new Date(JSON.parse(props?.route?.params?.data?.trip_time_start))
+      //   : new Date(),
+      openTime: new Date(),
       showOpenTime: false,
-      closeTime: props?.route?.params?.data?.trip_time_end
-        ? new Date(JSON.parse(props?.route?.params?.data?.trip_time_end))
-        : new Date(),
+      // closeTime: props?.route?.params?.data?.trip_time_end
+      //   ? new Date(JSON.parse(props?.route?.params?.data?.trip_time_end))
+      //   : new Date(),
+      closeTime: new Date(),
       showCloseTime: false,
-      fixedTime:
-        props?.route?.params?.data?.trip_time_type === 2 &&
-          props?.route?.params?.data?.trip_time_start !== null
-          ? new Date(JSON.parse(props?.route?.params?.data?.trip_time_start))
-          : new Date(),
+      // fixedTime:
+      //   props?.route?.params?.data?.trip_time_type === 2 &&
+      //   props?.route?.params?.data?.trip_time_start !== null
+      //     ? new Date(JSON.parse(props?.route?.params?.data?.trip_time_start))
+      //     : new Date(),
+
+      fixedTime: new Date(),
       showFixedTime: false,
       date: new Date(),
       equibTextInput: [],
@@ -97,28 +102,37 @@ class AddAd1 extends React.Component {
     let foodDetails =
       this.state.addon_arr !== "NA" &&
       this.state.addon_arr?.length &&
-      this.state.addon_arr.filter((item) => item.addon_name[0] === "Food");
+      this.state.addon_arr.filter((item) => item.add_On_name === "Food");
 
     let entertainmentDetails =
       this.state.addon_arr !== "NA" &&
       this.state.addon_arr?.length &&
       this.state.addon_arr.filter(
-        (item) => item.addon_name[0] === "entertainment"
+        (item) => item.add_On_name === "entertainment"
       );
     let equipmentDetails =
       this.state.addon_arr !== "NA" &&
       this.state.addon_arr?.length &&
       this.state.addon_arr.filter((item) => {
-        if (item.addon_name[0] === "Equipment ") return item;
+        if (item.add_On_name === "Equipment ") return item;
       });
+    console.log(this.state.addon_arr, "addon_arr");
+    console.log(equipmentDetails, "equipmentDetails");
 
     if (
-      equipmentDetails[0]?.addon_products?.length &&
-      equipmentDetails[0]?.addon_products !== "NA"
+      equipmentDetails &&
+      equipmentDetails.length > 0 &&
+      equipmentDetails !== "NA"
+      // equipmentDetails[0]?.addon_products?.length &&
+      // equipmentDetails[0]?.addon_products !== "NA"
     ) {
-      equipmentDetails[0]?.addon_products.map((item) => {
+      // equipmentDetails[0]?.addon_products.map((item) => {
+      equipmentDetails.map((item) => {
+        console.log("coming 1", item);
+
         this.state.equibments?.length &&
           this.state.equibments.map((innerItem, index) => {
+            console.log("coming 2", innerItem);
             if (innerItem.addon_product_id == item.addon_product_id) {
               innerItem.onCheck = 1;
               this.state.equibTextInput[index] = JSON.stringify(
@@ -132,10 +146,14 @@ class AddAd1 extends React.Component {
       });
     }
     if (
-      foodDetails[0]?.addon_products?.length &&
-      foodDetails[0]?.addon_products !== "NA"
+      // foodDetails[0]?.addon_products?.length &&
+      // foodDetails[0]?.addon_products !== "NA"
+      foodDetails &&
+      foodDetails.length > 0 &&
+      foodDetails !== "NA"
     ) {
-      foodDetails[0]?.addon_products.map((item) => {
+      // foodDetails[0]?.addon_products.map((item) => {
+      foodDetails.map((item) => {
         this.state.food?.length &&
           this.state.food.map((innerItem, index) => {
             if (innerItem.addon_product_id == item.addon_product_id) {
@@ -149,10 +167,14 @@ class AddAd1 extends React.Component {
       });
     }
     if (
-      entertainmentDetails[0]?.addon_products?.length &&
-      entertainmentDetails[0]?.addon_products !== "NA"
+      // entertainmentDetails[0]?.addon_products?.length &&
+      // entertainmentDetails[0]?.addon_products !== "NA"
+      entertainmentDetails &&
+      entertainmentDetails.length > 0 &&
+      entertainmentDetails !== "NA"
     ) {
-      entertainmentDetails[0]?.addon_products.map((item) => {
+      // entertainmentDetails[0]?.addon_products.map((item) => {
+      entertainmentDetails.map((item) => {
         this.state.entainment?.length &&
           this.state.entainment.map((innerItem, index) => {
             if (innerItem.addon_product_id == item.addon_product_id) {
@@ -198,6 +220,7 @@ class AddAd1 extends React.Component {
     });
   }
   equibselectCheckBox = (index) => {
+    console.log(index,'selected index');
     const { equibments, equibTextInput } = this.state;
     if (this.state.equibments[index].onCheck) {
       this.state.equibIds[index] = "";
@@ -216,6 +239,7 @@ class AddAd1 extends React.Component {
     });
   };
   foodselectCheckBox = (index) => {
+    console.log(index,'index');
     const { food, foodTextInput, foodIds } = this.state;
     if (this.state.food[index].onCheck) {
       this.state.foodIds[index] = "";
@@ -230,6 +254,7 @@ class AddAd1 extends React.Component {
     this.setState({ food, foodTextInput, foodIds });
   };
   entertainmentselectCheckBox = (index) => {
+    console.log(index)
     const { entainment, entainmentTextInput, entainmentIds } = this.state;
     if (this.state.entainment[index].onCheck) {
       this.state.entainmentTextInput[index] = "";
@@ -284,6 +309,7 @@ class AddAd1 extends React.Component {
     axios
       .get(url)
       .then((res) => {
+        console.log(res, "res at 294");
         if (res) {
           this.setState(
             {
@@ -332,6 +358,14 @@ class AddAd1 extends React.Component {
   };
   Addad = async () => {
     const props = this.props.route.params.data;
+
+    console.log(props, "props AddAd");
+    let lat = Number(props.BoatLat);
+    let finalLat = lat.toFixed(6);
+
+    let longi = Number(props.BoatLang);
+    let finalLong = longi.toFixed(6);
+
     const { openTime, tripTimeType, closeTime, fixedTime, addType } =
       this.state;
     var foodItems = this.state.foodTextInput;
@@ -393,8 +427,8 @@ class AddAd1 extends React.Component {
     data.append("boat_id", props.Boat);
     data.append("no_of_people", props.Max_number_of_people);
     data.append("location_address", props.locationAddress);
-    data.append('location_lat', props.BoatLat);
-    data.append('location_lng', props.BoatLang);
+    data.append("location_lat", finalLat);
+    data.append("location_lng", finalLong);
 
     // data.append("location_lat", 30.7046);
     // data.append("location_lng", 76.7179);
@@ -480,12 +514,12 @@ class AddAd1 extends React.Component {
     );
     let isEndHoursPM =
       moment(new Date(this.state.closeTime)).format("hh:mm:a").split(":")[2] ===
-        "pm"
+      "pm"
         ? true
         : false;
     let isStartHoursPM =
       moment(new Date(this.state.openTime)).format("hh:mm:a").split(":")[2] ===
-        "pm"
+      "pm"
         ? true
         : false;
     if (isEndHoursPM !== isStartHoursPM) {
@@ -505,11 +539,10 @@ class AddAd1 extends React.Component {
     return true;
   };
 
-
   getDate() {
-    let tempDate = moment(this.state.fixedTime).format('H:mm:ss')
-    return tempDate
-  };
+    let tempDate = moment(this.state.fixedTime).format("H:mm:ss");
+    return tempDate;
+  }
 
   render() {
     const {
@@ -527,9 +560,9 @@ class AddAd1 extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
         <Header imgBack={true} name={I18n.translate("add_ad")} backBtn={true} />
-       
-        <KeyboardAwareScrollView 
-          keyboardShouldPersistTaps='handled'
+
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps="handled"
           style={{
             marginVertical: -30,
             borderTopLeftRadius: 20,
@@ -596,25 +629,30 @@ class AddAd1 extends React.Component {
                           }}
                         />
                       )}
-                      <Text style={{top:5}}>{I18n.translate("open_time")} </Text>
+                      <Text style={{ top: 5 }}>
+                        {I18n.translate("open_time")}{" "}
+                      </Text>
                     </View>
                     <TouchableOpacity
                       onPress={() =>
                         this.setState({ showOpenTime: !showOpenTime })
                       }
                     >
-                      <Text style={{top:5}}>{moment(openTime).format("hh:mm a")}</Text>
+                      <Text style={{ top: 5 }}>
+                        {moment(openTime).format("hh:mm a")}
+                      </Text>
                     </TouchableOpacity>
                     {showOpenTime && tripTimeType === "open" && (
-                      <DateTimePicker style={{
-                        backgroundColor: 'lightgray',
-                        height: 40, width: 100
-                      }}
+                      <DateTimePicker
+                        style={{
+                          backgroundColor: "lightgray",
+                          height: 40,
+                          width: 100,
+                        }}
                         value={openTime}
                         mode={"time"}
                         is24Hour={true}
                         display="default"
-
                         onChange={(event, selectedDate) => {
                           var currentDate = selectedDate || date;
                           this.setState({
@@ -624,17 +662,20 @@ class AddAd1 extends React.Component {
                         }}
                       />
                     )}
-                    <Text style={{top:5,}}>{I18n.translate("to")}</Text>
+                    <Text style={{ top: 5 }}>{I18n.translate("to")}</Text>
                     <TouchableOpacity
                       onPress={() => this.setState({ showCloseTime: true })}
                     >
-                      <Text style={{top:5}}>{moment(closeTime).format("hh:mm a")}</Text>
+                      <Text style={{ top: 5 }}>
+                        {moment(closeTime).format("hh:mm a")}
+                      </Text>
                     </TouchableOpacity>
                     {showCloseTime && tripTimeType === "open" && (
                       <DateTimePicker
                         style={{
-                          backgroundColor: 'lightgray',
-                          height: 40, width: 100
+                          backgroundColor: "lightgray",
+                          height: 40,
+                          width: 100,
                         }}
                         testID="dateTimePicker"
                         value={closeTime}
@@ -686,22 +727,26 @@ class AddAd1 extends React.Component {
                           }}
                         />
                       )}
-                      <Text style={{top:5}} >{I18n.translate("fixed_time")}</Text>
+                      <Text style={{ top: 5 }}>
+                        {I18n.translate("fixed_time")}
+                      </Text>
                     </View>
                     <TouchableOpacity
                       onPress={() =>
                         this.setState({ showFixedTime: !showFixedTime })
                       }
                     >
-                      <Text style={{top:5}}>{moment(fixedTime).format("hh:mm a")}</Text>
+                      <Text style={{ top: 5 }}>
+                        {moment(fixedTime).format("hh:mm a")}
+                      </Text>
                     </TouchableOpacity>
                     {showFixedTime && tripTimeType === "fixed" && (
                       <DateTimePicker
-
-                      style={{
-                        backgroundColor: 'lightgray',
-                        height: 40, width: 100
-                      }}
+                        style={{
+                          backgroundColor: "lightgray",
+                          height: 40,
+                          width: 100,
+                        }}
                         testID="dateTimePicker"
                         value={fixedTime}
                         mode={"time"}
@@ -1216,7 +1261,6 @@ class AddAd1 extends React.Component {
             </View>
           )}
         </KeyboardAwareScrollView>
-       
       </View>
     );
   }

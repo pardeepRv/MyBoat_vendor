@@ -146,9 +146,7 @@ const CalenderView = (props) => {
   const gotoSelectedDate = ({ data }) => {
     console.log(data, "on press 147");
     if (data && data.dateString < today) {
-      return alert(
-        "Please select current or above date for unavailibity."
-      );
+      return alert("Please select current or above date for unavailibity.");
     }
     navigation.navigate("SelectedDate", {
       data,
@@ -275,6 +273,21 @@ const CalenderView = (props) => {
           onDayLongPress={(day) => {
             console.log(selecteddate);
           }}
+          // renderArrow={(direction) => (
+          //   <Icon
+          //     type="ionicon"
+          //     color={Colors.orange}
+          //     name={
+          //       direction === "left"
+          //         ? this.props.language_id == 1
+          //           ? "arrow-forward"
+          //           : "arrow-back"
+          //         : this.props.language_id == 1
+          //         ? "arrow-back"
+          //         : "arrow-forward"
+          //     }
+          //   />
+          // )}
           monthFormat={"MMMM , yyyy"}
           hideExtraDays
           onMonthChange={(month) => {}}

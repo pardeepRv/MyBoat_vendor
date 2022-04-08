@@ -55,7 +55,7 @@ export default {
   terms4: 'privacy policy',
   existing_account_text: 'I already have an account?',
   //Explore Tab
-  outgoing: 'Outgoing',
+  outgoing: 'Ongoing',
   upcoming: 'Upcoming',
   no_data: 'No Advertisements Created',
   explore: 'Explore',

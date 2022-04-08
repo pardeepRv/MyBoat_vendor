@@ -58,7 +58,7 @@ export default {
   terms4: 'سياسة الخصوصية',
   existing_account_text: 'لدي حساب بالفعل',
   //Explore Tab
-  outgoing: 'رحلات اليوم',
+  outgoing: 'جاري التنفيذ',
   upcoming: 'رحلات قادمة',
   no_data: 'لم يتم انشاء اعلان',
   explore: 'استكشف',

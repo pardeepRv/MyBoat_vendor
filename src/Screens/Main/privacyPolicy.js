@@ -16,6 +16,12 @@ import {Colors, FontFamily, Sizes} from '../../Constants/Constants';
 import {useNavigation} from '@react-navigation/core';
 import Header from '../../Components/Header';
 import I18n from '../../Translations/i18';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import config from '../../Constants/config';
+import WebView from 'react-native-webview';
+import { connect } from "react-redux";
+
+import axios from 'axios';
 const privacyPolicies = [
   'Privacy Statement',
 
@@ -609,36 +615,71 @@ const privacyPolicies = [
 
   'Our cookie statement may also be updated from time to time. If these updates are substantial, particularly relevant to you, or impact your data protection rights, we&rsquo;ll get in touch with you about them. However, we recommend visiting this page regularly to stay up to date with any other (less substantial or relevant) updates.',
 ];
-const privacyPolicy = () => {
+const privacyPolicy = (props) => {
+  console.log('props', props)
+  const [content , getContent] =  useState([]);
+  React.useEffect(async () => {
+    let userInfo = await AsyncStorage.getItem('userInfo');
+
+    let parsedInfo = JSON.parse(userInfo);
+    let url =
+      config.apiUrl +
+      '/get_all_content.php?user_id=' +
+      parsedInfo.id +
+      '&user_type=2';
+      axios
+      .get(url)
+      .then((res) => {
+        console.log(res, "res getting permission");
+        console.log('first', res.data.content_arr[1].content[0])
+        if (res.data.success == 'true'){
+          {props.language_id == 1 ? getContent(res.data.content_arr[1].content[1]) : getContent(res.data.content_arr[1].content[0])}
+
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  function webViewTextSize(data) {
+    return `
+       <!DOCTYPE html>
+       <html>
+       <head>
+         <style type="text/css">
+           body {
+             font-family: Helvetica;
+             font-size: 3rem;
+             color: black;
+             padding: 20px 20px 20px 20px;
+           } 
+           p {
+             text-align: center;
+           }
+         </style>
+       </head>
+       <meta name="viewport" content="initial-scale=0.1, maximum-scale=0.1">
+       <body>
+         ${data}
+       </body>
+       </html>
+       `;
+  }
   return (
     <View style={{flex: 1, backgroundColor: Colors.white}}>
       <Header backBtn={true} imgBack={true} name="Privacy Policy" />
       <View style={subrata.SEC2}>
-        <View style={{marginTop: 30, paddingHorizontal: 20}}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: FontFamily.bold,
-                marginBottom: 10,
-              }}>
-              {I18n.translate('privacy_policy')}
-            </Text>
-            {privacyPolicies.map(item => {
-              return (
-                <Text
-                  style={{
-                    textAlign: 'auto',
-                    fontFamily: FontFamily.default,
-                    fontSize: 12,
-                    lineHeight: 27,
-                  }}>
-                  {item}
-                </Text>
-              );
-            })}
-          </ScrollView>
-        </View>
+      <WebView
+            startInLoadingState={true}
+            originWhitelist={['*']}
+            source={{html: webViewTextSize(content)}}
+            javaScriptEnabled={true}
+            // source={{ html: '<h1>Hellogdfgdfgfdgdgdgdgggdggdgdfggdgdggdfgdfgdfgdfgdgdg </h1>' }}
+            style={{
+              marginTop: 15,
+              textAlign: 'center',
+            }}
+            height={750}
+          />
       </View>
     </View>
   );
@@ -652,4 +693,10 @@ const subrata = StyleSheet.create({
     flex: 1,
   },
 });
-export default privacyPolicy;
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+});
+
+export default connect(mapStateToProps)(privacyPolicy);
+

@@ -168,10 +168,19 @@ const Home = (props) => {
       .then((res) => {
         console.log(res, "res in home");
         setLoader(false);
-        if (res.data.success === "true") {
+        if (res.data.success == "true") {
+          console.log(
+            res.data.ongoning_booking_arr,
+            "res.data.ongoning_booking_arr"
+          );
+
           if (res.data.upcoming_booking_arr != "NA2") {
             setUpcoming(res.data.upcoming_booking_arr);
-          } else if (res.data.ongoning_booking_arr != "NA3") {
+          }
+          // else if (res.data.ongoning_booking_arr != "NA3") {
+          //   setOutgoing(res.data.ongoning_booking_arr);
+          // }
+          if (res.data.ongoning_booking_arr) {
             setOutgoing(res.data.ongoning_booking_arr);
           } else {
             setUpcoming([]);
@@ -185,6 +194,7 @@ const Home = (props) => {
           else alert(res.data.msg[1]);
         }
         console.log(upcoming, "upcomingupcoming");
+        console.log(outgoing, "outgoingoutgoing");
       })
       .catch((err) => console.log(err));
   };
@@ -234,9 +244,9 @@ const Home = (props) => {
                   <Text style={s.name}>{item.boat_name}</Text>
                   <Text style={s.type}>{I18n.translate("boat")}</Text>
                   <Text style={s.id}>{item.booking_no}</Text>
-                  {/* <Text style={s.type}>{item.time}</Text>
-                   */}
-                  <Text style={s.type}>{item.expiry_datetime}</Text>
+                  <Text style={s.type}>{item.date}</Text>
+                  
+                  {/* <Text style={s.type}>{item.expiry_datetime}</Text> */}
                 </View>
                 <View
                   style={{ justifyContent: "space-between", marginLeft: 50 }}
@@ -290,7 +300,7 @@ const Home = (props) => {
                   {item.booking_status === 4 ? (
                     <View
                       style={{
-                        backgroundColor: 'red',
+                        backgroundColor: "red",
                         alignItems: "center",
                       }}
                     >
@@ -309,7 +319,7 @@ const Home = (props) => {
                   {item.booking_status === 3 ? (
                     <View
                       style={{
-                        backgroundColor: 'red',
+                        backgroundColor: "red",
                         alignItems: "center",
                       }}
                     >

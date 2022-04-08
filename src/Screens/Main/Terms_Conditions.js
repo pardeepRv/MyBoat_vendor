@@ -16,6 +16,12 @@ import {Icon, Input, Card} from 'react-native-elements';
 import {Colors, FontFamily, Sizes} from '../../Constants/Constants';
 import {useNavigation} from '@react-navigation/core';
 import Header from '../../Components/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import WebView from 'react-native-webview';
+import { connect } from "react-redux";
+import config from '../../Constants/config';
+
 
 const termsAndConditions = [
   'Introduction TCs',
@@ -143,36 +149,72 @@ const termsAndConditions = [
   'MyBoat exclusively retains ownership of all rights, title and interest in and to (all intellectual property rights of) (the look and feel (including infrastructure) of) the Platform on which the service is made available (including the guest reviews and translated content) and you are not entitled to copy, scrape, (hyper-/deep)link to, publish, promote, market, integrate, utilize, combine or otherwise use the content (including any translations thereof and the guest reviews) or our brand without our express written permission. To the extent that you would (wholly or partly) use or combine our (translated) content (including guest reviews) or would otherwise own any intellectual property rights in the Platform or any (translated) content or guest reviews, you hereby assign, transfer and set over all such intellectual property rights to MyBoat . Any unlawful use or any of the aforementioned actions or behaviour will constitute a material infringement of our intellectual property rights (including copyright and database right).',
   '&nbsp;',
 ];
-const Terms_Conditions = () => {
+const Terms_Conditions = (props) => {
+console.log(props , 'props ion terms and condition ');
+  const [content , getContent] =  useState([]);
+  React.useEffect(async () => {
+    let userInfo = await AsyncStorage.getItem('userInfo');
+
+    let parsedInfo = JSON.parse(userInfo);
+    let url =
+      config.apiUrl +
+      '/get_all_content.php?user_id=' +
+      parsedInfo.id +
+      '&user_type=2';
+      axios
+      .get(url)
+      .then((res) => {
+        console.log(res, "res getting permission");
+        console.log('first', res.data.content_arr[2].content[0])
+        if (res.data.success == 'true'){
+          {props.language_id == 1 ? getContent(res.data.content_arr[2].content[1]) : getContent(res.data.content_arr[2].content[0])}
+
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  function webViewTextSize(data) {
+    return `
+       <!DOCTYPE html>
+       <html>
+       <head>
+         <style type="text/css">
+           body {
+             font-family: Helvetica;
+             font-size: 3rem;
+             color: black;
+             padding: 20px 20px 20px 20px;
+           } 
+           p {
+             text-align: center;
+           }
+         </style>
+       </head>
+       <meta name="viewport" content="initial-scale=0.1, maximum-scale=0.1">
+       <body>
+         ${data}
+       </body>
+       </html>
+       `;
+  }
   return (
     <View style={{flex: 1, backgroundColor: Colors.white}}>
       <Header backBtn={true} imgBack={true} name="Terms & Conditions" />
       <View style={subrata.SEC2}>
-        <View style={{marginTop: 30, paddingHorizontal: 20}}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: FontFamily.bold,
-                marginBottom: 10,
-              }}>
-              {I18n.translate('terms')}
-            </Text>
-            {termsAndConditions.map(item => {
-              return (
-                <Text
-                  style={{
-                    textAlign: 'auto',
-                    fontFamily: FontFamily.default,
-                    fontSize: 12,
-                    lineHeight: 27,
-                  }}>
-                  {item}
-                </Text>
-              );
-            })}
-          </ScrollView>
-        </View>
+       
+           <WebView
+            startInLoadingState={true}
+            originWhitelist={['*']}
+            source={{html: webViewTextSize(content)}}
+            javaScriptEnabled={true}
+            // source={{ html: '<h1>Hellogdfgdfgfdgdgdgdgggdggdgdfggdgdggdfgdfgdfgdfgdgdg </h1>' }}
+            style={{
+              marginTop: 15,
+              textAlign: 'center',
+            }}
+            height={750}
+          />
       </View>
     </View>
   );
@@ -186,4 +228,10 @@ const subrata = StyleSheet.create({
     flex: 1,
   },
 });
-export default Terms_Conditions;
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+});
+
+export default connect(mapStateToProps)(Terms_Conditions);
+

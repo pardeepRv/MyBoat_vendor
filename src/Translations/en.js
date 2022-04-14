@@ -241,7 +241,11 @@ export default {
   view:'View',
   back:'Back',
   view_home:'View Home',
-
+  Customer_Name  : "Customer Name :",
+  no_of_guest : 'Number of guests :',
+  Trip_time : 'Trip time :',
+  Book_date : 'Book date :' ,
+   extraresuesr :  'Extra requests',
   manage_home:'Manage Home',
   view_my_add:'View My Add',
   manage_my_add:'Manage My Add',

@@ -838,7 +838,7 @@ class ViewAdd extends React.Component {
                 >
                   {I18n.translate("booking_details")}
                 </Text>
-                <View style={{ flexDirection: "row", width: "100%" }}>
+                <View style={{ flexDirection: "row", width: "100%"  ,alignItems:'flex-start'}}>
                   <Text style={styles.adDetailsTextHeader}>
                     {I18n.translate("ad_type")}
                   </Text>
@@ -1169,6 +1169,7 @@ const styles = StyleSheet.create({
   adDetailsTextHeader: {
     flex: 1,
     fontFamily: FontFamily.semi_bold,
+alignItems:'flex-start'
   },
   adDetailsTextHeader1: {
     flex: 1,

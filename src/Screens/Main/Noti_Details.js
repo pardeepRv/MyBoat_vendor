@@ -7,17 +7,21 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { connect } from "react-redux";
+import {  useSelector} from "react-redux";
 import Header from "../../Components/Header";
 import { Colors, FontFamily } from "../../Constants/Constants";
 import config from "../../Constants/config";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import I18n from "../../Translations/i18";
 
-const Notifications_Details = ({ route, navigation }) => {
+
+const Notifications_Details = ({ route, navigation } ) => {
   console.log(route, "props in noti details");
+  let language_id = useSelector(state => state.data_Reducer);
+console.log('laungugageid', language_id)
   let obj = route?.params?.data?.item;
-  console.log(obj, "obj");
+  console.log(navigation, "obj");
 
   useEffect(() => {
     if (obj?.advertisement_id && obj?.booking_id) {
@@ -104,16 +108,16 @@ const Notifications_Details = ({ route, navigation }) => {
                       marginVertical: 10,
                     }}
                   >
-                    Booking Details :
+{I18n.translate("booking_details") }
                   </Text>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Customer Name :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("Book_date")}</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}> {obj?.user_name}</Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Book date :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("Trip_time")}</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.date}
@@ -121,7 +125,7 @@ const Notifications_Details = ({ route, navigation }) => {
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Trip time :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("Trip_time")}</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.time}
@@ -129,7 +133,7 @@ const Notifications_Details = ({ route, navigation }) => {
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Number of guests :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("no_of_guest")}</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.no_of_guest}
@@ -137,7 +141,7 @@ const Notifications_Details = ({ route, navigation }) => {
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Trip hours :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("trip_hours")}</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.minimum_hours} hr
@@ -145,7 +149,7 @@ const Notifications_Details = ({ route, navigation }) => {
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Extra hours :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("extra_hours_view_add")}</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.extra_time} hr
@@ -153,25 +157,25 @@ const Notifications_Details = ({ route, navigation }) => {
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Equipment :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("equipment")} :</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>Equipment</Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Entertainment :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("entertainment")} :</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>Entertainment</Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Food :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("food")} :</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>Food</Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Boat Place :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("boat_place")} :</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.location_address}
@@ -179,7 +183,7 @@ const Notifications_Details = ({ route, navigation }) => {
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Trip Destination :</Text>
+                    <Text style={sb.parameters}>Trip {I18n.translate("discount")}:</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.location_address}
@@ -195,7 +199,7 @@ const Notifications_Details = ({ route, navigation }) => {
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Discount :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("coupon_discount")} :</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.discount} %
@@ -203,13 +207,13 @@ const Notifications_Details = ({ route, navigation }) => {
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Coupon discount :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("coupon_discount")} :</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}></Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Total price :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("total_amt")}:</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         kD {obj?.booking_details?.booking_arr?.total_amt}
@@ -218,7 +222,7 @@ const Notifications_Details = ({ route, navigation }) => {
                   </View>
 
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Extra requests :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("extraresuesr")} :</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>No Request</Text>
                     </View>
@@ -327,8 +331,6 @@ const sb = StyleSheet.create({
     width: "100%",
   },
 });
-const mapStateToProps = (state) => ({
-  language_id: state.data_Reducer.language_id,
-});
 
-export default connect(mapStateToProps)(Notifications_Details);
+
+export default Notifications_Details;

@@ -25,7 +25,7 @@ import moment from "moment";
 const CalenderView = (props) => {
   const today = moment().format("YYYY-MM-DD");
 
-  console.log(today, "today");
+  console.log(props, "today");
   const navigation = useNavigation();
   const [Data, setData] = useState([]);
   const [allData, setAllData] = useState(null);
@@ -292,7 +292,22 @@ const CalenderView = (props) => {
           hideExtraDays
           onMonthChange={(month) => {}}
           renderArrow={(direction) =>
-            direction === "left" ? <IconLeft /> : <IconRight />
+             (
+              <Icon
+                  type="ionicon"
+                  color={Colors.orange}
+                  name={
+                    direction === "left"
+                      ? props.language_id == 1
+                        ? "arrow-forward"
+                        : "arrow-back"
+                      : props.language_id == 1
+                      ? "arrow-back"
+                      : "arrow-forward"
+                  }
+                />
+             )
+            // direction === "left" ? <IconLeft /> : <IconRight />
           }
           onPressArrowLeft={(subtractMonth) => subtractMonth()}
           onPressArrowRight={(addMonth) => addMonth()}

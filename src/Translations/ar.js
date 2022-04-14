@@ -122,6 +122,7 @@ export default {
   days: 'ايام',
   public: 'رحلة عامة',
   private: 'رحلة خاصة',
+  extraresuesr: 'طلبات اضافية' , 
   //Chat
   search_people: 'بحث',
   //Calender Tab
@@ -129,6 +130,10 @@ export default {
   unavailablity: 'عدم التوفر',
   calender: 'الرزنامة',
   manage_unavailability: 'ادارة عدم التوفر',
+  Customer_Name : 'اسم الزبون :',
+  Book_date : 'تاريخ الكتاب:',
+  Trip_time : 'وقت الرحلة :',
+  no_of_guest  : 'عدد الضيوف :',
   //
   profile: 'الملف',
   kwd: 'د.ك',

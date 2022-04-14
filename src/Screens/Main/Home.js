@@ -175,17 +175,28 @@ const Home = (props) => {
           );
 
           if (res.data.upcoming_booking_arr != "NA2") {
+            console.log('first....');
             setUpcoming(res.data.upcoming_booking_arr);
           }
-          // else if (res.data.ongoning_booking_arr != "NA3") {
-          //   setOutgoing(res.data.ongoning_booking_arr);
+          // if (res.data.ongoning_booking_arr == "NA3") {
+          //   setOutgoing([]);
           // }
-          if (res.data.ongoning_booking_arr) {
+          if (
+            Array.isArray(res.data.ongoning_booking_arr) &&
+            res.data.ongoning_booking_arr.length > 0 &&
+            res.data.ongoning_booking_arr != "NA3"
+          ) {
+            console.log('first111111...');
+
             setOutgoing(res.data.ongoning_booking_arr);
-          } else {
-            setUpcoming([]);
-            setOutgoing([]);
           }
+          //  else {
+
+          //   console.log('111112222...');
+
+          //   setUpcoming([]);
+          //   setOutgoing([]);
+          // }
         } else {
           if (res?.data?.status_code == 405) {
             logout();
@@ -245,7 +256,7 @@ const Home = (props) => {
                   <Text style={s.type}>{I18n.translate("boat")}</Text>
                   <Text style={s.id}>{item.booking_no}</Text>
                   <Text style={s.type}>{item.date}</Text>
-                  
+
                   {/* <Text style={s.type}>{item.expiry_datetime}</Text> */}
                 </View>
                 <View

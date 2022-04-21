@@ -255,6 +255,8 @@ export default {
   view_my_wallet:'عرض محفظتي',
   view_withdraw:'عرض سحب',
   permission:'أذونات',
-  save:'حفظ'
-
+  save:'حفظ',
+  Trip_type : 'نوع الرحلة:',
+Cancel : 'يلغي',
+Open_Reservation : 'فتح الحجز'
 };

@@ -288,7 +288,7 @@ class EditProfile extends React.Component {
             {/* <View style={s.search_bar}>
             <TextInput placeholder={'Search'} style={{ height: 50 }} onChangeText={(text) => { this.searchCity(text) }}></TextInput>
           </View> */}
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1  , marginTop:30}}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <AntDesign
                   name={"arrowleft"}
@@ -315,6 +315,7 @@ class EditProfile extends React.Component {
                     width: "85%",
                     borderRadius: 10,
                     marginVertical: 10,
+                    height:40
                   }}
                 />
               </View>

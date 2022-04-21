@@ -255,6 +255,9 @@ export default {
   view_my_wallet:'View My Wallet',
   view_withdraw:'View Withdraw',
   permission:'permissions',
-  save:'save'
+  save:'save',
+  Trip_type :'Trip Type :',
+  Cancel : 'Cancel',
+  Open_Reservation : 'Open Reservation'
 
 };

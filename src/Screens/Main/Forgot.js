@@ -25,6 +25,7 @@ import axios from 'axios';
 import {ActivityIndicator} from 'react-native-paper';
 import { color } from 'react-native-reanimated';
 import { Colors } from '../../Constants/Constants';
+import { transform } from '@babel/core';
 class Forgot extends Component {
   state = {
     email: '',
@@ -136,7 +137,7 @@ class Forgot extends Component {
               name={"arrowleft"}
               size={25}
               // style={{ padding: 5, marginHorizontal: 10 }}
-              style={styles.forgot_back}
+              style={  I18n.translate ? [styles.forgot_back , {transform: [{ rotate: "180deg" }]}] :styles.forgot_back }
             />
               {/* <Image
                 resizeMode="contain"
@@ -204,7 +205,8 @@ const styles = StyleSheet.create({
     width: 35,
     height: 20,
     marginTop:10,
-    color:Colors.orange
+    color:Colors.orange,
+    
   },
   firgot_header: {
     marginTop: 25,

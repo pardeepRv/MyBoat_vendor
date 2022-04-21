@@ -156,7 +156,7 @@ const NotificationsPage = () => {
                                 uri: config.imageUrl + item?.item?.user_image,
                               }}
                             />
-                            <View style={{ marginLeft: 7 }}>
+                            <View style={{ marginLeft: 7 , alignItems:'flex-start'}}>
                               <Text
                                 style={{
                                   fontFamily: FontFamily.semi_bold,
@@ -164,7 +164,7 @@ const NotificationsPage = () => {
                                   lineHeight: 22,
                                 }}
                               >
-                                {item.item.title[0]}
+                                {I18n.translate ? item.item.title[1] : item.item.title[0]}
                               </Text>
                               <Text
                                 style={{
@@ -174,7 +174,7 @@ const NotificationsPage = () => {
                                   color: "rgba(0, 0, 0, 0.58)",
                                 }}
                               >
-                                {item.item.message[0]}
+                                {I18n.translate ? item.item.message[1] : item.item.message[0]}
                               </Text>
                             </View>
                           </View>

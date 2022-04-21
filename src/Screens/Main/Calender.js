@@ -12,7 +12,7 @@ import {
   I18nManager,
 } from "react-native";
 import I18n from "../../Translations/i18";
-import { Calendar } from "react-native-calendars";
+import { Calendar  , LocaleConfig} from "react-native-calendars";
 import { Icon, Input, Card } from "react-native-elements";
 import Header from "../../Components/Header";
 import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
@@ -46,6 +46,7 @@ const CalenderView = (props) => {
     const unsubscribe = props.navigation.addListener("focus", () => {
       console.log("in useEfect calender>>>>>>>>>>>.");
       getLoginuserInfo();
+      laungugaelocal();
     });
     return unsubscribe;
   }, [props.navigation]);
@@ -92,6 +93,57 @@ const CalenderView = (props) => {
     });
   };
 
+ const  laungugaelocal= () =>{
+    // const user = this.context
+  // console.log('user :>> ', user);
+  if (I18n.translate ){
+    LocaleConfig.locales['ar'] = {
+      monthNames: [
+        'يناير',
+        'فبراير',
+        'مارس',
+        'ابريل',
+        'مايو',
+        'يونيو',
+        'يوليو',
+        'اغسطس',
+        'سبتمبر',
+        'اكتوبر',
+        'نوفمبر',
+        'ديسمبر'
+      ],
+      monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+      dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+      dayNamesShort: ['شمس','الإثنين' , 'الثلاثاء', 'تزوج.', 'خميس.', 'الجمعة.', 'قعد.'],
+      today: "Aujourd'hui"
+    };
+    LocaleConfig.defaultLocale = 'ar';
+   
+  } else {
+    LocaleConfig.locales['en'] = {
+      monthNames: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'may',
+        'June',
+        'July',
+        'august',
+        'September',
+        'October',
+        'November',
+        'December'
+      ],
+      monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+      dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+      dayNamesShort: ['Sun.','Mon.' , 'Tue.', 'Wed.', 'Thr.', 'Fri.', 'Sat.'],
+      today: "Aujourd'hui"
+    };
+    LocaleConfig.defaultLocale = 'en';
+  }
+}
+  
   const getData = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);

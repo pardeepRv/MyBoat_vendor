@@ -54,7 +54,7 @@ console.log('laungugageid', language_id)
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header backBtn={true} name="Notifications" />
+      <Header backBtn={true} name={I18n.translate("notifications")} />
       <View style={sb.SEC2}>
         <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
           <ScrollView>
@@ -86,7 +86,7 @@ console.log('laungugageid', language_id)
                 {obj?.booking_details?.booking_arr?.createtime_ago}
               </Text>
             </View>
-            <View style={{ marginVertical: 20 }}>
+            <View style={{ marginVertical: 20 , alignItems:'flex-start' }}>
               <Text
                 style={{
                   fontFamily: FontFamily.default,
@@ -94,13 +94,15 @@ console.log('laungugageid', language_id)
                   color: "rgba(0, 0, 0, 0.58)",
                 }}
               >
-                {obj.message[0]}
+                {I18n.translate? obj.message[1]:obj.message[0]}
               </Text>
             </View>
             <View style={sb.DIVIDER} />
             {obj && obj.action == "new_booking" && (
               <>
-                <View style={{ marginVertical: 10 }}>
+                <View style={{ marginVertical: 10  ,}}>
+                <View style={{ alignItems:'flex-start'}}>
+
                   <Text
                     style={{
                       fontSize: 14,
@@ -110,6 +112,7 @@ console.log('laungugageid', language_id)
                   >
 {I18n.translate("booking_details") }
                   </Text>
+                  </View>
                   <View style={sb.style1}>
                     <Text style={sb.parameters}>{I18n.translate("Book_date")}</Text>
                     <View style={sb.style2}>
@@ -183,7 +186,7 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Trip {I18n.translate("discount")}:</Text>
+                    <Text style={sb.parameters}>{I18n.translate("discount")}:</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.location_address}
@@ -191,10 +194,10 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>Trip type :</Text>
+                    <Text style={sb.parameters}>{I18n.translate("Trip_type")}</Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
-                        {obj?.booking_details?.booking_arr?.trip_name[0]}
+                        {I18n.translate ? obj?.booking_details?.booking_arr?.trip_name[1] : obj?.booking_details?.booking_arr?.trip_name[0]}
                       </Text>
                     </View>
                   </View>
@@ -253,7 +256,7 @@ console.log('laungugageid', language_id)
               activeOpacity={0.8}
             >
               <Text style={[sb.btn1Text, { color: Colors.orange }]}>
-                Cancel
+              {I18n.translate("Cancel")}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -269,7 +272,7 @@ console.log('laungugageid', language_id)
               activeOpacity={0.8}
             >
               <Text style={[sb.btn1Text, { color: Colors.white }]}>
-                Open Reservation
+              {I18n.translate("Open_Reservation")}
               </Text>
             </TouchableOpacity>
           </View>

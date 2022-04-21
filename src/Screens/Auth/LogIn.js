@@ -30,7 +30,7 @@ import { toggleLanguage } from "../../Data_Service/actions";
 import I18n from "../../Translations/i18";
 const WelComeNote = () => {
   return (
-    <View style={styles.WelComeNote}>
+    <View style={{alignItems:'flex-start'}}>
       <Text style={[styles.myboat, { textAlign: "left" }]}>
         {I18n.translate("myBoat")}
       </Text>
@@ -234,7 +234,10 @@ const Login = (props) => {
             />
             <WelComeNote />
             <View style={{ marginVertical: 5, marginBottom: 20 }}>
+            <View style={{ alignItems:'flex-start' }}>
+
               <Text style={styles.Login}>{I18n.translate("login")}</Text>
+              </View>
               <View
                 style={{
                   borderBottomWidth: 1,
@@ -246,7 +249,7 @@ const Login = (props) => {
                   placeholder={I18n.translate("username")}
                   value={email}
                   placeholderTextColor={"#fff"}
-                  textAlign={props.language_id == 0 ? "left" : "right"}
+                  textAlign={I18n.translate? "right" : "left"}
                   fontSize={16}
                   opacity={email && email.length >= 1 ? 1 : 0.6}
                   //fontFamily={FontFamily.semi_bold}
@@ -265,6 +268,7 @@ const Login = (props) => {
                   borderBottomWidth: 1,
                   borderColor: "#fff",
                   justifyContent: "space-between",
+                  alignItems:'flex-start'
                 }}
               >
                 <TextInput
@@ -273,8 +277,8 @@ const Login = (props) => {
                   opacity={password && password.length >= 1 ? 1 : 0.6}
                   fontSize={16}
                   placeholderTextColor={"#fff"}
-                  alignSelf="flex-start"
-                  textAlign={props.language_id == 0 ? "left" : "right"}
+                  // alignSelf="flex-start"
+                  textAlign={I18n.translate? "right" : "left"}
                   // ref={(ref)=>{
                   //   passRef = ref
                   // }}

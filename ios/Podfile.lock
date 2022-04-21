@@ -405,10 +405,16 @@ PODS:
   - RNScreens (3.8.0):
     - React-Core
     - React-RCTImage
+  - RNSentry (3.4.1):
+    - React-Core
+    - Sentry (= 7.11.0)
   - RNSVG (12.1.1):
     - React
   - RNVectorIcons (7.1.0):
     - React
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
   - Toast (4.0.0)
   - TOCropViewController (2.6.0)
   - Yoga (1.14.0)
@@ -464,6 +470,7 @@ DEPENDENCIES:
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -481,6 +488,7 @@ SPEC REPOS:
     - nanopb
     - OneSignalXCFramework
     - PromisesObjC
+    - Sentry
     - Toast
     - TOCropViewController
 
@@ -581,6 +589,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -648,8 +658,10 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 448d3c6e923fde3466b49caf3c2457c2a0ba02dd
   RNReanimated: 64c38d47ffcc29c97fc1d8cfde9e8a73d7be7cc8
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
+  RNSentry: fbbdcd7213058e3de5fbaa452b25a06a16b4b382
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac

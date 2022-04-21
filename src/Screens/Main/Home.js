@@ -156,7 +156,7 @@ const Home = (props) => {
       routes: [{ name: "Login" }],
     });
   };
-  const getBookingDetails = async () => {
+  const getBookingDetails = async () => { 
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     setUser_id_post(parsedInfo.id);

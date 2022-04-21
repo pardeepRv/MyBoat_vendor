@@ -15,6 +15,13 @@ import checkPermission from "./src/Screens/service/notificationServices";
 import { UserContext } from "./src/Screens/Main/UserContext";
 import FlashMessage from "react-native-flash-message";
 
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({ 
+  dsn: 'https://dab7db4ed0da40c5873adaa8b874089e@o1212165.ingest.sentry.io/6350080', 
+});
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +30,7 @@ class App extends React.Component {
     };
   }
   async componentDidMount() {
+
     checkPermission();
     requestUserPermission();
     createNotificationListener();
@@ -43,7 +51,8 @@ class App extends React.Component {
     I18n.locale = appLang;
     //commented by pardeep
     // firebaseprovider.getMyInboxAllData();
-    // firebaseprovider.getAllUsers();
+    // firebaseprovider.getAllUsers(); 
+
   }
 
   setData = (val) => {
@@ -83,4 +92,6 @@ class App extends React.Component {
   }
 }
 
-export default App;
+// export default App;
+export default Sentry.wrap(App);
+

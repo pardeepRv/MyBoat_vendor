@@ -360,6 +360,7 @@
 				B6CC43FD1F6D37A5D0EB9D6E /* [CP] Copy Pods Resources */,
 				63090AE0DF15E771079864D1 /* [CP-User] [RNFB] Core Configuration */,
 				EEBAD49C92CBE8C17389ECBA /* [CP] Embed Pods Frameworks */,
+				732C025022E24119BF337396 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -469,7 +470,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nset -e\n\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		380C9C1AAEA209F7424E6842 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -539,6 +540,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-orangeApp-orangeAppTests/Pods-orangeApp-orangeAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		732C025022E24119BF337396 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
 		};
 		9858DDF83F27E7FCDE990057 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -701,11 +716,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 03D812ADB9EC0D52991E189C /* Pods-orangeApp.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = orangeApp/orangeAppDebug.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = MTG47X9M92;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = orangeApp/Info.plist;
@@ -732,13 +747,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483BAD33CFF72C1DFE50F1F8 /* Pods-orangeApp.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = orangeApp/orangeAppRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Mahmoud Albandar (MTG47X9M92)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = MTG47X9M92;
 				INFOPLIST_FILE = orangeApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

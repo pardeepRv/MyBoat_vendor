@@ -587,7 +587,7 @@ class AddAd extends React.Component {
               animationType={'slide'}
               animationInTiming={500}
               animationOutTiming={500}>
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1,marginTop:20 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <AntDesign
                     name={'arrowleft'}
@@ -610,6 +610,7 @@ class AddAd extends React.Component {
                       borderWidth: 1,
                       borderColor: Colors.orange,
                       width: '85%',
+                      height:40,
                       borderRadius: 10,
                       marginVertical: 10,
                     }}

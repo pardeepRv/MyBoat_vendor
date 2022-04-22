@@ -62,7 +62,7 @@ const MyWithdraw = () => {
     <View style={{flex: 1, backgroundColor: Colors.white}}>
       <Header
         backBtn={true}
-        name={I18n.translate('my_withdraw')}
+        name={I18n.translate('withdrawal')}
         imgBack={true}
         headerHeight={300}
       />

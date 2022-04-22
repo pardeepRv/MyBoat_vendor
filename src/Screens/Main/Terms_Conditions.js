@@ -158,9 +158,7 @@ console.log(props , 'props ion terms and condition ');
     let parsedInfo = JSON.parse(userInfo);
     let url =
       config.apiUrl +
-      '/get_all_content.php?user_id=' +
-      parsedInfo.id +
-      '&user_type=2';
+      '/get_all_content.php?&user_type=2';
       axios
       .get(url)
       .then((res) => {

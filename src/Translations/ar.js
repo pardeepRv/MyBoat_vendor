@@ -138,7 +138,7 @@ export default {
   profile: 'الملف',
   kwd: 'د.ك',
   manage_boat: 'ادارة القوارب',
-  withdrawal: 'كشف الحساب',
+  withdrawal: 'بياناتي',
   history: 'السجل',
   //Settings Page
   settings: 'الاعدادات',

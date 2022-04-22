@@ -131,7 +131,7 @@ export default {
   profile: 'Profile',
   kwd: 'KD',
   manage_boat: 'Manage Boats',
-  withdrawal: 'My Withdrawals',
+  withdrawal: 'My Statements',
   history: 'History',
   //Settings Page
   settings: 'Settings',

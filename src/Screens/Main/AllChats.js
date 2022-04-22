@@ -1,24 +1,23 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { PureComponent } from "react";
 import {
+  Alert,
   Dimensions,
   FlatList,
   Image,
-  RefreshControl,
-  SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Icon } from "react-native-elements";
+import TimeAgo from "react-native-timeago";
 import { connect } from "react-redux";
 import Header from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
 import config from "../../Constants/config";
-import TimeAgo from "react-native-timeago";
+import { Colors } from "../../Constants/Constants";
 
 const { width, height } = Dimensions.get("window");
 
@@ -151,6 +150,53 @@ class AllChats extends PureComponent {
       });
   };
 
+  deleteChat = async (item) => {
+    console.log("item", item);
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    let parsedInfo = JSON.parse(userInfo);
+
+    this.setState({ isLoading: true });
+    let url = config.apiUrl + "/chat_delete_list.php";
+    console.log(url, "url of notify");
+    var data = new FormData();
+    data.append("user_id", parsedInfo.id);
+    data.append("other_user_id", item.other_user_id);
+    console.log(data, "data while creatin Ad");
+    this.setState({ isLoading: true });
+    axios
+      .post(url, data)
+      .then((res) => {
+        console.log("res", res);
+        this.setState({ isLoading: false });
+        if (res.data.success === "true") {
+          alert("Chat has been deleted successfully!");
+          this.getAllChatMembers();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  deleteChatAlert(item) {
+    Alert.alert(
+      "Delete chat",
+      "Are you sure you want to delete ?",
+      [
+        {
+          text: "Ok",
+          onPress: () => {
+            this.deleteChat(item);
+          },
+        },
+        {
+          text: "Cancel",
+          onPress: () => {
+            console.log("cancel");
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  }
   renderChats = ({ item }) => {
     return (
       <TouchableOpacity
@@ -213,6 +259,18 @@ class AllChats extends PureComponent {
           <View style={styles.right}>
             <TimeAgo time={item?.last_message_time} />
           </View>
+          <TouchableOpacity
+            onPress={() => this.deleteChatAlert(item)}
+            style={{
+              height: 30,
+              width: 30,
+              padding: 0,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Icon name="trash-outline" type="ionicon" color={Colors.orange} />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     );
@@ -312,12 +370,14 @@ const styles = StyleSheet.create({
   },
   left: {
     flexDirection: "row",
-    width: "60%",
+    width: "90%",
     alignItems: "center",
   },
   right: {
-    flex: 1,
+    width: "20%",
     alignItems: "flex-end",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   separator: {
     width: "100%",

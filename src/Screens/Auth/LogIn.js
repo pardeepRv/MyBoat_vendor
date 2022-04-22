@@ -243,13 +243,14 @@ const Login = (props) => {
                   borderBottomWidth: 1,
                   borderColor: "#fff",
                   marginVertical: 10,
+                  alignItems:'flex-start'
                 }}
               >
                 <TextInput
                   placeholder={I18n.translate("username")}
                   value={email}
                   placeholderTextColor={"#fff"}
-                  textAlign={I18n.translate? "right" : "left"}
+                  // textAlign={I18n.translate? "right" : "left"}
                   fontSize={16}
                   opacity={email && email.length >= 1 ? 1 : 0.6}
                   //fontFamily={FontFamily.semi_bold}
@@ -264,7 +265,6 @@ const Login = (props) => {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: "center",
                   borderBottomWidth: 1,
                   borderColor: "#fff",
                   justifyContent: "space-between",
@@ -275,16 +275,17 @@ const Login = (props) => {
                   placeholder={I18n.translate("password")}
                   value={password}
                   opacity={password && password.length >= 1 ? 1 : 0.6}
+                  
                   fontSize={16}
                   placeholderTextColor={"#fff"}
-                  // alignSelf="flex-start"
-                  textAlign={I18n.translate? "right" : "left"}
+                
+                  textAlign={ props.language_id != 1 ? 'left'  :  "right"}
                   // ref={(ref)=>{
                   //   passRef = ref
                   // }}
                   fontFamily={FontFamily.semi_bold}
-                  // containerStyle={styles.Input}
-                  // inputContainerStyle={styles.Input}
+                  containerStyle={styles.Input}
+                  inputContainerStyle={styles.Input}
                   color={"#fff"}
                   style={{ width: "70%" }}
                   inputStyle={{ color: "#fff" }}
@@ -296,7 +297,7 @@ const Login = (props) => {
                   onPress={() => {
                     nav.navigate("forgot");
                   }}
-                  style={{ marginRight: 200, marginTop: 15 }}
+                  style={{ marginRight: 100, marginTop: 15 }}
                 >
                   <Text style={styles.FGPASS}>
                     {I18n.translate("forgotPassword")}
@@ -376,7 +377,7 @@ const styles = StyleSheet.create({
   },
   Input: {
     borderBottomColor: Colors.white,
-    // width: Sizes.width * 0.70,
+    width: Sizes.width * 0.85,
     color: Colors.white,
   },
   FGPASS: {

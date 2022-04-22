@@ -31,13 +31,16 @@ class Forgot extends Component {
     email: '',
     loading: false,
     isConnected: true,
+    value:'',
   };
 
   backpress = () => {
     this.props.navigation.goBack();
-  };
+  }; 
 
   _btnSubmitForgot = () => {
+    this.setState({value :this.props.language_id == 1 ? 1 : 0})
+      console.log(this.state.value );
     let user_email = this.state.email;
     //email============================
     if (user_email.length <= 0) {
@@ -62,6 +65,7 @@ class Forgot extends Component {
       let url = config.apiUrl + '/forget_password.php';
       var data = new FormData();
       data.append('user_email', user_email);
+      data.append('language_id', this.state.value);
       this.setState({loading: true});
       axios
         .post(url, data)

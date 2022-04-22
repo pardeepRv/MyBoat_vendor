@@ -18,7 +18,7 @@ import config from "../../Constants/config";
 import { Colors, FontFamily } from "../../Constants/Constants";
 import I18n from "../../Translations/i18";
 
-const NotificationsPage = () => {
+const NotificationsPage = (props) => {
   const navigation = useNavigation();
   const [user_id_post, setUser_id_post] = useState(false);
   const [data, setData] = useState([]);
@@ -164,7 +164,7 @@ const NotificationsPage = () => {
                                   lineHeight: 22,
                                 }}
                               >
-                                {I18n.translate ? item.item.title[1] : item.item.title[0]}
+                                {props.language_id == 1 ? item.item.title[1] : item.item.title[0]}
                               </Text>
                               <Text
                                 style={{
@@ -174,7 +174,7 @@ const NotificationsPage = () => {
                                   color: "rgba(0, 0, 0, 0.58)",
                                 }}
                               >
-                                {I18n.translate ? item.item.message[1] : item.item.message[0]}
+                                {props.language_id == 1 ? item.item.message[1] : item.item.message[0]}
                               </Text>
                             </View>
                           </View>

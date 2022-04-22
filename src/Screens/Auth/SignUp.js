@@ -159,7 +159,7 @@ const SignUp = (props) => {
   signup_data.append("email", email);
   signup_data.append("business_name", b_name);
   signup_data.append("country_code", config.country_code);
-  signup_data.append("language_id", config.language_id);
+  signup_data.append("language_id", props.language_id);
   signup_data.append("login_type", config.login_type);
   signup_data.append("device_type", config.device_type);
   signup_data.append("dob", dob);
@@ -1315,9 +1315,13 @@ const s = StyleSheet.create({
     color: Colors.white,
   },
 });
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+});
 
 const mapDispatchToProps = {
   addPermissions: addPermissions,
+
 };
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

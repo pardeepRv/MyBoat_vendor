@@ -94,7 +94,7 @@ console.log('laungugageid', language_id)
                   color: "rgba(0, 0, 0, 0.58)",
                 }}
               >
-                {I18n.translate? obj.message[1]:obj.message[0]}
+                {language_id== 1? obj.message[1]:obj.message[0]}
               </Text>
             </View>
             <View style={sb.DIVIDER} />

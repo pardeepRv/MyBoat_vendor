@@ -46,12 +46,37 @@ const Settings = () => {
         }).catch(console.error)
     }
     const logout = async () => {
-        await AsyncStorage.clear();
-        navigation.reset({
-            index: 0,
-            routes: [{name: 'Login'}],
-          });
+        // await AsyncStorage.clear();
+        clearAllData()
+  
     }
+
+
+    
+     
+    const   clearAllData =()=> {
+        AsyncStorage.getAllKeys()
+          .then(keys => {
+             console.log(keys, 'getting in Async');
+            let updatedKeys = keys.filter((v, i) => {
+              console.log(v,'v at 109');
+              if (v != 'language') {
+                return v
+              }
+            })
+            console.log(updatedKeys, 'getting in updatedKeys');
+    
+            AsyncStorage.multiRemove(updatedKeys)
+          })
+          .then((data) => {
+            console.log(data, 'data in 104');
+            navigation.reset({
+                index: 0,
+                routes: [{name: 'Login'}],
+              });
+          }
+          );
+      }
     return (
         <View style={{ flex: 1, backgroundColor: Colors.white }}>
             <Header

@@ -199,80 +199,88 @@ class AllChats extends PureComponent {
   }
   renderChats = ({ item }) => {
     return (
-      <TouchableOpacity
-        style={{
-          margin: 10,
-          borderRadius: 10,
-          backgroundColor: "white",
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-        }}
-        onPress={() => {
-          this.props.navigation.navigate("OneToOneChat", { data: item });
-        }}
-      >
-        <View style={styles.chat}>
-          <View style={styles.left}>
-            <View style={styles.imageContainer}>
-              <Image
-                source={
-                  item?.image
-                    ? { uri: config.imageUrl + item.image }
-                    : {
-                        uri: "https://manjeettattooz.com/wp-content/uploads/2018/09/User-dummy-300x300.png",
-                      }
-                }
-                style={{
-                  height: "80%",
-                  width: "80%",
-                  alignSelf: "center",
-                  marginTop: 5,
-                  borderRadius: 10,
-                }}
-                resizeMode="cover"
-              />
-            </View>
-            <View style={{ paddingLeft: 10 }}>
-              <Text style={{}}>{item.name}</Text>
-              <View
-                style={{
-                  justifyContent: "center",
-                  justifyContent: "space-between",
-                  flexDirection: "row",
-                  width: width / 1.4,
-                  paddingTop: 10,
-                }}
-              >
-                <Text numberOfLines={1} style={styles.msgText}>
-                  {item.last_message}
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.right}>
-            <TimeAgo time={item?.last_message_time} />
-          </View>
+      <>
+        {item && item.last_message &&(
           <TouchableOpacity
-            onPress={() => this.deleteChatAlert(item)}
             style={{
-              height: 30,
-              width: 30,
-              padding: 0,
-              alignItems: "center",
-              justifyContent: "center",
+              margin: 10,
+              borderRadius: 10,
+              backgroundColor: "white",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+            onPress={() => {
+              this.props.navigation.navigate("OneToOneChat", { data: item });
             }}
           >
-            <Icon name="trash-outline" type="ionicon" color={Colors.orange} />
+            <View style={styles.chat}>
+              <View style={styles.left}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={
+                      item?.image
+                        ? { uri: config.imageUrl + item.image }
+                        : {
+                            uri: "https://manjeettattooz.com/wp-content/uploads/2018/09/User-dummy-300x300.png",
+                          }
+                    }
+                    style={{
+                      height: "80%",
+                      width: "80%",
+                      alignSelf: "center",
+                      marginTop: 5,
+                      borderRadius: 10,
+                    }}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View style={{ paddingLeft: 10 }}>
+                  <Text style={{}}>{item.name}</Text>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      justifyContent: "space-between",
+                      flexDirection: "row",
+                      width: width / 1.4,
+                      paddingTop: 10,
+                    }}
+                  >
+                    <Text numberOfLines={1} style={styles.msgText}>
+                      {item.last_message}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.right}>
+                <TimeAgo time={item?.last_message_time} />
+              </View>
+              <TouchableOpacity
+                onPress={() => this.deleteChatAlert(item)}
+                style={{
+                  height: 30,
+                  width: 30,
+                  padding: 0,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Icon
+                  name="trash-outline"
+                  type="ionicon"
+                  color={Colors.orange}
+                />
+              </TouchableOpacity>
+            </View>
           </TouchableOpacity>
-        </View>
-      </TouchableOpacity>
+        )}
+      </>
     );
   };
 

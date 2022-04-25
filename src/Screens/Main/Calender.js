@@ -151,6 +151,7 @@ const CalenderView = (props) => {
 
     let url =
       config.apiUrl + "/unavailable_list.php?user_id_post=" + parsedInfo.id;
+      console.log(url,'url here 154');
     axios
       .get(url)
       .then((res) => {
@@ -240,7 +241,7 @@ const CalenderView = (props) => {
       .catch((err) => console.log(err));
   };
   const getDayColor = (date, preference) => {
-    console.log(upcomingTripData, "upcomingTripDataupcomingTripData");
+    // console.log(upcomingTripData, "upcomingTripDataupcomingTripData");
     let color = "white";
     let textColor = "#000";
     let found = false;

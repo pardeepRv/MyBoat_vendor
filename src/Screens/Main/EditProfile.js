@@ -514,7 +514,7 @@ class EditProfile extends React.Component {
                   </Text>
                   <DatePicker
                     style={{}}
-                    style={{ textAlign: "right", height: 45, marginTop: 5 }}
+                    style={{textAlign: "right", height: 45, marginTop: 5 }}
                     date={this.state.Birthday}
                     confirmBtnText="Confirm"
                     placeholder={I18n.translate("date")}

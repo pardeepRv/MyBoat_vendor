@@ -72,6 +72,7 @@ class AddAd1 extends React.Component {
       foodIds: [],
       destinationTextInput: [],
       destinationIds: [],
+      checkingarry:[],
       Free_Cancel_Days:
         JSON.stringify(props?.route?.params?.data?.free_cancel_days) || "",
       userId: "",
@@ -280,8 +281,12 @@ class AddAd1 extends React.Component {
         this.destinationRefArray[index].focus();
       });
       this.state.destination[index].onCheck = 1;
+    //  this.setState({checkingarry:data})
+     
     }
+    console.log(this.state.destination);
 
+  // return console.log(checkingarry);
     this.setState({ destination, destinationTextInput, destinationIds });
   };
   uncheckEquipmentsField = (index) => {
@@ -483,6 +488,10 @@ class AddAd1 extends React.Component {
           this.setState({ loader: false });
           return;
         }
+      }
+      console.log(destinationItems,'destinationItems');
+      if(addType === "public" && destinationItems && destinationItems.length>1){
+        alert('kindly select only one destination in case of public.')
       }
       console.log(data, "data while creatin Ad");
 
@@ -1159,9 +1168,11 @@ class AddAd1 extends React.Component {
                       ) : (
                         <Fontisto
                           onPress={() => {
+                           
                             if (tripTimeType === "open") {
                               alert(I18n.translate("open_time_not_available"));
-                            } else {
+                            }
+                             else {
                               this.setState({ addType: "public" });
                             }
                           }}

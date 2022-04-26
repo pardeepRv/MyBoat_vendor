@@ -91,6 +91,7 @@ const Change_Language = (props) => {
         imgBack={true}
         name={I18n.translate('change_lang')}
         headerHeight={300}
+        isarbic={props.language_id == 1 ? 1: 0}
       />
       <View style={sb.SEC2}>
         <View style={{marginTop: 30, paddingHorizontal: 10}}>

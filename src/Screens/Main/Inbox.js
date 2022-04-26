@@ -599,7 +599,7 @@ class Inbox extends Component {
         }}
       >
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
-          <Header name={I18n.translate("inbox")} imgBack={true} backBtn />
+          <Header name={I18n.translate("inbox")} imgBack={true} backBtn isarbic={this.props.language_id == 1 ? 1: 0}/>
           <Modal
             animationType="slide"
             visible={this.state.modalVisible}

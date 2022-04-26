@@ -7,6 +7,7 @@ import {
   Text,
   View,Alert
 } from 'react-native';
+import { connect } from 'react-redux';
 import Header from '../../Components/Header';
 import { Colors } from '../../Constants/Constants';
 import I18n from "../../Translations/i18";
@@ -79,7 +80,7 @@ class ViewStaff extends React.Component {
     const { item } = this.state;
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
-        <Header imgBack={true} backBtn={true} name={I18n.translate("details")} />
+        <Header imgBack={true} backBtn={true} name={I18n.translate("details")} isarbic={this.props.language_id == 1? 1:0}  />
         <View style={{ flex: 1 }}>
           <FlatList
             data={this.state.listKeys}
@@ -103,8 +104,13 @@ class ViewStaff extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+});
 
-export default ViewStaff;
+export default connect(mapStateToProps)(ViewStaff);
+
 
 const styles = StyleSheet.create({
   card: {

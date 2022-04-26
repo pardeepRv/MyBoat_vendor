@@ -406,6 +406,7 @@ const Home = (props) => {
         notiBtn={true}
         searchBtn={true}
         name={I18n.translate("home")}
+        isarbic={props.language_id == 1 ? 1 : 0}
       />
 
       {/* Buttons */}

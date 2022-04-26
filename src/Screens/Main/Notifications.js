@@ -84,7 +84,7 @@ const NotificationsPage = (props) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header backBtn={true} name={I18n.translate("notifications")} />
+      <Header backBtn={true} name={I18n.translate("notifications")}  isarbic={props.language_id==1 ? 1 : 0}/>
       {/* Clear */}
       <View style={{ position: "absolute", right: 30, top: 32 }}>
         <TouchableOpacity onPress={()=>deleteNotification('all',null)}>

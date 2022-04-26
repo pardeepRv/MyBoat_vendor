@@ -12,6 +12,7 @@ import {
   Modal,
 } from "react-native";
 import { Card, Icon, Overlay } from "react-native-elements";
+import { connect } from "react-redux";
 import Header from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
 import config from "../../Constants/config";
@@ -19,7 +20,7 @@ import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
 import I18n from "../../Translations/i18";
 
 
-const ManageStaff = () => {
+const ManageStaff = (props) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -132,6 +133,7 @@ const ManageStaff = () => {
           name={I18n.translate('Add_Staff')}
           backBtn={true}
           headerHeight={Sizes.height * 0.2}
+          isarbic={props.language_id == 1 ? 1: 0}
           // searchBtn={true}
         />
         {/* Buttons */}
@@ -564,4 +566,13 @@ const s = StyleSheet.create({
   },
 });
 
-export default ManageStaff;
+
+const mapStateToProps = (state)=>({
+  language_id: state.data_Reducer.language_id
+
+})
+
+
+
+export default connect(mapStateToProps)(ManageStaff)
+

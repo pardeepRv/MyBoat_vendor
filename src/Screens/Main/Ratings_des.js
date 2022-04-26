@@ -21,6 +21,7 @@ import {
 import { useNavigation } from "@react-navigation/core";
 import config from "../../Constants/config";
 import I18n from "../../Translations/i18";
+import { connect } from "react-redux";
 
 const DetailsRatings = ({ route }) => {
   console.log(route, "in 26");
@@ -391,4 +392,10 @@ const sb = StyleSheet.create({
     padding: 0,
   },
 });
-export default DetailsRatings;
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+});
+
+export default connect(mapStateToProps)(DetailsRatings);
+

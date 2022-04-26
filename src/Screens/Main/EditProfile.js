@@ -268,6 +268,7 @@ class EditProfile extends React.Component {
           imgBack={true}
           backBtn={true}
           name={I18n.translate("edit_profile")}
+          isarbic={this.props.language_id==1 ? 1 : 0}
         />
         <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
           <Modal

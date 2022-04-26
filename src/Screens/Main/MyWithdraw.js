@@ -24,7 +24,7 @@ import I18n from '../../Translations/i18'
 import config from '../../Constants/config';
 import axios from 'axios';
 import {Loading} from '../../Components/Loader';
-const MyWithdraw = () => {
+const MyWithdraw = (props) => {
   const [data, setData] = useState([]);
   const [pendingAmount, setPendingAmount] = useState([]);
   const [totalEarning, setTotalEarning] = useState([]);
@@ -65,6 +65,7 @@ const MyWithdraw = () => {
         name={I18n.translate('withdrawal')}
         imgBack={true}
         headerHeight={300}
+        isarbic={props.language_id==1 ? 1 :0}
       />
       {/* btn */}
       <View

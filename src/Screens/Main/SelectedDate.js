@@ -41,6 +41,7 @@ import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import config from "../../Constants/config";
 import moment from "moment";
+import { connect } from "react-redux";
 
 const SelectedDate = (props) => {
   console.log(props, "props in selcetd date");
@@ -177,7 +178,7 @@ const SelectedDate = (props) => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header backBtn={true} name={I18n.translate("selected_date")} />
+      <Header backBtn={true} name={I18n.translate("selected_date")} isarbic={props.language_id==1 ? 1:0}/>
       <View style={sb.SEC2}>
         <View style={{ marginTop: 30, paddingHorizontal: 10 }}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -468,5 +469,10 @@ const sb = StyleSheet.create({
     flex: 1,
   },
 });
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+});
 
-export default SelectedDate;
+export default connect(mapStateToProps)(SelectedDate);
+

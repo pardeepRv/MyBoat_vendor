@@ -10,11 +10,12 @@ import {
 } from "react-native";
 import { Card, Icon } from "react-native-elements";
 import email from "react-native-email";
+import { connect } from "react-redux";
 import Header from "../../Components/Header";
 import { Colors, FontFamily } from "../../Constants/Constants";
 import I18n from "../../Translations/i18";
 
-const Settings = () => {
+const Settings = (props) => {
   const navigation = useNavigation();
   const gotoNoti_Settings = () => {
     navigation.navigate("Noti_Setting");
@@ -67,7 +68,7 @@ const Settings = () => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header backBtn={true} name={I18n.translate("settings")} />
+      <Header backBtn={true} name={I18n.translate("settings")} isarbic={props.language_id==1? 1:0}/>
       <View style={sb.SEC2}>
         <ScrollView
           style={{ marginTop: 30 }}
@@ -492,4 +493,10 @@ const sb = StyleSheet.create({
     flex: 1,
   },
 });
-export default Settings;
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+});
+
+export default connect(mapStateToProps)(Settings);
+

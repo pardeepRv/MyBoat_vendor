@@ -16,6 +16,7 @@ import I18n from '../../Translations/i18'
 import { ScrollView } from "react-native-gesture-handler";
 import Header from '../../Components/Header';
 import { FontFamily } from "../../Constants/Constants";
+import { connect } from "react-redux";
 
 class viewBoat extends React.Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class viewBoat extends React.Component {
         return (
             <View style={{flex:1}}>
                 <StatusBar barStyle="light-content" backgroundColor={"transparent"} translucent/>
-                <Header imgBack={true} backBtn={true} name={I18n.translate('details')} headerHeight={Dimensions.get('window').height * 0.2} />
+                <Header isarbic={this.props.language_id == 1 ? 1 : 0} imgBack={true} backBtn={true} name={I18n.translate('details')} headerHeight={Dimensions.get('window').height * 0.2} />
                 <ScrollView style={{ paddingTop: 20,borderTopRightRadius: 25,marginTop: -25,backgroundColor:'#fff', borderTopLeftRadius:25 }} >
                     <View style={styles.card} >
                         <Text style={styles.hText} >{I18n.translate('boat_name')} :</Text>
@@ -75,8 +76,13 @@ class viewBoat extends React.Component {
         )
     };
 }
+const mapStateToProps = (state) => ({
+    language_id: state.data_Reducer.language_id,
+    permissions: state.data_Reducer.permissions,
+  });
+  
+  export default connect(mapStateToProps)(viewBoat);
 
-export default viewBoat;
 
 const styles = StyleSheet.create({
     card: {

@@ -76,7 +76,7 @@ class Change_Password extends React.Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: Colors.white}}>
-        <Header backBtn={true} name={I18n.translate('change_pass')} />
+        <Header backBtn={true} name={I18n.translate('change_pass')} isarbic={this.props.language_id == 1 ? 1: 0} />
         <View style={sb.SEC2}>
           <View style={{marginTop: 30, paddingHorizontal: 20}}>
             <View

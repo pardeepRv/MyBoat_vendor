@@ -300,6 +300,7 @@ class AllChats extends PureComponent {
           // searchBtn={this.state?.allChatMember?.length > 0 ? true : false}
           headerHeight={150}
           name={"Messages"}
+          isarbic={this.props.language_id == 1 ? 1 : 0}
         />
         {/* <TextInput
           onChangeText={(search) => this.searchByKeyword(search)}
@@ -413,5 +414,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+const mapStateToProps = (state)=>({
+  language_id: state.data_Reducer.language_id
 
-export default connect(null, null)(AllChats);
+})
+
+export default connect(mapStateToProps, null)(AllChats);

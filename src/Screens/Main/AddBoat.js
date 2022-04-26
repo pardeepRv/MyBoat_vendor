@@ -157,6 +157,7 @@ const AddBoat = (props) => {
         imgBack={true}
         name={pageType + ` ${I18n.translate("boat")}`}
         backBtn={true}
+        isarbic={props.language_id == 1 ? 1 : 0}
       />
       <View style={s.SEC2}>
         <KeyboardAwareScrollView

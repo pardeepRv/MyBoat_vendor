@@ -26,7 +26,8 @@ import axios from 'axios';
 import { s } from '../../Components/Header';
 import { Loading } from '../../Components/Loader';
 import I18n from "../../Translations/i18";
-const Ratings = () => {
+import { connect } from 'react-redux';
+const Ratings = (props) => {
   const navigate = useNavigation();
   const [data, setData] = useState([]);
   const [count1, setCount1] = useState('');
@@ -75,7 +76,7 @@ const Ratings = () => {
   }, []);
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header backBtn={true} name={I18n.translate("rating")} imgBack={true} headerHeight={300} />
+      <Header backBtn={true} name={I18n.translate("rating")} imgBack={true} headerHeight={300} isarbic={props.language_id==1 ? 1:0}/>
       {/* Ratings */}
       <View
         style={{
@@ -360,4 +361,10 @@ const sb = StyleSheet.create({
     
   }
 });
-export default Ratings;
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+  permissions: state.data_Reducer.permissions,
+});
+
+export default connect(mapStateToProps)(Ratings);
+

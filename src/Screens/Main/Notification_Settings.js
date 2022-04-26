@@ -89,6 +89,7 @@ const Noti_Setting = (props) => {
         imgBack={true}
         headerHeight={300}
         name={"Notification Settings"}
+        isarbic={props.language_id == 1 ? 1 : 0}
       />
       <View style={styles.SEC2}>
         {loader ? (

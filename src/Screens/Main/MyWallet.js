@@ -25,7 +25,7 @@ import axios from 'axios';
 import moment from 'moment';
 import {Loading} from '../../Components/Loader';
 import I18n from "../../Translations/i18";
-const MyWallet = () => {
+const MyWallet = (props) => {
   const [totalEarn, setTotalEarn] = useState(0);
   const [pending, setPending] = useState(0);
   const [data, setData] = useState([]);
@@ -64,6 +64,7 @@ const MyWallet = () => {
         name={I18n.translate('my_wallet')}
         imgBack={true}
         headerHeight={300}
+        isarbic={props.language_id==1 ? 1 : 0}
       />
       <View
         style={{

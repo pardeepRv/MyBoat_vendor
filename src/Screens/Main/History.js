@@ -65,7 +65,7 @@ class History extends React.Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <Header imgBack={true} name={I18n.translate('history')} backBtn={true} />
+        <Header imgBack={true} name={I18n.translate('history')} backBtn={true} isarbic={this.props.language_id== 1? 1 : 0}/>
         <View
           style={{
             marginTop: '20%',

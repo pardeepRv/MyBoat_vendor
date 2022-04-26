@@ -83,7 +83,7 @@ const about = (props) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header backBtn={true} imgBack={true} name={I18n.translate("about")} />
+      <Header backBtn={true} imgBack={true} name={I18n.translate("about")} isarbic={props.language_id == 1 ? 1 : 0} />
       <View style={subrata.SEC2}>
       
           <WebView

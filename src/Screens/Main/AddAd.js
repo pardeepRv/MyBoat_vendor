@@ -569,6 +569,7 @@ class AddAd extends React.Component {
             name={I18n.translate('add_ad')}
             backBtn={true}
             headerHeight={120}
+            isarbic={this.props.language_id==1 ? 1: 0}
           />
           <KeyboardAwareScrollView 
           keyboardShouldPersistTaps='handled'

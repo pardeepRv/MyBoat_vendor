@@ -559,7 +559,7 @@ class AddAd1 extends React.Component {
     // console.log(this.state.openTime, "consoling");
     return (
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
-        <Header imgBack={true} name={I18n.translate("add_ad")} backBtn={true} />
+        <Header imgBack={true} name={I18n.translate("add_ad")} backBtn={true} isarbic={this.props.language_id== 1 ? 1 : 0} />
 
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="handled"

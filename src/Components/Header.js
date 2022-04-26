@@ -10,18 +10,13 @@ import {
 import { Icon } from "react-native-elements";
 import { back_img, Colors, FontFamily } from "../Constants/Constants";
 import { useNavigation } from "@react-navigation/core";
+import { connect } from "react-redux";
+
+
 
 const Header = ({
-  backBtn,
-  notiBtn,
-  searchBtn,
-  name,
-  imgBack,
-  backColor,
-  headerHeight,
-  backImgSource,
-  chatModule,
-}) => {
+  backBtn,notiBtn,searchBtn,name,imgBack,backColor,headerHeight,backImgSource,chatModule  ,isarbic}) => {
+    console.log(isarbic);
   const navigation = useNavigation();
   const [state, setState] = useState({
     backBtn: false || backBtn,
@@ -32,6 +27,7 @@ const Header = ({
     backColor: Colors.orange || backColor,
     headerHeight: headerHeight || 200,
     back_img_source: back_img || backImgSource,
+    isarbic: 0,
   });
   const gotoBack = () => {
     navigation.goBack();
@@ -55,7 +51,7 @@ const Header = ({
         }}
       >
         {state.backBtn ? (
-          <TouchableOpacity onPress={() => gotoBack()} style={{marginTop:35}}>
+    <TouchableOpacity onPress={() => gotoBack()} style={ isarbic == 1 ? s.backbutton : {marginTop:35  } }>
             <Icon
               name="arrow-back"
               type="ionicons"
@@ -117,7 +113,7 @@ const Header = ({
         }}
       >
         {state.backBtn ? (
-          <TouchableOpacity onPress={() => gotoBack()} style={{marginTop:35}}>
+          <TouchableOpacity onPress={() => gotoBack()} style={ isarbic == 1 ? s.backbutton : {marginTop:35}}>
             <Icon
               name="arrow-back"
               type="ionicons"
@@ -171,5 +167,13 @@ export const s = StyleSheet.create({
     resizeMode: "cover",
     opacity: 0.5,
   },
+  backbutton :{
+    transform: [{ rotate: "-180deg" }],
+    marginTop:45
+  }
 });
-export default Header;
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+});
+export default connect(mapStateToProps)(Header);
+// export default Header;

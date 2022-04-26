@@ -313,6 +313,7 @@ const ManageAdd = (props) => {
         name={I18n.translate("manage_ad")}
         searchBtn={true}
         imgBack={true}
+        isarbic={props.language_id==1 ? 1: 0}
       />
 
       {/* Buttons */}

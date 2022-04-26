@@ -435,7 +435,7 @@ const CalenderView = (props) => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header name={I18n.translate("manage_unavailability")} imgBack={true} />
+      <Header name={I18n.translate("manage_unavailability")} imgBack={true} isarbic={props.language_id==1 ? 1 : 0} />
       <View style={sb.SEC2}>
         <View style={{ marginTop: 30 }}>
           <ScrollView showsVerticalScrollIndicator={false}>

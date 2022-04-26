@@ -15,6 +15,7 @@ import {
 import { Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ActivityIndicator } from "react-native-paper";
+import { connect } from "react-redux";
 import Header from "../../Components/Header";
 import config from "../../Constants/config";
 import { Colors, FontFamily } from "../../Constants/Constants";
@@ -449,7 +450,7 @@ const AddStaff = (props) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header imgBack={true} name={pageType + " Staff"} backBtn={true} />
+      <Header imgBack={true} name={pageType + " Staff"} backBtn={true} isarbic={props.language_id== 1?1:0} />
 
       <View style={s.SEC2}>
         <KeyboardAwareScrollView
@@ -570,4 +571,12 @@ const s = StyleSheet.create({
     color: Colors.white,
   },
 });
-export default AddStaff;
+const mapStateToProps = (state)=>({
+  language_id: state.data_Reducer.language_id
+
+})
+
+
+
+export default connect(mapStateToProps)(AddStaff)
+

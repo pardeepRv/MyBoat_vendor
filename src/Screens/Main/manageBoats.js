@@ -19,7 +19,7 @@ import config from "../../Constants/config";
 import { Colors, FontFamily, Sizes } from "../../Constants/Constants";
 import I18n from "../../Translations/i18";
 
-const ManageBoats = () => {
+const ManageBoats = (props) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -95,6 +95,7 @@ const ManageBoats = () => {
         name={I18n.translate("choose_boat")}
         backBtn={true}
         headerHeight={Sizes.height * 0.2}
+        isarbic={props.language_id == 1 ? 1 : 0}
         // searchBtn={true}
       />
       {/* Buttons */}

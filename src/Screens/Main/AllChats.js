@@ -241,16 +241,17 @@ class AllChats extends PureComponent {
                   />
                 </View>
                 <View style={{ paddingLeft: 10 }}>
-                  <Text style={{}}>{item.name}</Text>
+                 
                   <View
                     style={{
                       justifyContent: "center",
-                      justifyContent: "space-between",
-                      flexDirection: "row",
+                      alignItems:'flex-start', 
+                      // flexDirection: "row",
                       width: width / 1.4,
-                      paddingTop: 10,
+                      // paddingTop: 10,
                     }}
                   >
+                     <Text style={{}}>{item.name}</Text>
                     <Text numberOfLines={1} style={styles.msgText}>
                       {item.last_message}
                     </Text>
@@ -260,8 +261,7 @@ class AllChats extends PureComponent {
 
               <View style={styles.right}>
                 <TimeAgo time={item?.last_message_time} />
-              </View>
-              <TouchableOpacity
+                <TouchableOpacity
                 onPress={() => this.deleteChatAlert(item)}
                 style={{
                   height: 30,
@@ -277,6 +277,8 @@ class AllChats extends PureComponent {
                   color={Colors.orange}
                 />
               </TouchableOpacity>
+              </View>
+              
             </View>
           </TouchableOpacity>
         )}
@@ -383,9 +385,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   right: {
-    width: "20%",
+    // width: "20%",
     alignItems: "flex-end",
-    flexDirection: "row",
+    // flexDirection: "row",
     justifyContent: "space-around",
   },
   separator: {

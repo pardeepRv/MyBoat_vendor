@@ -96,7 +96,7 @@ const CalenderView = (props) => {
  const  laungugaelocal= () =>{
     // const user = this.context
   // console.log('user :>> ', user);
-  if (I18n.translate ){
+  if (props.language_id== 1  ){
     LocaleConfig.locales['ar'] = {
       monthNames: [
         'يناير',

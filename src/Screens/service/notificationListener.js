@@ -1,12 +1,12 @@
 import messaging from "@react-native-firebase/messaging";
 import { useNavigation } from "@react-navigation/native";
 import { Platform } from "react-native";
-import {showMessage} from "react-native-flash-message";
+import { showMessage } from "react-native-flash-message";
 import { FontFamily } from "../../Constants/Constants";
 
 export const createNotificationListener = async () => {
   const { navigation } = useNavigation;
-  console.log("coming in noification");
+  console.log("coming in noification", navigation);
 
   // messaging().onNotificationOpenedApp(async (remoteMessage) => {
   //     console.log('Notification caused app to open from background state bla bla:', remoteMessage);
@@ -15,17 +15,18 @@ export const createNotificationListener = async () => {
   // });
 
   messaging().onNotificationOpenedApp(async (remoteMessage) => {
+    const { navigation } = useNavigation;
+
+    console.log("coming in noification", navigation);
+
+    console.log(remoteMessage, "remoteMessage");
     // setTimeout(() => {
-    //   console.log(
-    //     NavigationService,
-    //     'hte +++++++++++++++++++++++++++++++++++++++++++',
-    //   );
-    //   remoteMessage.data?.type == '1'
-    //     ? NavigationService.navigate('FriendRequests')
-    //     : remoteMessage.data?.type == '2'
-    //     ? NavigationService.navigate('Like')
-    //     : NavigationService.navigate('Home');
-    // }, 3000);
+    //   remoteMessage.data?.type == "chat_message" &&NavigationService.navigate('FriendRequests') ;
+    //   // ? NavigationService.navigate('FriendRequests')
+    //   // : remoteMessage.data?.type == '2'
+    //   // ? NavigationService.navigate('Like')
+    //   // : NavigationService.navigate('Home');
+    // }, 2000);
   });
 
   messaging().onMessage(async (remoteMessage) => {

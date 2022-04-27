@@ -181,7 +181,7 @@ const ManageAdd = (props) => {
             mobile: Data.mobile,
             trip_type_id: Data.trip_type_id,
             boat_id: Data.boat_id,
-            no_of_people: res.data.adver_arr.no_of_people,
+            no_of_people: res.data.adver_arr.remaining_seats,
             location_lng: Data.location_lng,
             location_lat: Data.location_lat,
             location_address: Data.location_address,
@@ -526,7 +526,7 @@ const ManageAdd = (props) => {
                             </Text> */}
                             <View
                               style={{
-                                flexDirection: "row",
+                                // flexDirection: "row",
                                 alignItems: "center",
                                 alignSelf: "flex-end",
                               }}
@@ -540,6 +540,15 @@ const ManageAdd = (props) => {
                                 }}
                               >
                                 {item.no_of_people} {I18n.translate("person")}
+                              </Text>
+                              <Text
+                                style={{
+                                  color: "rgba(51, 51, 51, 1)",
+                                  fontSize: 10,
+                                  fontFamily: FontFamily.default,
+                                }}
+                              >
+                                {item.remaining_seats} {I18n.translate("Remaning")}
                               </Text>
                             </View>
                             {/* <Text

@@ -14,6 +14,7 @@ export default {
   home: 'الصفحة الرئيسية',
   off: 'إيقاف',
   person: 'الأشخاص',
+  Remaning :'ريمانينج',
   pickup: 'تلتقط من',
   edit: 'تعديل',
   all_boats_available: 'جميع القوارب متوفرة',

@@ -14,6 +14,7 @@ export default {
   home: 'Home',
   off: 'OFF',
   person: 'persons',
+  Remaning:'Remaning',
   pickup: 'Pickup from',
   edit: 'Edit',
   all_boats_available: ' All Boats Are Available',

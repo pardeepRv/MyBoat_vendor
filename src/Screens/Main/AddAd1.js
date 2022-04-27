@@ -642,19 +642,11 @@ class AddAd1 extends React.Component {
                         {I18n.translate("open_time")}{" "}
                       </Text>
                     </View>
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.setState({ showOpenTime: !showOpenTime })
-                      }
-                    >
-                      <Text style={{ top: 5 }}>
-                        {moment(openTime).format("hh:mm a")}
-                      </Text>
-                    </TouchableOpacity>
-                    {showOpenTime && tripTimeType === "open" && (
+                    
+                    {tripTimeType === "open" ?  (
                       <DateTimePicker
                         style={{
-                          backgroundColor: "lightgray",
+                          // backgroundColor: "lightgray",
                           height: 40,
                           width: 100,
                         }}
@@ -670,19 +662,19 @@ class AddAd1 extends React.Component {
                           });
                         }}
                       />
-                    )}
+                     ) :
+                    //  <TouchableOpacity style={{width: 100,height:30, backgroundColor:'#DCDCDC'  , alignItems:'center' , borderRadius:10}}>
+                     <Text style={{ top:5 , fontSize:16}}>
+                     {moment(openTime).format("hh:mm a")}
+                   </Text> 
+                  //  </TouchableOpacity>
+                   } 
                     <Text style={{ top: 5 }}>{I18n.translate("to")}</Text>
-                    <TouchableOpacity
-                      onPress={() => this.setState({ showCloseTime: true })}
-                    >
-                      <Text style={{ top: 5 }}>
-                        {moment(closeTime).format("hh:mm a")}
-                      </Text>
-                    </TouchableOpacity>
-                    {showCloseTime && tripTimeType === "open" && (
+                   
+                    {tripTimeType === "open" ? (
                       <DateTimePicker
                         style={{
-                          backgroundColor: "lightgray",
+                          backgroundColor: "white",
                           height: 40,
                           width: 100,
                         }}
@@ -699,7 +691,10 @@ class AddAd1 extends React.Component {
                           });
                         }}
                       />
-                    )}
+                     ) : 
+                     <Text style={{ top: 5 }}>
+                     {moment(closeTime).format("hh:mm a")}
+                   </Text>} 
                   </View>
                   <View
                     style={{
@@ -740,26 +735,16 @@ class AddAd1 extends React.Component {
                         {I18n.translate("fixed_time")}
                       </Text>
                     </View>
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.setState({ showFixedTime: !showFixedTime })
-                      }
-                    >
-                      <Text style={{ top: 5 }}>
-                        {moment(fixedTime).format("hh:mm a")}
-                      </Text>
-                    </TouchableOpacity>
-                    {showFixedTime && tripTimeType === "fixed" && (
+                    { tripTimeType === "fixed" ?(
                       <DateTimePicker
                         style={{
-                          backgroundColor: "lightgray",
                           height: 40,
                           width: 100,
                         }}
                         testID="dateTimePicker"
                         value={fixedTime}
                         mode={"time"}
-                        // is24Hour={true}
+                        is24Hour={true}
                         display="default"
                         onChange={(event, selectedDate) => {
                           var currentDate = selectedDate || date;
@@ -769,7 +754,11 @@ class AddAd1 extends React.Component {
                           });
                         }}
                       />
-                    )}
+                    ) : 
+                    <Text style={{ top: 5 }}>
+                    {moment(fixedTime).format("hh:mm a")}
+                  </Text>
+                    }
                   </View>
                 </View>
                 <View style={{ marginTop: 5 }}>

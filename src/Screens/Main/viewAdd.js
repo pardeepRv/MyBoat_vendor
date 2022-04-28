@@ -1073,7 +1073,7 @@ class ViewAdd extends React.Component {
             <View
               style={{ alignItems: "center", bottom: 15, height: 150, top: 20 }}
             >
-              <DatePicker
+              {/* <DatePicker
                 style={styles.booking}
                 // date={dob}
                 mode="date"
@@ -1109,7 +1109,7 @@ class ViewAdd extends React.Component {
                   },
                 }}
                 onDateChange={(date) => this.setdob(date)}
-              />
+              /> */}
               <View
                 style={{
                   flexDirection: "row",

@@ -44,6 +44,7 @@ const dummyChat = [
 
 class AllChats extends PureComponent {
   constructor(props) {
+    console.log(props, "props in All Chat");
     super(props);
     this.state = {
       isLoading: false,
@@ -200,7 +201,7 @@ class AllChats extends PureComponent {
   renderChats = ({ item }) => {
     return (
       <>
-        {item && item.last_message &&(
+        {item && item.last_message && (
           <TouchableOpacity
             style={{
               margin: 10,
@@ -241,17 +242,16 @@ class AllChats extends PureComponent {
                   />
                 </View>
                 <View style={{ paddingLeft: 10 }}>
-                 
                   <View
                     style={{
                       justifyContent: "center",
-                      alignItems:'flex-start', 
+                      alignItems: "flex-start",
                       // flexDirection: "row",
                       width: width / 1.4,
                       // paddingTop: 10,
                     }}
                   >
-                     <Text style={{}}>{item.name}</Text>
+                    <Text style={{}}>{item.name}</Text>
                     <Text numberOfLines={1} style={styles.msgText}>
                       {item.last_message}
                     </Text>
@@ -262,23 +262,22 @@ class AllChats extends PureComponent {
               <View style={styles.right}>
                 <TimeAgo time={item?.last_message_time} />
                 <TouchableOpacity
-                onPress={() => this.deleteChatAlert(item)}
-                style={{
-                  height: 30,
-                  width: 30,
-                  padding: 0,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Icon
-                  name="trash-outline"
-                  type="ionicon"
-                  color={Colors.orange}
-                />
-              </TouchableOpacity>
+                  onPress={() => this.deleteChatAlert(item)}
+                  style={{
+                    height: 30,
+                    width: 30,
+                    padding: 0,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Icon
+                    name="trash-outline"
+                    type="ionicon"
+                    color={Colors.orange}
+                  />
+                </TouchableOpacity>
               </View>
-              
             </View>
           </TouchableOpacity>
         )}
@@ -297,6 +296,7 @@ class AllChats extends PureComponent {
         }}
       >
         <Header
+          backBtn={this.props?.route.params?.notificationParam ? true : false}
           imgBack={true}
           notiBtn={false}
           // searchBtn={this.state?.allChatMember?.length > 0 ? true : false}
@@ -416,9 +416,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-const mapStateToProps = (state)=>({
-  language_id: state.data_Reducer.language_id
-
-})
+const mapStateToProps = (state) => ({
+  language_id: state.data_Reducer.language_id,
+});
 
 export default connect(mapStateToProps, null)(AllChats);

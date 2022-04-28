@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Platform } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { FontFamily } from "../../Constants/Constants";
+import * as NavigationService from "../../../NavigationService";
 
 export const createNotificationListener = async () => {
   const { navigation } = useNavigation;
@@ -15,18 +16,20 @@ export const createNotificationListener = async () => {
   // });
 
   messaging().onNotificationOpenedApp(async (remoteMessage) => {
-    const { navigation } = useNavigation;
-
     console.log("coming in noification", navigation);
-
+    // alert(JSON.stringify(remoteMessage))
     console.log(remoteMessage, "remoteMessage");
-    // setTimeout(() => {
-    //   remoteMessage.data?.type == "chat_message" &&NavigationService.navigate('FriendRequests') ;
-    //   // ? NavigationService.navigate('FriendRequests')
-    //   // : remoteMessage.data?.type == '2'
-    //   // ? NavigationService.navigate('Like')
-    //   // : NavigationService.navigate('Home');
-    // }, 2000);
+    setTimeout(() => {
+      if (remoteMessage.data?.type == "chat_message") {
+        NavigationService.navigate("AllChats", { notificationParam: 1 });
+      }
+      if (remoteMessage.notification?.body == "A new booking request") {
+        NavigationService.navigate("Notifications" );
+      }
+      // else {
+      //   NavigationService.navigate("Home");
+      // }
+    }, 1500);
   });
 
   messaging().onMessage(async (remoteMessage) => {

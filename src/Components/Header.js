@@ -11,6 +11,8 @@ import { Icon } from "react-native-elements";
 import { back_img, Colors, FontFamily } from "../Constants/Constants";
 import { useNavigation } from "@react-navigation/core";
 import { connect } from "react-redux";
+import * as NavigationService from '../../NavigationService';
+
 
 
 

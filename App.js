@@ -9,6 +9,8 @@ import Stacks from "./src/Navi/Stack";
 import { firebaseprovider } from "./src/Screens/Provider/FirebaseProvider";
 import { SafeAreaView, StatusBar } from "react-native";
 import { Colors, langCheck } from "./src/Constants/Constants";
+import { navigationRef } from './NavigationService';
+
 import { requestUserPermission } from "./src/Screens/service/FcmService";
 import { createNotificationListener } from "./src/Screens/service/notificationListener";
 import checkPermission from "./src/Screens/service/notificationServices";
@@ -66,7 +68,7 @@ class App extends React.Component {
     // console.disableYellowBox = true;
     return (
       <Provider store={store}>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <Root>
             {/* <SafeAreaView
               style={{

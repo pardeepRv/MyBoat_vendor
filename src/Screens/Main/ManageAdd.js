@@ -310,10 +310,11 @@ const ManageAdd = (props) => {
   return (
     <View style={{ backgroundColor: Colors.white, flex: 1 }}>
       <Header
+        // backBtn={props?.route.params?.notificationParam ? true : false}
         name={I18n.translate("manage_ad")}
         searchBtn={true}
         imgBack={true}
-        isarbic={props.language_id==1 ? 1: 0}
+        isarbic={props.language_id == 1 ? 1 : 0}
       />
 
       {/* Buttons */}
@@ -548,7 +549,8 @@ const ManageAdd = (props) => {
                                   fontFamily: FontFamily.default,
                                 }}
                               >
-                                {item.remaining_seats} {I18n.translate("Remaning")}
+                                {item.remaining_seats}{" "}
+                                {I18n.translate("Remaning")}
                               </Text>
                             </View>
                             {/* <Text

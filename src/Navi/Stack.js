@@ -36,6 +36,8 @@ import MapView from "../Screens/MapView";
 import TabNav from "./BottomNav";
 import viewAddDetail from "../Screens/Main/viewAddDetail";
 import OneToOneChat from "../Screens/Main/OneToOneChat";
+import AllChats from "../Screens/Main/AllChats";
+import ManageAdd from "../Screens/Main/ManageAdd";
 // import MyTabs from './BottomNav';
 
 const Stack = createStackNavigator();
@@ -71,6 +73,8 @@ const Stacks = () => {
       <Stack.Screen name="Change_Language" component={Change_Language} />
       <Stack.Screen name="Change_Password" component={Change_Password} />
       <Stack.Screen name="Notifications" component={NotificationsPage} />
+      <Stack.Screen name="AllChats" component={AllChats} />
+      <Stack.Screen name="ManageAdd" component={ManageAdd} />
       <Stack.Screen
         name="Notifications_Details"
         component={Notifications_Details}

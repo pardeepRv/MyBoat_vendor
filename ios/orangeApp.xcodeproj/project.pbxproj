@@ -720,7 +720,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = orangeApp/orangeAppDebug.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = MTG47X9M92;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = orangeApp/Info.plist;
@@ -753,7 +753,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Mahmoud Albandar (MTG47X9M92)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = MTG47X9M92;
 				INFOPLIST_FILE = orangeApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

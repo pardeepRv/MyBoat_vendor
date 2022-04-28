@@ -21,7 +21,8 @@ export const createNotificationListener = async () => {
     console.log(remoteMessage, "remoteMessage");
     setTimeout(() => {
       if (remoteMessage.data?.type == "chat_message") {
-        NavigationService.navigate("AllChats", { notificationParam: 1 });
+        // NavigationService.navigate("AllChats", { notificationParam: 1 });
+        NavigationService.navigate("Inbox" );
       }
       if (remoteMessage.notification?.body == "A new booking request") {
         NavigationService.navigate("Notifications" );

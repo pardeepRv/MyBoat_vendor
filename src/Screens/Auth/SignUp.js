@@ -80,7 +80,7 @@ const SignUp = (props) => {
   //   const [b_location, setb_location] = useState('');
   const [dob, setdob] = useState("");
   const [city, setcity] = useState(0);
-  const [cityName, setCityName] = useState("Select City");
+  const [cityName, setCityName] = useState( props.language_id == 1 ? 'اختيار المدينة' : "Select City");
 
   const [gender, setgender] = useState("");
   const [password, setpassword] = useState("");
@@ -571,12 +571,16 @@ const SignUp = (props) => {
         </View>
       ) : (
         <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-          <Feather
+          {/* <Feather
             name={"square"}
             size={25}
             color={"#fff"}
             style={{ marginHorizontal: 5 }}
-          />
+          /> */}
+          <Image source={require('../../Images/checkbox.png')} style={{
+            height:22,
+            width:22
+          }} />
         </View>
       )}
 
@@ -675,11 +679,7 @@ const SignUp = (props) => {
         <KeyboardAwareScrollView>
           <View style={{height:25}}></View>
           <Image source={require("../../Images/orange.png")} style={s.Logo} />
-          {Boatfacality[0].value == 1 && Boatfacality[0].isSelected ? (
-            <Text style={s.Text1}>{I18n.translate("boat_owner")}</Text>
-          ) : (
-            <Text style={s.Text1}>{I18n.translate("Boat_Staff")}</Text>
-          )}
+            <Text style={s.Text1}>{"My Boat"}</Text>
           <View style={{ marginTop: 15 }}>
             <FlatList
               extraData={Boatfacality}
@@ -875,6 +875,7 @@ const SignUp = (props) => {
               containerStyle={s.Input}
               inputContainerStyle={s.Input}
               placeholderTextColor={Colors.white}
+              textAlign={ props.language_id != 1 ? 'left'  :  "right"}
               inputStyle={{ color: Colors.white }}
               keyboardType="number-pad"
               sss
@@ -885,7 +886,8 @@ const SignUp = (props) => {
             {Boatfacality[0].value == 1 && Boatfacality[0].isSelected ? (
               <Input
                 placeholder={I18n.translate("business_name")}
-                containerStyle={s.Input}
+                  textAlign={ props.language_id != 1 ? 'left'  :  "right"}
+                  containerStyle={s.Input}
                 inputContainerStyle={s.Input}
                 placeholderTextColor={Colors.white}
                 inputStyle={{ color: Colors.white }}
@@ -1012,7 +1014,7 @@ const SignUp = (props) => {
                 }}
               >
                 {" "}
-                Please Select Gender
+                {props.language_id== 1 ? 'يرجى تحديد الجنس' : 'Please Select Gender'}
               </Text>
               <FlatList
                 extraData={Gender}
@@ -1038,7 +1040,7 @@ const SignUp = (props) => {
                     marginTop: -60,
                   }}
                 >
-                  Male
+                  {I18n.translate("male")}
                 </Text>
                 <Text
                   style={{
@@ -1049,14 +1051,15 @@ const SignUp = (props) => {
                     marginTop: -60,
                   }}
                 >
-                  Female
+                {I18n.translate("female")}
                 </Text>
               </View>
             </View>
             <Input
-              placeholder={I18n.translate("confirm_password")}
+              placeholder={I18n.translate("password")}
               secureTextEntry
               containerStyle={s.Input}
+              textAlign={ props.language_id != 1 ? 'left'  :  "right"}
               inputContainerStyle={s.Input}
               placeholderTextColor={Colors.white}
               inputStyle={{ color: Colors.white }}
@@ -1068,6 +1071,7 @@ const SignUp = (props) => {
               containerStyle={s.Input}
               secureTextEntry
               inputContainerStyle={s.Input}
+              textAlign={ props.language_id != 1 ? 'left'  :  "right"}
               placeholderTextColor={Colors.white}
               inputStyle={{ color: Colors.white }}
               onChangeText={(t) => setconfirmPass(t)}
@@ -1101,14 +1105,14 @@ const SignUp = (props) => {
               />
             )}
 
-            <Text style={s.Text1}>{"By sign up, you agree to our "}</Text>
+            <Text style={s.Text1}>{ props.language_id== 1 ? 'بالتسجيل ، أنت توافق على' : "By sign up, you agree to our "}</Text>
             <TouchableOpacity
               onPress={() => {
                 Navigation.navigate("Terms_Conditions");
               }}
               style={{ borderBottomWidth: 1, borderColor: "#fff" }}
             >
-              <Text style={[s.Text1]}>{"terms of service"}</Text>
+              <Text style={[s.Text1]}>{ props.language_id== 1 ?   'و' : "terms of service"}</Text>
             </TouchableOpacity>
           </View>
           <View
@@ -1119,14 +1123,14 @@ const SignUp = (props) => {
               marginBottom: 15,
             }}
           >
-            <Text style={s.Text1}>{" and "}</Text>
+            <Text style={s.Text1}>{ props.language_id== 1 ?   'و' :" and "}</Text>
             <TouchableOpacity
               onPress={() => {
                 Navigation.navigate("privacyPolicy");
               }}
               style={{ borderBottomWidth: 1, borderColor: "#fff" }}
             >
-              <Text style={s.Text1}>{"privacy policy"}</Text>
+              <Text style={s.Text1}>{ props.language_id== 1 ? 'سياسة خاصة': "privacy policy"}</Text>
             </TouchableOpacity>
           </View>
 
@@ -1142,7 +1146,7 @@ const SignUp = (props) => {
           </View>
           <View>
             <Text style={[s.Text1, { marginBottom: 10 }]}>
-              I have already account ?{" "}
+               { props.language_id == 1 ? "لدي حساب بالفعل؟ " : "I have already account ?"}
               <Text
                 style={{
                   fontFamily: FontFamily.semi_bold,

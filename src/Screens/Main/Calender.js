@@ -114,7 +114,7 @@ const CalenderView = (props) => {
       ],
       monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
       dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-      dayNamesShort: ['شمس','الإثنين' , 'الثلاثاء', 'تزوج.', 'خميس.', 'الجمعة.', 'قعد.'],
+      dayNamesShort: ['احد','اثنين' , 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعة', 'السبت'],
       today: "Aujourd'hui"
     };
     LocaleConfig.defaultLocale = 'ar';
@@ -126,10 +126,10 @@ const CalenderView = (props) => {
         'February',
         'March',
         'April',
-        'may',
+        'May',
         'June',
         'July',
-        'august',
+        'August',
         'September',
         'October',
         'November',
@@ -137,7 +137,7 @@ const CalenderView = (props) => {
       ],
       monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
       dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-      dayNamesShort: ['Sun.','Mon.' , 'Tue.', 'Wed.', 'Thr.', 'Fri.', 'Sat.'],
+      dayNamesShort: ['Sun','Mon' , 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'],
       today: "Aujourd'hui"
     };
     LocaleConfig.defaultLocale = 'en';

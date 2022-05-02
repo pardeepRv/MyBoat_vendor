@@ -268,7 +268,7 @@ class EditProfile extends React.Component {
           imgBack={true}
           backBtn={true}
           name={I18n.translate("edit_profile")}
-          isarbic={this.props.language_id==1 ? 1 : 0}
+          isarbic={this.props.language_id == 1 ? 1 : 0}
         />
         <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
           <Modal
@@ -289,7 +289,7 @@ class EditProfile extends React.Component {
             {/* <View style={s.search_bar}>
             <TextInput placeholder={'Search'} style={{ height: 50 }} onChangeText={(text) => { this.searchCity(text) }}></TextInput>
           </View> */}
-            <View style={{ flex: 1  , marginTop:30}}>
+            <View style={{ flex: 1, marginTop: 30 }}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <AntDesign
                   name={"arrowleft"}
@@ -316,7 +316,7 @@ class EditProfile extends React.Component {
                     width: "85%",
                     borderRadius: 10,
                     marginVertical: 10,
-                    height:40
+                    height: 40,
                   }}
                 />
               </View>
@@ -381,11 +381,17 @@ class EditProfile extends React.Component {
                 }}
                 onPress={() => this.uploadImage()}
               >
-                <Icon
+                {/* <Icon
                   name="edit"
                   type="feather"
                   size={24}
                   color={Colors.orange}
+                /> */}
+                <Image
+                  source={require("../../Images/editprofile.png")}
+                  style={{
+                    tintColor: Colors.orange,
+                  }}
                 />
               </TouchableOpacity>
             </ImageBackground>
@@ -514,7 +520,7 @@ class EditProfile extends React.Component {
                   </Text>
                   <DatePicker
                     style={{}}
-                    style={{textAlign: "right", height: 45, marginTop: 5 }}
+                    style={{ textAlign: "right", height: 45, marginTop: 5 }}
                     date={this.state.Birthday}
                     confirmBtnText="Confirm"
                     placeholder={I18n.translate("date")}

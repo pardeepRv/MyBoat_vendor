@@ -51,7 +51,7 @@ class ViewAdd extends React.Component {
       dob: "",
       other_user_id: null,
       other_user_img: "",
-      other_user_name:"",
+      other_user_name: "",
       mobile: "",
     };
     this.addOnData();
@@ -648,14 +648,24 @@ class ViewAdd extends React.Component {
                     >
                       {this.state.item?.boat_name}
                     </Text>
+                    {this.state.item?.rating ? (
+                      <AirbnbRating
+                        showRating={false}
+                        size={12}
+                        isDisabled
+                        defaultRating={this.state.item?.rating}
+                        starContainerStyle={{ alignSelf: "flex-start" }}
+                      />
+                    ) : (
+                      <AirbnbRating
+                        showRating={false}
+                        size={12}
+                        isDisabled
+                        defaultRating={0}
+                        starContainerStyle={{ alignSelf: "flex-start" }}
+                      />
+                    )}
 
-                    <AirbnbRating
-                      showRating={false}
-                      size={12}
-                      isDisabled
-                      defaultRating={this.state.item?.rating}
-                      starContainerStyle={{ alignSelf: "flex-start" }}
-                    />
                     <Text
                       style={{
                         fontSize: 15,
@@ -838,7 +848,13 @@ class ViewAdd extends React.Component {
                 >
                   {I18n.translate("booking_details")}
                 </Text>
-                <View style={{ flexDirection: "row", width: "100%"  ,alignItems:'flex-start'}}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    width: "100%",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <Text style={styles.adDetailsTextHeader}>
                     {I18n.translate("ad_type")}
                   </Text>
@@ -1169,7 +1185,7 @@ const styles = StyleSheet.create({
   adDetailsTextHeader: {
     flex: 1,
     fontFamily: FontFamily.semi_bold,
-alignItems:'flex-start'
+    alignItems: "flex-start",
   },
   adDetailsTextHeader1: {
     flex: 1,

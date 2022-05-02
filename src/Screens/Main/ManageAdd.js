@@ -499,19 +499,22 @@ const ManageAdd = (props) => {
                                 >
                                   {item.boat_brand}
                                 </Text>
-                                <AirbnbRating
-                                  showRating={false}
-                                  size={12}
-                                  isDisabled
-                                  defaultRating={
-                                    item &&
-                                    item.rating !== null &&
-                                    item.rating !== "NA"
-                                      ? item.rating
-                                      : 0
-                                  }
-                                  //starContainerStyle={{alignSelf: 'flex-start'}}
-                                />
+
+                                {item && item.rating ? (
+                                  <AirbnbRating
+                                    showRating={false}
+                                    size={12}
+                                    isDisabled
+                                    defaultRating={item.rating}
+                                  />
+                                ) : (
+                                  <AirbnbRating
+                                    showRating={false}
+                                    size={12}
+                                    isDisabled
+                                    defaultRating={0}
+                                  />
+                                )}
                               </View>
                             </View>
                           </View>

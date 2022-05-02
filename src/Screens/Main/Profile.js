@@ -13,6 +13,7 @@ import {
   View,
 } from "react-native";
 import { AirbnbRating, Card, Icon } from "react-native-elements";
+import { color } from "react-native-reanimated";
 import { connect } from "react-redux";
 import { s } from "../../Components/Header";
 import { Loading } from "../../Components/Loader";
@@ -47,7 +48,12 @@ const CustomHeader = ({ name }) => {
         }}
       >
         <TouchableOpacity onPress={() => gotoEditProfile()}>
-          <Icon name="edit" type="feather" size={24} color={Colors.white} />
+          {/* <Icon name="edit" type="feather" size={24} color={Colors.white} />
+           */}
+          <Image
+            source={require("../../Images/editprofile.png")}
+            style={{ tintColor: Colors.white }}
+          />
         </TouchableOpacity>
         <Text style={{ fontFamily: FontFamily.semi_bold, color: Colors.white }}>
           {name}

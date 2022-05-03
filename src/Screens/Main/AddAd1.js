@@ -72,9 +72,11 @@ class AddAd1 extends React.Component {
       foodIds: [],
       destinationTextInput: [],
       destinationIds: [],
-      checkingarry:[],
+      checkingarry: [],
       Free_Cancel_Days:
-        JSON.stringify(props?.route?.params?.data?.free_cancel_days) || "",
+        // JSON.stringify(props?.route?.params?.data?.free_cancel_days) || "",
+        props?.route?.params?.data?.free_cancel_days || "",
+
       userId: "",
       tripTimeType:
         JSON.stringify(props?.route?.params?.data?.trip_time_type) === "1"
@@ -220,18 +222,19 @@ class AddAd1 extends React.Component {
       destinationTextInput: this.state.destinationTextInput,
     });
   }
-  equibselectCheckBox = (index) => {
-    console.log(index,'selected index');
-    const { equibments, equibTextInput } = this.state;
+  equibselectCheckBox = (index,item) => {
+    console.log(index, "selected index");
+    const { equibments, equibTextInput,equibIds } = this.state;
     if (this.state.equibments[index].onCheck) {
       this.state.equibIds[index] = "";
       this.state.equibTextInput[index] = "";
-      this.state.equibments[index].onCheck = 0;
+      // this.state.equibments[index].onCheck = 0;
     } else {
       setTimeout(() => {
         this.equipmentsRefArray[index].focus();
       });
       this.state.equibments[index].onCheck = 1;
+      this.state.equibIds[index] = item.addon_product_id;
     }
     this.setState({
       equibments,
@@ -239,8 +242,8 @@ class AddAd1 extends React.Component {
       equibIds: this.state.equibIds,
     });
   };
-  foodselectCheckBox = (index) => {
-    console.log(index,'index');
+  foodselectCheckBox = (index,item) => {
+    console.log(index, "index");
     const { food, foodTextInput, foodIds } = this.state;
     if (this.state.food[index].onCheck) {
       this.state.foodIds[index] = "";
@@ -251,24 +254,36 @@ class AddAd1 extends React.Component {
         this.foodRefArray[index].focus();
       });
       this.state.food[index].onCheck = 1;
+      this.state.foodIds[index] = item.addon_product_id;
+
     }
     this.setState({ food, foodTextInput, foodIds });
   };
-  entertainmentselectCheckBox = (index) => {
-    console.log(index)
+  entertainmentselectCheckBox = (index, item) => {
+    console.log(index);
+    console.log(item, "item 261");
+    console.log(this.state.entainmentIds[index].onCheck,'fwfwwefwe');
+    console.log(item.addon_product_id,'fwfwwefwe11');
+
+
     const { entainment, entainmentTextInput, entainmentIds } = this.state;
     if (this.state.entainment[index].onCheck) {
       this.state.entainmentTextInput[index] = "";
       this.state.entainment[index].onCheck = 0;
-      this.state.entainmentIds[index] = "";
+      // this.state.entainmentIds[index] = "";
     } else {
       setTimeout(() => {
         this.entertainmentRefArray[index].focus();
       });
       this.state.entainment[index].onCheck = 1;
+      this.state.entainmentIds[index] = item.addon_product_id;
     }
 
-    this.setState({ entainment, entainmentTextInput, entainmentIds });
+    this.setState({
+      entainment,
+      entainmentTextInput,
+      entainmentIds: entainmentIds,
+    });
   };
   destinationselectCheckBox = (index) => {
     const { destination, destinationTextInput, destinationIds } = this.state;
@@ -281,12 +296,11 @@ class AddAd1 extends React.Component {
         this.destinationRefArray[index].focus();
       });
       this.state.destination[index].onCheck = 1;
-    //  this.setState({checkingarry:data})
-     
+      //  this.setState({checkingarry:data})
     }
     console.log(this.state.destination);
 
-  // return console.log(checkingarry);
+    // return console.log(checkingarry);
     this.setState({ destination, destinationTextInput, destinationIds });
   };
   uncheckEquipmentsField = (index) => {
@@ -405,6 +419,9 @@ class AddAd1 extends React.Component {
     var idsArr = [];
     var priceArr = [];
 
+    console.log(entainmentIds, "entainmentIds");
+    console.log(equibIds, "equibIds");
+
     idsArr = foodIds.concat(entainmentIds, equibIds);
     priceArr = foodItems.concat(entainmentItems, equibItems);
     var images = props.images;
@@ -459,6 +476,7 @@ class AddAd1 extends React.Component {
     data.append("adver_boat_type", addType === "public" ? 2 : 1);
     data.append("freeCancel_days", this.state.Free_Cancel_Days);
     // data.append('image', JSON.stringify(props.images));
+    console.log(idsArr, "ids to be print");
     idsArr.forEach((item, index) => {
       data.append("addons[" + index + "]", item);
     });
@@ -489,11 +507,15 @@ class AddAd1 extends React.Component {
           return;
         }
       }
-      console.log(destinationItems,'destinationItems');
-      if(addType === "public" && destinationItems && destinationItems.length>1){
-        alert('kindly select only one destination in case of public.')
+      console.log(destinationItems, "destinationItems");
+      if (
+        addType === "public" &&
+        destinationItems &&
+        destinationItems.length > 1
+      ) {
+        alert("kindly select only one destination in case of public.");
       }
-      console.log(data, "data while creatin Ad");
+        console.log(data, "data while creatin Ad");
 
       axios
         .post(url, data)
@@ -568,7 +590,12 @@ class AddAd1 extends React.Component {
     // console.log(this.state.openTime, "consoling");
     return (
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
-        <Header imgBack={true} name={I18n.translate("add_ad")} backBtn={true} isarbic={this.props.language_id== 1 ? 1 : 0} />
+        <Header
+          imgBack={true}
+          name={I18n.translate("add_ad")}
+          backBtn={true}
+          isarbic={this.props.language_id == 1 ? 1 : 0}
+        />
 
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="handled"
@@ -642,35 +669,37 @@ class AddAd1 extends React.Component {
                         {I18n.translate("open_time")}{" "}
                       </Text>
                     </View>
-                    
-                    {tripTimeType === "open" ?  (
-                      <DateTimePicker
-                        style={{
-                          // backgroundColor: "lightgray",
-                          height: 40,
-                          width: 100,
-                        }}
-                        value={openTime}
-                        mode={"time"}
-                        is24Hour={true}
-                        display="default"
-                        onChange={(event, selectedDate) => {
-                          var currentDate = selectedDate || date;
-                          this.setState({
-                            showOpenTime: false,
-                            openTime: currentDate,
-                          });
-                        }}
-                      />
-                     ) :
-                    //  <TouchableOpacity style={{width: 100,height:30, backgroundColor:'#DCDCDC'  , alignItems:'center' , borderRadius:10}}>
-                     <Text style={{ top:5 , fontSize:16}}>
-                     {moment(openTime).format("hh:mm a")}
-                   </Text> 
-                  //  </TouchableOpacity>
-                   } 
+
+                    {
+                      tripTimeType === "open" ? (
+                        <DateTimePicker
+                          style={{
+                            // backgroundColor: "lightgray",
+                            height: 40,
+                            width: 100,
+                          }}
+                          value={openTime}
+                          mode={"time"}
+                          is24Hour={true}
+                          display="default"
+                          onChange={(event, selectedDate) => {
+                            var currentDate = selectedDate || date;
+                            this.setState({
+                              showOpenTime: false,
+                              openTime: currentDate,
+                            });
+                          }}
+                        />
+                      ) : (
+                        //  <TouchableOpacity style={{width: 100,height:30, backgroundColor:'#DCDCDC'  , alignItems:'center' , borderRadius:10}}>
+                        <Text style={{ top: 5, fontSize: 16 }}>
+                          {moment(openTime).format("hh:mm a")}
+                        </Text>
+                      )
+                      //  </TouchableOpacity>
+                    }
                     <Text style={{ top: 5 }}>{I18n.translate("to")}</Text>
-                   
+
                     {tripTimeType === "open" ? (
                       <DateTimePicker
                         style={{
@@ -691,10 +720,11 @@ class AddAd1 extends React.Component {
                           });
                         }}
                       />
-                     ) : 
-                     <Text style={{ top: 5 }}>
-                     {moment(closeTime).format("hh:mm a")}
-                   </Text>} 
+                    ) : (
+                      <Text style={{ top: 5 }}>
+                        {moment(closeTime).format("hh:mm a")}
+                      </Text>
+                    )}
                   </View>
                   <View
                     style={{
@@ -735,7 +765,7 @@ class AddAd1 extends React.Component {
                         {I18n.translate("fixed_time")}
                       </Text>
                     </View>
-                    { tripTimeType === "fixed" ?(
+                    {tripTimeType === "fixed" ? (
                       <DateTimePicker
                         style={{
                           height: 40,
@@ -754,11 +784,11 @@ class AddAd1 extends React.Component {
                           });
                         }}
                       />
-                    ) : 
-                    <Text style={{ top: 5 }}>
-                    {moment(fixedTime).format("hh:mm a")}
-                  </Text>
-                    }
+                    ) : (
+                      <Text style={{ top: 5 }}>
+                        {moment(fixedTime).format("hh:mm a")}
+                      </Text>
+                    )}
                   </View>
                 </View>
                 <View style={{ marginTop: 5 }}>
@@ -811,18 +841,18 @@ class AddAd1 extends React.Component {
                                 alert("Invalid Input");
                                 this.uncheckEquipmentsField(index);
                               } else {
-                                this.state.equibIds[index] = JSON.stringify(
-                                  this.state.equibments[index]?.addon_product_id
-                                );
-                                this.setState({
-                                  equibIds: this.state.equibIds,
-                                });
+                                // this.state.equibIds[index] = JSON.stringify(
+                                //   this.state.equibments[index]?.addon_product_id
+                                // );
+                                // this.setState({
+                                //   equibIds: this.state.equibIds,
+                                // });
                               }
                             }}
                           />
                           <TouchableOpacity
                             onPress={() => {
-                              this.equibselectCheckBox(index);
+                              this.equibselectCheckBox(index,item);
                             }}
                           >
                             {item.onCheck === 1 ? (
@@ -897,16 +927,16 @@ class AddAd1 extends React.Component {
                                 alert("Invalid Input");
                                 this.uncheckFoodField(index);
                               } else {
-                                this.state.foodIds[index] = JSON.stringify(
-                                  this.state.food[index]?.addon_product_id
-                                );
-                                this.setState({ foodIds: this.state.foodIds });
+                                // this.state.foodIds[index] = JSON.stringify(
+                                //   this.state.food[index]?.addon_product_id
+                                // );
+                                // this.setState({ foodIds: this.state.foodIds });
                               }
                             }}
                           />
                           <TouchableOpacity
                             onPress={() => {
-                              this.foodselectCheckBox(index);
+                              this.foodselectCheckBox(index,item);
                             }}
                           >
                             {item.onCheck === 1 ? (
@@ -983,20 +1013,22 @@ class AddAd1 extends React.Component {
                                 alert("Invalid Input");
                                 this.uncheckEntertainmentField(index);
                               } else {
-                                this.state.entainmentIds[index] =
-                                  JSON.stringify(
-                                    this.state.entainment[index]
-                                      ?.addon_product_id
-                                  );
-                                this.setState({
-                                  entainmentIds: this.state.entainmentIds,
-                                });
+                                // this.state.entainmentIds[index] =
+                                //   JSON.stringify(
+                                //     this.state.entainment[index]
+                                //       ?.addon_product_id
+                                //   );
+                                //   console.log(this.state.entainment[index]
+                                //     ?.addon_product_id,'this.state.entainment[index]');
+                                // this.setState({
+                                //   entainmentIds: this.state.entainmentIds,
+                                // });
                               }
                             }}
                           />
                           <TouchableOpacity
                             onPress={() => {
-                              this.entertainmentselectCheckBox(index);
+                              this.entertainmentselectCheckBox(index, item);
                             }}
                           >
                             {item.onCheck === 1 ? (
@@ -1157,11 +1189,9 @@ class AddAd1 extends React.Component {
                       ) : (
                         <Fontisto
                           onPress={() => {
-                           
                             if (tripTimeType === "open") {
                               alert(I18n.translate("open_time_not_available"));
-                            }
-                             else {
+                            } else {
                               this.setState({ addType: "public" });
                             }
                           }}

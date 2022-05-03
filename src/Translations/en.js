@@ -219,7 +219,7 @@ export default {
   mail_send_success:
     'A mail to reset your password has been sent to your registered mail id!',
   mail_send_failure: 'Unable to send email at this moment! Please try again!',
-  delete: 'delete',
+  delete: 'Delete',
   unavailablity_success: "Success! Added your boat's unavailability!",
   unavailablity_failure: 'Cannot process your request, please try again later!',
   permission_deny: 'Permission Denied',

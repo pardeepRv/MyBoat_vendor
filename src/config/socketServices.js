@@ -1,6 +1,9 @@
 import io from "socket.io-client";
 // const SOCKET_URL = "http://server3.rvtechnologies.in:3005";
-const SOCKET_URL = "http://chat.myboatonline.com:3008";
+const SOCKET_URL = "http://chat.myboatonline.com:3009";
+// const SOCKET_URL = "http://chat.myboatonline.com"
+// const SOCKET_URL = "https://chat.myboatonline.com:7000";
+
 
 class WSService {
   initializeSocket = (user_id) => {
@@ -15,8 +18,8 @@ class WSService {
       this.socket = io(`${SOCKET_URL}?user_id=${user_id}`, {
         transports: ["websocket"],
         query: {
-            user_id: user_id,
-        }
+          user_id: user_id,
+        },
       });
 
       this.socket.on("connect", () => {
@@ -26,7 +29,7 @@ class WSService {
       this.socket.on("disconnect", () => {
         console.log("socket disconnected");
       });
-
+ 
       this.socket.on("connect_error", (err) => {
         // console.log('socket connection error: ', err);
         // console.data('socket connection error: ', err);

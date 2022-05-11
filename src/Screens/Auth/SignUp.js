@@ -80,7 +80,9 @@ const SignUp = (props) => {
   //   const [b_location, setb_location] = useState('');
   const [dob, setdob] = useState("");
   const [city, setcity] = useState(0);
-  const [cityName, setCityName] = useState( props.language_id == 1 ? 'اختيار المدينة' : "Select City");
+  const [cityName, setCityName] = useState(
+    props.language_id == 1 ? "اختيار المدينة" : "Select City"
+  );
 
   const [gender, setgender] = useState("");
   const [password, setpassword] = useState("");
@@ -119,7 +121,7 @@ const SignUp = (props) => {
   // console.log(signup_data);
 
   // -----------------------Api Urls--------------------- //
-  var url_main = "https://myboatonline.com/app/webservice";
+  var url_main = "https://webservice.myboatonline.com";
   var url = config.apiUrl;
   console.log(url);
   const apiUrl_signup = url + "/signup.php";
@@ -538,11 +540,18 @@ const SignUp = (props) => {
         </View>
       ) : (
         <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-          <Feather
+          {/* <Feather
             name={"square"}
             size={25}
             color={"#fff"}
             style={{ marginHorizontal: 5 }}
+          /> */}
+          <Image
+            source={require("../../Images/checkbox.png")}
+            style={{
+              height: 22,
+              width: 22,
+            }}
           />
         </View>
       )}
@@ -577,10 +586,13 @@ const SignUp = (props) => {
             color={"#fff"}
             style={{ marginHorizontal: 5 }}
           /> */}
-          <Image source={require('../../Images/checkbox.png')} style={{
-            height:22,
-            width:22
-          }} />
+          <Image
+            source={require("../../Images/checkbox.png")}
+            style={{
+              height: 22,
+              width: 22,
+            }}
+          />
         </View>
       )}
 
@@ -607,7 +619,7 @@ const SignUp = (props) => {
         animationOutTiming={500}
       >
         <View style={{ flex: 1 }}>
-          <View style={{height:25 , margin:10}}></View>
+          <View style={{ height: 25, margin: 10 }}></View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <AntDesign
               name={"arrowleft"}
@@ -629,7 +641,7 @@ const SignUp = (props) => {
                 borderWidth: 1,
                 borderColor: Colors.orange,
                 width: "85%",
-                height:30,
+                height: 30,
                 borderRadius: 15,
                 marginVertical: 15,
               }}
@@ -677,9 +689,9 @@ const SignUp = (props) => {
         />
       ) : (
         <KeyboardAwareScrollView>
-          <View style={{height:25}}></View>
+          <View style={{ height: 25 }}></View>
           <Image source={require("../../Images/orange.png")} style={s.Logo} />
-            <Text style={s.Text1}>{"My Boat"}</Text>
+          <Text style={s.Text1}>{"My Boat"}</Text>
           <View style={{ marginTop: 15 }}>
             <FlatList
               extraData={Boatfacality}
@@ -875,7 +887,7 @@ const SignUp = (props) => {
               containerStyle={s.Input}
               inputContainerStyle={s.Input}
               placeholderTextColor={Colors.white}
-              textAlign={ props.language_id != 1 ? 'left'  :  "right"}
+              textAlign={props.language_id != 1 ? "left" : "right"}
               inputStyle={{ color: Colors.white }}
               keyboardType="number-pad"
               sss
@@ -886,8 +898,8 @@ const SignUp = (props) => {
             {Boatfacality[0].value == 1 && Boatfacality[0].isSelected ? (
               <Input
                 placeholder={I18n.translate("business_name")}
-                  textAlign={ props.language_id != 1 ? 'left'  :  "right"}
-                  containerStyle={s.Input}
+                textAlign={props.language_id != 1 ? "left" : "right"}
+                containerStyle={s.Input}
                 inputContainerStyle={s.Input}
                 placeholderTextColor={Colors.white}
                 inputStyle={{ color: Colors.white }}
@@ -1014,7 +1026,9 @@ const SignUp = (props) => {
                 }}
               >
                 {" "}
-                {props.language_id== 1 ? 'يرجى تحديد الجنس' : 'Please Select Gender'}
+                {props.language_id == 1
+                  ? "يرجى تحديد الجنس"
+                  : "Please Select Gender"}
               </Text>
               <FlatList
                 extraData={Gender}
@@ -1051,7 +1065,7 @@ const SignUp = (props) => {
                     marginTop: -60,
                   }}
                 >
-                {I18n.translate("female")}
+                  {I18n.translate("female")}
                 </Text>
               </View>
             </View>
@@ -1059,7 +1073,7 @@ const SignUp = (props) => {
               placeholder={I18n.translate("password")}
               secureTextEntry
               containerStyle={s.Input}
-              textAlign={ props.language_id != 1 ? 'left'  :  "right"}
+              textAlign={props.language_id != 1 ? "left" : "right"}
               inputContainerStyle={s.Input}
               placeholderTextColor={Colors.white}
               inputStyle={{ color: Colors.white }}
@@ -1071,7 +1085,7 @@ const SignUp = (props) => {
               containerStyle={s.Input}
               secureTextEntry
               inputContainerStyle={s.Input}
-              textAlign={ props.language_id != 1 ? 'left'  :  "right"}
+              textAlign={props.language_id != 1 ? "left" : "right"}
               placeholderTextColor={Colors.white}
               inputStyle={{ color: Colors.white }}
               onChangeText={(t) => setconfirmPass(t)}
@@ -1096,23 +1110,38 @@ const SignUp = (props) => {
                 style={{ marginHorizontal: 5 }}
               />
             ) : (
-              <Feather
-                onPress={() => setChecked(!isChecked)}
-                name={"square"}
-                size={25}
-                color={"#fff"}
-                style={{ marginHorizontal: 5 }}
-              />
+              <TouchableOpacity onPress={() => setChecked(!isChecked)}>
+                <Image
+                  source={require("../../Images/checkbox.png")}
+                  style={{
+                    height: 22,
+                    width: 22,
+                  }}
+                />
+              </TouchableOpacity>
+
+              // <Feather
+              //   name={"square"}
+              //   size={25}
+              //   color={"#fff"}
+              //   style={{ marginHorizontal: 5 }}
+              // />
             )}
 
-            <Text style={s.Text1}>{ props.language_id== 1 ? 'بالتسجيل ، أنت توافق على' : "By sign up, you agree to our "}</Text>
+            <Text style={s.Text1}>
+              {props.language_id == 1
+                ? "بالتسجيل ، أنت توافق على"
+                : "By sign up, you agree to our "}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 Navigation.navigate("Terms_Conditions");
               }}
               style={{ borderBottomWidth: 1, borderColor: "#fff" }}
             >
-              <Text style={[s.Text1]}>{ props.language_id== 1 ?   'و' : "terms of service"}</Text>
+              <Text style={[s.Text1]}>
+                {props.language_id == 1 ? "و" : "terms of service"}
+              </Text>
             </TouchableOpacity>
           </View>
           <View
@@ -1123,14 +1152,18 @@ const SignUp = (props) => {
               marginBottom: 15,
             }}
           >
-            <Text style={s.Text1}>{ props.language_id== 1 ?   'و' :" and "}</Text>
+            <Text style={s.Text1}>
+              {props.language_id == 1 ? "و" : " and "}
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 Navigation.navigate("privacyPolicy");
               }}
               style={{ borderBottomWidth: 1, borderColor: "#fff" }}
             >
-              <Text style={s.Text1}>{ props.language_id== 1 ? 'سياسة خاصة': "privacy policy"}</Text>
+              <Text style={s.Text1}>
+                {props.language_id == 1 ? "سياسة خاصة" : "privacy policy"}
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -1146,7 +1179,9 @@ const SignUp = (props) => {
           </View>
           <View>
             <Text style={[s.Text1, { marginBottom: 10 }]}>
-               { props.language_id == 1 ? "لدي حساب بالفعل؟ " : "I have already account ?"}
+              {props.language_id == 1
+                ? "لدي حساب بالفعل؟ "
+                : "I have already account ?"}
               <Text
                 style={{
                   fontFamily: FontFamily.semi_bold,
@@ -1325,7 +1360,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   addPermissions: addPermissions,
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

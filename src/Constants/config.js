@@ -24,9 +24,9 @@ let config = {
   // apiUrl: 'https://freshandfine.xyz/app/webservice',
   // apiUrl: 'https://server3.rvtechnologies.in/My-Boat/app/app/webservice',
   // apiUrl: 'https://myboatonline.com/app/webservice',
-  apiUrl: "http://webservice.myboatonline.com",
+  apiUrl: "https://webservice.myboatonline.com",
 
-  imageUrl: "http://webservice.myboatonline.com/images/",
+  imageUrl: "https://webservice.myboatonline.com/images/",
   device_type: Platform.OS,
   login_type: 0, //login_type (0 for App, 1 for Facebook, 2 for Google, 3 for twitter, 4 for Instagram, 5 for apple)
   player_id: 123456,

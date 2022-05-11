@@ -10,6 +10,7 @@ import {
   Dimensions,
   FlatList,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import I18n from "../../Translations/i18";
@@ -222,9 +223,9 @@ class AddAd1 extends React.Component {
       destinationTextInput: this.state.destinationTextInput,
     });
   }
-  equibselectCheckBox = (index,item) => {
+  equibselectCheckBox = (index, item) => {
     console.log(index, "selected index");
-    const { equibments, equibTextInput,equibIds } = this.state;
+    const { equibments, equibTextInput, equibIds } = this.state;
     if (this.state.equibments[index].onCheck) {
       this.state.equibIds[index] = "";
       this.state.equibTextInput[index] = "";
@@ -242,7 +243,7 @@ class AddAd1 extends React.Component {
       equibIds: this.state.equibIds,
     });
   };
-  foodselectCheckBox = (index,item) => {
+  foodselectCheckBox = (index, item) => {
     console.log(index, "index");
     const { food, foodTextInput, foodIds } = this.state;
     if (this.state.food[index].onCheck) {
@@ -255,16 +256,14 @@ class AddAd1 extends React.Component {
       });
       this.state.food[index].onCheck = 1;
       this.state.foodIds[index] = item.addon_product_id;
-
     }
     this.setState({ food, foodTextInput, foodIds });
   };
   entertainmentselectCheckBox = (index, item) => {
     console.log(index);
     console.log(item, "item 261");
-    console.log(this.state.entainmentIds[index].onCheck,'fwfwwefwe');
-    console.log(item.addon_product_id,'fwfwwefwe11');
-
+    console.log(this.state.entainmentIds[index].onCheck, "fwfwwefwe");
+    console.log(item.addon_product_id, "fwfwwefwe11");
 
     const { entainment, entainmentTextInput, entainmentIds } = this.state;
     if (this.state.entainment[index].onCheck) {
@@ -515,7 +514,7 @@ class AddAd1 extends React.Component {
       ) {
         alert("kindly select only one destination in case of public.");
       }
-        console.log(data, "data while creatin Ad");
+      console.log(data, "data while creatin Ad");
 
       axios
         .post(url, data)
@@ -670,60 +669,159 @@ class AddAd1 extends React.Component {
                       </Text>
                     </View>
 
-                    {
-                      tripTimeType === "open" ? (
+                    {Platform.OS == "android" && (
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.setState({ showOpenTime: !showOpenTime })
+                        }
+                      >
+                        <Text style={{ top: 5 }}>
+                          {moment(openTime).format("hh:mm a")}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+
+                    {Platform.OS == "android" &&
+                      showCloseTime &&
+                      tripTimeType === "open" && (
                         <DateTimePicker
                           style={{
-                            // backgroundColor: "lightgray",
+                            backgroundColor: "lightgray",
                             height: 40,
                             width: 100,
                           }}
-                          value={openTime}
+                          testID="dateTimePicker"
+                          value={closeTime}
                           mode={"time"}
                           is24Hour={true}
                           display="default"
                           onChange={(event, selectedDate) => {
                             var currentDate = selectedDate || date;
                             this.setState({
-                              showOpenTime: false,
-                              openTime: currentDate,
+                              showCloseTime: false,
+                              closeTime: currentDate,
                             });
                           }}
                         />
-                      ) : (
-                        //  <TouchableOpacity style={{width: 100,height:30, backgroundColor:'#DCDCDC'  , alignItems:'center' , borderRadius:10}}>
-                        <Text style={{ top: 5, fontSize: 16 }}>
-                          {moment(openTime).format("hh:mm a")}
-                        </Text>
-                      )
-                      //  </TouchableOpacity>
-                    }
+                      )}
+
+                    {Platform.OS == "android" &&
+                      showFixedTime &&
+                      tripTimeType === "fixed" && (
+                        <DateTimePicker
+                          style={{
+                            backgroundColor: "lightgray",
+                            height: 40,
+                            width: 100,
+                          }}
+                          testID="dateTimePicker"
+                          value={fixedTime}
+                          mode={"time"}
+                          // is24Hour={true}
+                          display="default"
+                          onChange={(event, selectedDate) => {
+                            var currentDate = selectedDate || date;
+                            this.setState({
+                              showFixedTime: false,
+                              fixedTime: currentDate,
+                            });
+                          }}
+                        />
+                      )}
+
+                    {Platform.OS == "ios" && (
+                      <>
+                        {tripTimeType === "open" ? (
+                          <DateTimePicker
+                            style={{
+                              // backgroundColor: "lightgray",
+                              height: 40,
+                              width: 100,
+                            }}
+                            value={openTime}
+                            mode={"time"}
+                            is24Hour={true}
+                            display="default"
+                            onChange={(event, selectedDate) => {
+                              var currentDate = selectedDate || date;
+                              this.setState({
+                                showOpenTime: false,
+                                openTime: currentDate,
+                              });
+                            }}
+                          />
+                        ) : (
+                          <Text style={{ top: 5, fontSize: 16 }}>
+                            {moment(openTime).format("hh:mm a")}
+                          </Text>
+                        )}
+                      </>
+                    )}
+
                     <Text style={{ top: 5 }}>{I18n.translate("to")}</Text>
 
-                    {tripTimeType === "open" ? (
-                      <DateTimePicker
-                        style={{
-                          backgroundColor: "white",
-                          height: 40,
-                          width: 100,
-                        }}
-                        testID="dateTimePicker"
-                        value={closeTime}
-                        mode={"time"}
-                        is24Hour={true}
-                        display="default"
-                        onChange={(event, selectedDate) => {
-                          var currentDate = selectedDate || date;
-                          this.setState({
-                            showCloseTime: false,
-                            closeTime: currentDate,
-                          });
-                        }}
-                      />
-                    ) : (
-                      <Text style={{ top: 5 }}>
-                        {moment(closeTime).format("hh:mm a")}
-                      </Text>
+                    {Platform.OS == "android" && (
+                      <TouchableOpacity
+                        onPress={() => this.setState({ showCloseTime: true })}
+                      >
+                        <Text style={{ top: 5 }}>
+                          {moment(closeTime).format("hh:mm a")}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+
+                    {Platform.OS == "android" &&
+                      showCloseTime &&
+                      tripTimeType === "open" && (
+                        <DateTimePicker
+                          style={{
+                            backgroundColor: "lightgray",
+                            height: 40,
+                            width: 100,
+                          }}
+                          testID="dateTimePicker"
+                          value={closeTime}
+                          mode={"time"}
+                          is24Hour={true}
+                          display="default"
+                          onChange={(event, selectedDate) => {
+                            var currentDate = selectedDate || date;
+                            this.setState({
+                              showCloseTime: false,
+                              closeTime: currentDate,
+                            });
+                          }}
+                        />
+                      )}
+
+                    {Platform.OS == "ios" && (
+                      <>
+                        {tripTimeType === "open" ? (
+                          <DateTimePicker
+                            style={{
+                              backgroundColor: "white",
+                              height: 40,
+                              width: 100,
+                            }}
+                            testID="dateTimePicker"
+                            value={closeTime}
+                            mode={"time"}
+                            is24Hour={true}
+                            display="default"
+                            onChange={(event, selectedDate) => {
+                              var currentDate = selectedDate || date;
+                              this.setState({
+                                showCloseTime: false,
+                                closeTime: currentDate,
+                              });
+                            }}
+                          />
+                        ) : (
+                          <Text style={{ top: 5 }}>
+                            {moment(closeTime).format("hh:mm a")}
+                          </Text>
+                        )}
+                      </>
                     )}
                   </View>
                   <View
@@ -765,29 +863,70 @@ class AddAd1 extends React.Component {
                         {I18n.translate("fixed_time")}
                       </Text>
                     </View>
-                    {tripTimeType === "fixed" ? (
-                      <DateTimePicker
-                        style={{
-                          height: 40,
-                          width: 100,
-                        }}
-                        testID="dateTimePicker"
-                        value={fixedTime}
-                        mode={"time"}
-                        is24Hour={true}
-                        display="default"
-                        onChange={(event, selectedDate) => {
-                          var currentDate = selectedDate || date;
-                          this.setState({
-                            showFixedTime: false,
-                            fixedTime: currentDate,
-                          });
-                        }}
-                      />
-                    ) : (
-                      <Text style={{ top: 5 }}>
-                        {moment(fixedTime).format("hh:mm a")}
-                      </Text>
+
+                    {Platform.OS == "android" && (
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.setState({ showFixedTime: !showFixedTime })
+                        }
+                      >
+                        <Text style={{ top: 5 }}>
+                          {moment(fixedTime).format("hh:mm a")}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+
+                    {Platform.OS == "android" &&
+                      showFixedTime &&
+                      tripTimeType === "fixed" && (
+                        <DateTimePicker
+                          style={{
+                            backgroundColor: "lightgray",
+                            height: 40,
+                            width: 100,
+                          }}
+                          testID="dateTimePicker"
+                          value={fixedTime}
+                          mode={"time"}
+                          // is24Hour={true}
+                          display="default"
+                          onChange={(event, selectedDate) => {
+                            var currentDate = selectedDate || date;
+                            this.setState({
+                              showFixedTime: false,
+                              fixedTime: currentDate,
+                            });
+                          }}
+                        />
+                      )}
+
+                    {Platform.OS == "ios" && (
+                      <>
+                        {tripTimeType === "fixed" ? (
+                          <DateTimePicker
+                            style={{
+                              height: 40,
+                              width: 100,
+                            }}
+                            testID="dateTimePicker"
+                            value={fixedTime}
+                            mode={"time"}
+                            is24Hour={true}
+                            display="default"
+                            onChange={(event, selectedDate) => {
+                              var currentDate = selectedDate || date;
+                              this.setState({
+                                showFixedTime: false,
+                                fixedTime: currentDate,
+                              });
+                            }}
+                          />
+                        ) : (
+                          <Text style={{ top: 5 }}>
+                            {moment(fixedTime).format("hh:mm a")}
+                          </Text>
+                        )}
+                      </>
                     )}
                   </View>
                 </View>
@@ -852,7 +991,7 @@ class AddAd1 extends React.Component {
                           />
                           <TouchableOpacity
                             onPress={() => {
-                              this.equibselectCheckBox(index,item);
+                              this.equibselectCheckBox(index, item);
                             }}
                           >
                             {item.onCheck === 1 ? (
@@ -936,7 +1075,7 @@ class AddAd1 extends React.Component {
                           />
                           <TouchableOpacity
                             onPress={() => {
-                              this.foodselectCheckBox(index,item);
+                              this.foodselectCheckBox(index, item);
                             }}
                           >
                             {item.onCheck === 1 ? (

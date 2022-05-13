@@ -140,6 +140,11 @@ const SelectedDate = (props) => {
     }
   };
   const onSubmit = () => {
+    console.log(boatids, "boatids");
+
+    if (boatids && boatids.length == 0) {
+      return alert("Please select any boat.");
+    }
     let url = config.apiUrl + "/unavailable_add.php";
     var data = new FormData();
     let updatedBoatIds = boatids;
@@ -178,7 +183,11 @@ const SelectedDate = (props) => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
-      <Header backBtn={true} name={I18n.translate("selected_date")} isarbic={props.language_id==1 ? 1:0}/>
+      <Header
+        backBtn={true}
+        name={I18n.translate("selected_date")}
+        isarbic={props.language_id == 1 ? 1 : 0}
+      />
       <View style={sb.SEC2}>
         <View style={{ marginTop: 30, paddingHorizontal: 10 }}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -475,4 +484,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(SelectedDate);
-

@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 import Home from "../Screens/Main/Home";
 import React from "react";
 import I18n from "../Translations/i18";
@@ -83,10 +83,22 @@ function TabNav() {
                 source={require("../../assets/icons/active_inbox.png")}
               />
             ) : (
-              <Image
-                style={{ height: 20, width: 30, resizeMode: "contain" }}
-                source={require("../../assets/icons/inbox.png")}
-              />
+              <>
+                <Image
+                  style={{ height: 20, width: 30, resizeMode: "contain" }}
+                  source={require("../../assets/icons/inbox.png")}
+                />
+                <View
+                  style={{
+                    height: 12,
+                    width: 12,
+                    borderRadius: 12 / 2,
+                    backgroundColor: Colors.orange,
+                    position: "absolute",
+                    bottom: 20,
+                  }}
+                />
+              </>
             ),
           //   tabBarBadge: 3,
         }}

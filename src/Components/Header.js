@@ -11,14 +11,21 @@ import { Icon } from "react-native-elements";
 import { back_img, Colors, FontFamily } from "../Constants/Constants";
 import { useNavigation } from "@react-navigation/core";
 import { connect } from "react-redux";
-import * as NavigationService from '../../NavigationService';
-
-
-
+import * as NavigationService from "../../NavigationService";
 
 const Header = ({
-  backBtn,notiBtn,searchBtn,name,imgBack,backColor,headerHeight,backImgSource,chatModule  ,isarbic}) => {
-    console.log(isarbic);
+  backBtn,
+  notiBtn,
+  searchBtn,
+  name,
+  imgBack,
+  backColor,
+  headerHeight,
+  backImgSource,
+  chatModule,
+  isarbic,
+}) => {
+  console.log(isarbic);
   const navigation = useNavigation();
   const [state, setState] = useState({
     backBtn: false || backBtn,
@@ -53,7 +60,10 @@ const Header = ({
         }}
       >
         {state.backBtn ? (
-    <TouchableOpacity onPress={() => gotoBack()} style={ isarbic == 1 ? s.backbutton : {marginTop:35  } }>
+          <TouchableOpacity
+            onPress={() => gotoBack()}
+            style={isarbic == 1 ? s.backbutton : { marginTop: 35 }}
+          >
             <Icon
               name="arrow-back"
               type="ionicons"
@@ -62,13 +72,26 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : state.notiBtn ? (
-          <TouchableOpacity onPress={() => gotoNotification()} style={{marginTop:35}}>
+          <TouchableOpacity
+            onPress={() => gotoNotification()}
+            style={{ marginTop: 35 }}
+          >
             <Icon
               name="bell"
               type="simple-line-icon"
               size={24}
               color={Colors.white}
             />
+            <View
+              style={{
+                height: 12,
+                width: 12,
+                borderRadius: 12 / 2,
+                backgroundColor: Colors.orange,
+                position: "absolute",
+                bottom: 20,
+              }}
+            ></View>
           </TouchableOpacity>
         ) : (
           <View style={{ height: 25, width: 25 }} />
@@ -78,13 +101,13 @@ const Header = ({
             fontFamily: FontFamily.semi_bold,
             color: Colors.white,
             textAlign: "center",
-            marginTop:40
+            marginTop: 40,
           }}
         >
           {name}
         </Text>
         {state.searchBtn == false ? (
-          <TouchableOpacity  style={{marginTop:35}}>
+          <TouchableOpacity style={{ marginTop: 35 }}>
             <Icon
               name="search1"
               type="antdesign"
@@ -115,7 +138,10 @@ const Header = ({
         }}
       >
         {state.backBtn ? (
-          <TouchableOpacity onPress={() => gotoBack()} style={ isarbic == 1 ? s.backbutton : {marginTop:35}}>
+          <TouchableOpacity
+            onPress={() => gotoBack()}
+            style={isarbic == 1 ? s.backbutton : { marginTop: 35 }}
+          >
             <Icon
               name="arrow-back"
               type="ionicons"
@@ -124,7 +150,10 @@ const Header = ({
             />
           </TouchableOpacity>
         ) : state.notiBtn ? (
-          <TouchableOpacity onPress={() => gotoNotification()} style={{marginTop:35}}>
+          <TouchableOpacity
+            onPress={() => gotoNotification()}
+            style={{ marginTop: 35 }}
+          >
             <Icon
               name="bell"
               type="simple-line-icon"
@@ -140,13 +169,13 @@ const Header = ({
             fontFamily: FontFamily.semi_bold,
             color: Colors.white,
             textAlign: "center",
-            marginTop:30
+            marginTop: 30,
           }}
         >
           {name}
         </Text>
         {state.searchBtn ? (
-          <TouchableOpacity >
+          <TouchableOpacity>
             <Icon
               name="search1"
               type="antdesign"
@@ -169,10 +198,10 @@ export const s = StyleSheet.create({
     resizeMode: "cover",
     opacity: 0.5,
   },
-  backbutton :{
+  backbutton: {
     transform: [{ rotate: "-180deg" }],
-    marginTop:45
-  }
+    marginTop: 45,
+  },
 });
 const mapStateToProps = (state) => ({
   language_id: state.data_Reducer.language_id,

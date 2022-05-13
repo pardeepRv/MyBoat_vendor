@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {  useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import Header from "../../Components/Header";
 import { Colors, FontFamily } from "../../Constants/Constants";
 import config from "../../Constants/config";
@@ -15,11 +15,13 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "../../Translations/i18";
 
-
-const Notifications_Details = ({ route, navigation } ) => {
+const Notifications_Details = ({ route, navigation }) => {
   console.log(route, "props in noti details");
-  let language_id = useSelector(state => state.data_Reducer);
-console.log('laungugageid', language_id)
+  let language_id = useSelector((state) => state.data_Reducer);
+
+  const [formatted_array, setFormattedArr] = useState([]);
+
+  console.log("laungugageid", language_id);
   let obj = route?.params?.data?.item;
   console.log(navigation, "obj");
 
@@ -47,6 +49,7 @@ console.log('laungugageid', language_id)
       .then((res) => {
         console.log(res, "view ad on notificaton");
         if (res) {
+          setFormattedArr(res?.data?.adver_arr?.formatted_array);
         }
       })
       .catch((err) => console.log(err));
@@ -57,7 +60,10 @@ console.log('laungugageid', language_id)
       <Header backBtn={true} name={I18n.translate("notifications")} />
       <View style={sb.SEC2}>
         <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
-          <ScrollView>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentInset={{ bottom: 50 }}
+          >
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -86,7 +92,7 @@ console.log('laungugageid', language_id)
                 {obj?.booking_details?.booking_arr?.createtime_ago}
               </Text>
             </View>
-            <View style={{ marginVertical: 20 , alignItems:'flex-start' }}>
+            <View style={{ marginVertical: 20, alignItems: "flex-start" }}>
               <Text
                 style={{
                   fontFamily: FontFamily.default,
@@ -94,33 +100,36 @@ console.log('laungugageid', language_id)
                   color: "rgba(0, 0, 0, 0.58)",
                 }}
               >
-                {language_id== 1? obj.message[1]:obj.message[0]}
+                {language_id == 1 ? obj.message[1] : obj.message[0]}
               </Text>
             </View>
             <View style={sb.DIVIDER} />
             {obj && obj.action == "new_booking" && (
               <>
-                <View style={{ marginVertical: 10  ,}}>
-                <View style={{ alignItems:'flex-start'}}>
-
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontFamily: FontFamily.semi_bold,
-                      marginVertical: 10,
-                    }}
-                  >
-{I18n.translate("booking_details") }
-                  </Text>
+                <View style={{ marginVertical: 10 }}>
+                  <View style={{ alignItems: "flex-start" }}>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        fontFamily: FontFamily.semi_bold,
+                        marginVertical: 10,
+                      }}
+                    >
+                      {I18n.translate("booking_details")}
+                    </Text>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("Book_date")}</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("Book_date")}
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}> {obj?.user_name}</Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("Trip_time")}</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("Trip_time")}
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.date}
@@ -128,7 +137,9 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("Trip_time")}</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("Trip_time")}
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.time}
@@ -136,7 +147,9 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("no_of_guest")}</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("no_of_guest")}
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.no_of_guest}
@@ -144,7 +157,9 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("trip_hours")}</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("trip_hours")}
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.minimum_hours} hr
@@ -152,7 +167,9 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("extra_hours_view_add")}</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("extra_hours_view_add")}
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.extra_time} hr
@@ -160,25 +177,63 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("equipment")} :</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("equipment")} :
+                    </Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Equipment</Text>
+                      {formatted_array?.equipment &&
+                        formatted_array?.equipment.map((v, i) => {
+                          return (
+                            <Text
+                              key={i}
+                              style={[{ fontFamily: FontFamily.default }]}
+                            >
+                              {v?.addon_product_name && v.addon_product_name[0]}
+                            </Text>
+                          );
+                        })}
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("entertainment")} :</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("entertainment")} :
+                    </Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Entertainment</Text>
+                      {formatted_array?.entertainment &&
+                        formatted_array?.entertainment.map((v, i) => {
+                          return (
+                            <Text
+                              key={i}
+                              style={[{ fontFamily: FontFamily.default }]}
+                            >
+                              {v?.addon_product_name && v.addon_product_name[0]}
+                            </Text>
+                          );
+                        })}
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("food")} :</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("food")} :
+                    </Text>
                     <View style={sb.style2}>
-                      <Text style={sb.values}>Food</Text>
+                      {formatted_array?.food &&
+                        formatted_array?.food.map((v, i) => {
+                          return (
+                            <Text
+                              key={i}
+                              style={[{ fontFamily: FontFamily.default }]}
+                            >
+                              {v?.addon_product_name && v.addon_product_name[0]}
+                            </Text>
+                          );
+                        })}
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("boat_place")} :</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("boat_place")} :
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.location_address}
@@ -186,7 +241,9 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("discount")}:</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("discount")}:
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.location_address}
@@ -194,15 +251,21 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("Trip_type")}</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("Trip_type")}
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
-                        {I18n.translate ? obj?.booking_details?.booking_arr?.trip_name[1] : obj?.booking_details?.booking_arr?.trip_name[0]}
+                        {I18n.translate
+                          ? obj?.booking_details?.booking_arr?.trip_name[1]
+                          : obj?.booking_details?.booking_arr?.trip_name[0]}
                       </Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("coupon_discount")} :</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("coupon_discount")} :
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         {obj?.booking_details?.booking_arr?.discount} %
@@ -210,13 +273,17 @@ console.log('laungugageid', language_id)
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("coupon_discount")} :</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("coupon_discount")} :
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}></Text>
                     </View>
                   </View>
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("total_amt")}:</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("total_amt")}:
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>
                         kD {obj?.booking_details?.booking_arr?.total_amt}
@@ -225,7 +292,9 @@ console.log('laungugageid', language_id)
                   </View>
 
                   <View style={sb.style1}>
-                    <Text style={sb.parameters}>{I18n.translate("extraresuesr")} :</Text>
+                    <Text style={sb.parameters}>
+                      {I18n.translate("extraresuesr")} :
+                    </Text>
                     <View style={sb.style2}>
                       <Text style={sb.values}>No Request</Text>
                     </View>
@@ -256,7 +325,7 @@ console.log('laungugageid', language_id)
               activeOpacity={0.8}
             >
               <Text style={[sb.btn1Text, { color: Colors.orange }]}>
-              {I18n.translate("Cancel")}
+                {I18n.translate("Cancel")}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -272,7 +341,7 @@ console.log('laungugageid', language_id)
               activeOpacity={0.8}
             >
               <Text style={[sb.btn1Text, { color: Colors.white }]}>
-              {I18n.translate("Open_Reservation")}
+                {I18n.translate("Open_Reservation")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -334,6 +403,5 @@ const sb = StyleSheet.create({
     width: "100%",
   },
 });
-
 
 export default Notifications_Details;

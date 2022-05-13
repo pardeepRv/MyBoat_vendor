@@ -53,6 +53,7 @@ class ViewAdd extends React.Component {
       other_user_img: "",
       other_user_name: "",
       mobile: "",
+      formatted_array: [],
     };
     this.addOnData();
     this.getAdvertismentDetails();
@@ -195,6 +196,7 @@ class ViewAdd extends React.Component {
         if (res) {
           this.setState(
             {
+              formatted_array: res?.data?.adver_arr?.formatted_array,
               item: res.data.adver_arr,
               img_arr: res.data.adver_arr?.img_arr,
               cabinsCount: res.data.adver_arr?.boat_cabins,
@@ -564,6 +566,7 @@ class ViewAdd extends React.Component {
     this.setState({ endTime: endTimeUpdated, startTime: startTimeUpdated });
   };
   render() {
+    const { formatted_array } = this.state;
     let item = {};
     item["other_user_id"] = this.state.other_user_id;
     item["image"] = this.state.other_user_img;
@@ -948,113 +951,88 @@ class ViewAdd extends React.Component {
                     {I18n.translate("not_available")}
                   </Text>
                 </View>
-                <View style={{ flexDirection: "row", width: "100%" }}>
-                  <Text style={styles.adDetailsTextHeader}>
-                    {I18n.translate("equipments")}
-                  </Text>
-                  <Text style={styles.adDetailsTextHeader1}>
-                    {this.state.equipmentsCount
-                      ? I18n.translate("available")
-                      : I18n.translate("not_available")}
-                  </Text>
-                </View>
-                <View style={{ flexDirection: "row", width: "100%" }}>
-                  <Text style={styles.adDetailsTextHeader}>
-                    {I18n.translate("entertainment")}
-                  </Text>
-                  <Text style={styles.adDetailsTextHeader1}>
-                    {!this.state.entertainmentCount
-                      ? I18n.translate("available")
-                      : I18n.translate("not_available")}
-                  </Text>
-                </View>
-                <View style={{ flexDirection: "row", width: "100%" }}>
-                  <Text style={styles.adDetailsTextHeader}>
-                    {I18n.translate("food")}
-                  </Text>
-                  <Text style={styles.adDetailsTextHeader1}>
-                    {this.state.foodCount
-                      ? I18n.translate("available")
-                      : I18n.translate("not_available")}
-                  </Text>
-                </View>
-              </View>
-              {/* <View
-                style={{
-                  backgroundColor: Colors.orange,
-                  height: 75,
-                  marginHorizontal: 15,
-                  borderRadius: 5,
-                  marginVertical: 10,
-                }}
-              >
                 <View
                   style={{
                     flexDirection: "row",
-                    flex: 1,
+                    alignItems: "flex-start",
+                    top: 10,
                   }}
                 >
+                  <Text style={styles.adDetailsTextHeader}>
+                    {I18n.translate("equipments")}
+                  </Text>
                   <View
                     style={{
-                      flex: 1,
-                      alignItems: "center",
-                      justifyContent: "center",
+                      width: "45%",
+                      fontSize: 10,
+                      alignItems: "flex-start",
                     }}
                   >
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      onPress={() => {}}
-                      style={{
-                        backgroundColor: "#fff",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        paddingVertical: 10,
-                        paddingHorizontal: 25,
-                        borderRadius: 20,
-                        elevation: 3,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: Colors.orange,
-                          fontSize: 16,
-                          fontFamily: FontFamily.bold,
-                        }}
-                      >
-                        {I18n.translate("book_now")}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View
-                    style={{
-                      flex: 1,
-                      alignItems: "flex-end",
-                      justifyContent: "center",
-                      paddingRight: 15,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: "#fff",
-                        fontSize: 16,
-                        fontFamily: FontFamily.semi_bold,
-                      }}
-                    >
-                      {I18n.translate("rental_price")}
-                    </Text>
-                    <Text
-                      style={{
-                        color: "#fff",
-                        fontSize: 16,
-                        fontFamily: FontFamily.semi_bold,
-                      }}
-                    >
-                      {`${this.state.destinationPrices}` +
-                        `${I18n.translate("kwd")}`}
-                    </Text>
+                    {formatted_array?.equipment &&
+                      formatted_array?.equipment.map((v, i) => {
+                        return (
+                          <Text style={[{ fontFamily: FontFamily.default }]}>
+                            {v?.addon_product_name && v.addon_product_name[0]}
+                          </Text>
+                        );
+                      })}
                   </View>
                 </View>
-              </View> */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    top: 10,
+                  }}
+                >
+                  <Text style={styles.adDetailsTextHeader}>
+                    {I18n.translate("entertainment")}
+                  </Text>
+                  <View
+                    style={{
+                      width: "45%",
+                      fontSize: 10,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {formatted_array?.entertainment &&
+                      formatted_array?.entertainment.map((v, i) => {
+                        return (
+                          <Text style={[{ fontFamily: FontFamily.default }]}>
+                            {v?.addon_product_name && v.addon_product_name[0]}
+                          </Text>
+                        );
+                      })}
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    top: 10,
+                  }}
+                >
+                  <Text style={styles.adDetailsTextHeader}>
+                    {I18n.translate("food")}
+                  </Text>
+                  <View
+                    style={{
+                      width: "45%",
+                      fontSize: 10,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {formatted_array?.food &&
+                      formatted_array?.food.map((v, i) => {
+                        return (
+                          <Text style={[{ fontFamily: FontFamily.default }]}>
+                            {v?.addon_product_name && v.addon_product_name[0]}
+                          </Text>
+                        );
+                      })}
+                  </View>
+                </View>
+              </View>
             </View>
           )}
 
@@ -1075,14 +1053,14 @@ class ViewAdd extends React.Component {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => this.callNumber(this.state.mobile)}
             >
               <Image
                 style={{ height: 25, width: 30, resizeMode: "contain" }}
                 source={require("../../../assets/icons/phone_call.png")}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           {this.state.status1 == 0 ? (

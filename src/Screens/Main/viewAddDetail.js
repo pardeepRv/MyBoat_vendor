@@ -13,7 +13,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Platform
+  Platform,
 } from "react-native";
 import { AirbnbRating } from "react-native-elements";
 import { connect } from "react-redux";
@@ -25,9 +25,8 @@ import DatePicker from "react-native-datepicker";
 class ViewAdd extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props, 'consoling here in viewAdd');
+    console.log(props, "consoling here in viewAdd");
     this.state = {
-
       id: this.props.route.params.item.advertisement_id,
       boatDetails: null,
       item: null,
@@ -46,19 +45,19 @@ class ViewAdd extends React.Component {
       endTime: new Date(),
       startTime: new Date(),
       boat_brand: "",
-      status1: ''
+      status1: "",
+      addon_arr_formatted: [],
     };
     this.addOnData();
     this.getAdvertismentDetails();
   }
   componentDidMount() {
-    
     //   alert( JSON.stringify(this.props.route.params.item.addvr_id))
-    
-    // var userInfo =  AsyncStorage.getItem("user_id");
-  //  alert(JSON.stringify(this.props.route.params.item.id))
 
-    if (Platform.OS == 'android') {
+    // var userInfo =  AsyncStorage.getItem("user_id");
+    //  alert(JSON.stringify(this.props.route.params.item.id))
+
+    if (Platform.OS == "android") {
       StatusBar.setTranslucent(true);
     }
     StatusBar.setBarStyle("light-content");
@@ -72,16 +71,14 @@ class ViewAdd extends React.Component {
   /// use for caNCEL AND CONFI9RM BOOKING
   cancelConfirmBooking = async (id) => {
     this.setState({
-      loader: true
-    })
+      loader: true,
+    });
 
     console.log(id, " id from cancvel confirm ");
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
-    console.log(parsedInfo, ' parsedInfo in url');
-    let url =
-      config.apiUrl +
-      "/booking_list_owner_manage.php";
+    console.log(parsedInfo, " parsedInfo in url");
+    let url = config.apiUrl + "/booking_list_owner_manage.php";
 
     var data = new FormData();
     data.append("user_id_post", parsedInfo.id);
@@ -89,25 +86,23 @@ class ViewAdd extends React.Component {
     data.append("status", id);
 
     console.log(data);
-    console.log(url, 'url');
+    console.log(url, "url");
     axios
       .post(url, data)
       .then((res) => {
-        console.log(res, 'res in cancel api ');
+        console.log(res, "res in cancel api ");
         this.setState({
-          loader: false
-        })
+          loader: false,
+        });
 
         if (res.data.success === "true") {
-          this.goBack()
-        }
-        else {
+          this.goBack();
+        } else {
           if (this.props.language_id == 0) alert(res.data.msg[0]);
           else alert(res.data.msg[1]);
           this.setState({
-            loader: false
-          })
-
+            loader: false,
+          });
         }
       })
       .catch((err) => console.log(err));
@@ -121,29 +116,29 @@ class ViewAdd extends React.Component {
       "/advertisement_details.php?user_id_post=" +
       parsedInfo.id +
       "&advertisement_id=" +
-      this.state.id
-     
+      this.state.id;
+
     axios
       .get(url)
       .then((res) => {
         console.log(res, "view ad");
         if (res) {
-          // alert(res.data.status)
+          if (Object.keys(res?.data?.adver_arr?.addon_arr_formatted).length) {
+          }
           this.setState(
-
             {
+              addon_arr_formatted: res?.data?.adver_arr?.addon_arr_formatted,
               item: res.data.adver_arr,
               img_arr: res.data.adver_arr?.img_arr,
               cabinsCount: res.data.adver_arr?.boat_cabins,
               toiletCount: res.data.adver_arr?.boat_toilets,
               numberOfPeople: res.data.adver_arr?.no_of_people,
               boat_brand: res.data.adver_arr?.boat_brand,
-              status1: res.data.status
+              status1: res.data.status,
               // boatDropdown: res.data.boat_arr,
               // cityDropdown: res.data.city_arr,
             },
             () => {
-              
               if (this.state.item?.trip_time_end !== "NA") {
                 this.getTimeDifferenceInHours(
                   new Date(JSON.parse(this.state.item?.trip_time_end)),
@@ -304,7 +299,7 @@ class ViewAdd extends React.Component {
     axios
       .get(url)
       .then((res) => {
-        console.log("test==>>", res)
+        console.log("test==>>", res);
 
         if (res.data.success === "true") {
           this.setState({ boatDetails: res.data?.boat_arr });
@@ -498,6 +493,16 @@ class ViewAdd extends React.Component {
     this.setState({ endTime: endTimeUpdated, startTime: startTimeUpdated });
   };
   render() {
+    console.log(
+      this.state.addon_arr_formatted,
+      "addon_arr_formatted in render"
+    );
+    console.log(
+      this.state.addon_arr_formatted,
+      "addon_arr_formatted in render"
+    );
+    const { addon_arr_formatted } = this.state;
+
     return (
       <View style={{ flex: 1, backgroundColor: "#fff" }}>
         {/* <StatusBar
@@ -522,11 +527,17 @@ class ViewAdd extends React.Component {
 
         <ScrollView showsVerticalScrollIndicator={false}>
           {this.state.loader ? (
-            <View style={{ justifyContent: "center", alignItems: "center", bottom: 40 }}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                bottom: 40,
+              }}
+            >
               <ActivityIndicator size={30} color={Colors.orange} />
             </View>
           ) : (
-            <View >
+            <View>
               <View style={styles.adressbox}>
                 <View
                   style={{
@@ -588,10 +599,10 @@ class ViewAdd extends React.Component {
                     >
                       {this.props.language_id == 0
                         ? this.state.item?.captain_name[0] &&
-                        this.state.item?.captain_name[0]
+                          this.state.item?.captain_name[0]
                         : (this.state.item?.captain_name[1] &&
-                          this.state.item?.captain_name[1]) ||
-                        ""}
+                            this.state.item?.captain_name[1]) ||
+                          ""}
                     </Text>
                   </View>
                 </View>
@@ -855,35 +866,101 @@ class ViewAdd extends React.Component {
                     {I18n.translate("not_available")}
                   </Text>
                 </View>
-                <View style={{ flexDirection: "row", width: "100%" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <Text style={styles.adDetailsTextHeader}>
                     {I18n.translate("equipments")}
                   </Text>
-                  <Text style={styles.adDetailsTextHeader1}>
+                  <View
+                    style={{
+                      width: "45%", // is 50% of container width
+                      fontSize: 10,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {addon_arr_formatted?.equipment &&
+                      addon_arr_formatted?.equipment.map((v, i) => {
+                        return (
+                          <Text style={[{ fontFamily: FontFamily.default }]}>
+                            {v?.addon_product_name && v.addon_product_name[0]}
+                          </Text>
+                        );
+                      })}
+                  </View>
+
+                  {/* <Text style={styles.adDetailsTextHeader1}>
                     {this.state.equipmentsCount
                       ? I18n.translate("available")
                       : I18n.translate("not_available")}
-                  </Text>
+                  </Text> */}
                 </View>
-                <View style={{ flexDirection: "row", width: "100%" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    top: 10,
+                  }}
+                >
                   <Text style={styles.adDetailsTextHeader}>
                     {I18n.translate("entertainment")}
                   </Text>
-                  <Text style={styles.adDetailsTextHeader1}>
+                  <View
+                    style={{
+                      width: "45%", // is 50% of container width
+                      fontSize: 10,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {addon_arr_formatted?.entertainment &&
+                      addon_arr_formatted?.entertainment.map((v, i) => {
+                        return (
+                          <Text style={[{ fontFamily: FontFamily.default }]}>
+                            {v?.addon_product_name && v.addon_product_name[0]}
+                          </Text>
+                        );
+                      })}
+                  </View>
+                  {/* <Text style={styles.adDetailsTextHeader1}>
                     {!this.state.entertainmentCount
                       ? I18n.translate("available")
                       : I18n.translate("not_available")}
-                  </Text>
+                  </Text> */}
                 </View>
-                <View style={{ flexDirection: "row", width: "100%" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    top: 10,
+                  }}
+                >
                   <Text style={styles.adDetailsTextHeader}>
                     {I18n.translate("food")}
                   </Text>
-                  <Text style={styles.adDetailsTextHeader1}>
+                  {/* <Text style={styles.adDetailsTextHeader1}>
                     {this.state.foodCount
                       ? I18n.translate("available")
                       : I18n.translate("not_available")}
-                  </Text>
+                  </Text> */}
+                  <View
+                    style={{
+                      width: "45%", // is 50% of container width
+                      fontSize: 10,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {addon_arr_formatted?.food &&
+                      addon_arr_formatted?.food.map((v, i) => {
+                        return (
+                          <Text style={[{ fontFamily: FontFamily.default }]}>
+                            {v?.addon_product_name && v.addon_product_name[0]}
+                          </Text>
+                        );
+                      })}
+                  </View>
                 </View>
               </View>
               {/* <View
@@ -964,8 +1041,6 @@ class ViewAdd extends React.Component {
               </View> */}
             </View>
           )}
-         
-
         </ScrollView>
       </View>
     );
@@ -1061,11 +1136,11 @@ const styles = StyleSheet.create({
     borderColor: "orange",
     justifyContent: "center",
     alignItems: "center",
-    textAlign: 'center',
+    textAlign: "center",
     color: "white",
     padding: 8,
     top: 10,
-    overflow: 'hidden'
+    overflow: "hidden",
   },
   bookingStatus: {
     height: 40,
@@ -1079,8 +1154,7 @@ const styles = StyleSheet.create({
     color: "white",
     padding: 8,
     top: 20,
-    overflow: 'hidden',
-
+    overflow: "hidden",
   },
   bookingtext: {
     height: 40,
@@ -1093,10 +1167,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "white",
     padding: 8,
-    overflow: 'hidden',
+    overflow: "hidden",
     left: 8,
     top: -8,
-    fontSize: 15
-
+    fontSize: 15,
   },
 });

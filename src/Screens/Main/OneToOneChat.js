@@ -48,9 +48,22 @@ class OneToOneChat extends PureComponent {
 
   componentDidMount() {
     this.getChatListing();
+    this.readAllMsgs();
     socketServices.on(`message`, this.onReceiveMessage);
   }
 
+  readAllMsgs = async () => {
+    const { data } = this.props.route?.params;
+
+    let userInfo = await AsyncStorage.getItem("userInfo");
+    this.parsedInfo = JSON.parse(userInfo);
+    console.log(this.parsedInfo,'this.parsedInfo');
+
+    socketServices.emit("markMessageAsRead", {
+      sender_id: this.parsedInfo.id,
+      receiver_id: data.other_user_id, 
+    });
+  }
   getChatListing = async () => {
     this.setState({
       isLoading: true,

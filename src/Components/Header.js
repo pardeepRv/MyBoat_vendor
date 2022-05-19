@@ -24,6 +24,7 @@ const Header = ({
   backImgSource,
   chatModule,
   isarbic,
+  notificationIcon,
 }) => {
   console.log(isarbic);
   const navigation = useNavigation();
@@ -82,16 +83,18 @@ const Header = ({
               size={24}
               color={Colors.white}
             />
-            <View
-              style={{
-                height: 12,
-                width: 12,
-                borderRadius: 12 / 2,
-                backgroundColor: Colors.orange,
-                position: "absolute",
-                bottom: 20,
-              }}
-            ></View>
+            {notificationIcon == 0 && (
+              <View
+                style={{
+                  height: 12,
+                  width: 12,
+                  borderRadius: 12 / 2,
+                  backgroundColor: Colors.orange,
+                  position: "absolute",
+                  bottom: 20,
+                }}
+              />
+            )}
           </TouchableOpacity>
         ) : (
           <View style={{ height: 25, width: 25 }} />

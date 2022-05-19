@@ -46,6 +46,8 @@ const Home = (props) => {
   const [outgoing, setOutgoing] = useState(null);
   const [user_id_post, setUser_id_post] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [notificationIcon, setNotification] = useState(null);
+
   // --------------------------------------- //
 
   useEffect(async () => {
@@ -156,7 +158,7 @@ const Home = (props) => {
       routes: [{ name: "Login" }],
     });
   };
-  const getBookingDetails = async () => { 
+  const getBookingDetails = async () => {
     let userInfo = await AsyncStorage.getItem("userInfo");
     let parsedInfo = JSON.parse(userInfo);
     setUser_id_post(parsedInfo.id);
@@ -173,9 +175,10 @@ const Home = (props) => {
             res.data.ongoning_booking_arr,
             "res.data.ongoning_booking_arr"
           );
+          setNotification(res?.data?.is_read)
 
           if (res.data.upcoming_booking_arr != "NA2") {
-            console.log('first....');
+            console.log("first....");
             setUpcoming(res.data.upcoming_booking_arr);
           }
           // if (res.data.ongoning_booking_arr == "NA3") {
@@ -186,7 +189,7 @@ const Home = (props) => {
             res.data.ongoning_booking_arr.length > 0 &&
             res.data.ongoning_booking_arr != "NA3"
           ) {
-            console.log('first111111...');
+            console.log("first111111...");
 
             setOutgoing(res.data.ongoning_booking_arr);
           }
@@ -404,6 +407,7 @@ const Home = (props) => {
       <Header
         imgBack={true}
         notiBtn={true}
+        notificationIcon={notificationIcon}
         searchBtn={true}
         name={I18n.translate("home")}
         isarbic={props.language_id == 1 ? 1 : 0}

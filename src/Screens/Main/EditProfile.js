@@ -12,6 +12,7 @@ import {
   I18nManager,
   Modal,
   TextInput,
+  Platform,
 } from "react-native";
 import I18n from "../../Translations/i18";
 import { Icon, Input, Card } from "react-native-elements";
@@ -234,8 +235,9 @@ class EditProfile extends React.Component {
       // maxFiles: 7,
       //   cropping: true,
     }).then((image) => {
+      console.log(image, "iage res");
       var imagefil = {
-        uri: image.path,
+        uri: Platform.OS == "ios" ? image.sourceURL : image.path,
         name: image.modificationDate + "." + image.mime.split("/")[1],
         size: image.size,
         filename: image.modificationDate + "." + image.mime.split("/")[1],

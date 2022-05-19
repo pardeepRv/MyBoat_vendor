@@ -36,6 +36,7 @@ const NotificationsPage = (props) => {
     let parsedInfo = JSON.parse(userInfo);
     setUser_id_post(parsedInfo.id);
     setLoader(true);
+    // "&read_status=0"
     let url =
       config.apiUrl + "/notificationList.php?user_id_post=" + parsedInfo.id;
     axios

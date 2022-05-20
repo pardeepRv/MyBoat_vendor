@@ -22,10 +22,13 @@ export const createNotificationListener = async () => {
     setTimeout(() => {
       if (remoteMessage.data?.type == "chat_message") {
         // NavigationService.navigate("AllChats", { notificationParam: 1 });
-        NavigationService.navigate("Inbox" );
+        NavigationService.navigate("Inbox");
       }
-      if (remoteMessage.notification?.body == "A new booking request") {
-        NavigationService.navigate("Notifications" );
+      if (
+        remoteMessage.notification?.body == "A new booking request" ||
+        remoteMessage.notification?.body == "A new broadcast added "
+      ) {
+        NavigationService.navigate("Notifications");
       }
       // else {
       //   NavigationService.navigate("Home");

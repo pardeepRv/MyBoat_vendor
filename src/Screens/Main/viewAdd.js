@@ -193,7 +193,7 @@ class ViewAdd extends React.Component {
       .get(url)
       .then((res) => {
         console.log(res, "view ad");
-        if (res) {
+        if (res?.data?.success == "true") {
           this.setState(
             {
               formatted_array: res?.data?.adver_arr?.formatted_array,

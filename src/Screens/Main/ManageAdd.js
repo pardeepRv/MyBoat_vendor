@@ -425,13 +425,19 @@ const ManageAdd = (props) => {
                             </View>
                           )}
                           <TouchableOpacity
-                            style={{ position: "absolute", right: 10, top: 10 }}
+                            style={{
+                              position: "absolute",
+                              right: 10,
+                              top: 10,
+                              borderRadius: 20,
+                              backgroundColor: Colors.orange,
+                            }}
                             onPress={() => toggleOverlay({ item })}
                           >
                             <Icon
                               name="dots-three-vertical"
                               type="entypo"
-                              color={Colors.orange}
+                              color={Colors.white}
                             />
                           </TouchableOpacity>
                           <View
@@ -545,16 +551,18 @@ const ManageAdd = (props) => {
                               >
                                 {item.no_of_people} {I18n.translate("person")}
                               </Text>
-                              <Text
-                                style={{
-                                  color: "rgba(51, 51, 51, 1)",
-                                  fontSize: 10,
-                                  fontFamily: FontFamily.default,
-                                }}
-                              >
-                                {item.remaining_seats}{" "}
-                                {I18n.translate("Remaning")}
-                              </Text>
+                              {item.adver_boat_type != 1 && (
+                                <Text
+                                  style={{
+                                    color: "rgba(51, 51, 51, 1)",
+                                    fontSize: 10,
+                                    fontFamily: FontFamily.default,
+                                  }}
+                                >
+                                  {item.remaining_seats}{" "}
+                                  {I18n.translate("Remaning")}
+                                </Text>
+                              )}
                             </View>
                             {/* <Text
                               style={{
